@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JFrame;
 
-public class Pong extends JFrame{
+public class Pong extends JFrame {
     private final int leveys = 500;
     private final int korkeus = 600;
     private Kentta kentta;

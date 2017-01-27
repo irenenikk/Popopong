@@ -1,6 +1,6 @@
 package irene.pong.komponentit;
 
-public class Maila{
+public class Maila {
     private int x;
     private int y;
     private final int leveys = 20;
