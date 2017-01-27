@@ -7,3 +7,5 @@ Ideoita pelin vaikeuttamiseksi:
 - "Tennisverkon" tuntumaan alkaa ilmestyä neliöitä, jotka blokkaavat pallon liikettä. Blokit voivat varoittaa ilmestymisestään.
 - "Ilkeä pallo": kun tarpeeksi onnistuneita osumia peräkkäin, pallo vaihtaa varoittamatta suuntaa
 - Varoittamatta ilmestyvä este keskelle kenttää
+
+![Määrittelyvaiheen luokkakaavio](luokkakaavio_maarittelyvaihe.png)

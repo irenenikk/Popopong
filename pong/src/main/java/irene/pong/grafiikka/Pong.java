@@ -9,7 +9,22 @@ public class Pong extends JFrame{
     private final int leveys = 500;
     private final int korkeus = 600;
     private Kentta kentta;
+
+    public int getLeveys() {
+        return leveys;
+    }
     
+    public int getKorkeus() {
+        return korkeus;
+    }
+
+    public Kentta getKentta() {
+        return kentta;
+    }
+
+    public void setKentta(Kentta kentta) {
+        this.kentta = kentta;
+    }
     
     public void aloita() {
         setSize(leveys, korkeus);
@@ -18,11 +33,11 @@ public class Pong extends JFrame{
         setLayout(new BorderLayout());
         setResizable(false);
         
-        kentta = new Kentta(leveys, korkeus);
+        kentta = new Kentta();
         kentta.setBackground(Color.BLACK);
         add(kentta, BorderLayout.CENTER);
         
         setVisible(true);
+        kentta.aloita();
     }
-
 }
