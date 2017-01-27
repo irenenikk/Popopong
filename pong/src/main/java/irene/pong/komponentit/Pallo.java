@@ -1,13 +1,10 @@
 package irene.pong.komponentit;
 
 public class Pallo {
+    private final int halkaisija = 20;
     private int x;
     private int y;
-    private int halkaisija;
     
-    public Pallo(int halkaisija) {
-        this.halkaisija = halkaisija;
-    }
     
     public int getX() {
         return x;
@@ -19,6 +16,14 @@ public class Pallo {
     
     public int getHalkaisija() {
         return halkaisija;
+    }
+
+    public void setX(int x) {
+        this.x = x-halkaisija/2;
+    }
+
+    public void setY(int y) {
+        this.y = y-halkaisija/2;
     }
     
     public void liikuta(int xLiike, int yLiike) {

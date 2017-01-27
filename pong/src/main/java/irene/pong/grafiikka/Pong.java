@@ -18,7 +18,7 @@ public class Pong extends JFrame{
         setLayout(new BorderLayout());
         setResizable(false);
         
-        kentta = new Kentta();
+        kentta = new Kentta(leveys, korkeus);
         kentta.setBackground(Color.BLACK);
         add(kentta, BorderLayout.CENTER);
         
