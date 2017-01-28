@@ -7,10 +7,15 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class Kentta extends JPanel {
-
-    private Pallo pallo;
-    private Maila pelaaja1;
-    private Maila pelaaja2;
+    private final Pallo pallo;
+    private final Maila pelaaja1;
+    private final Maila pelaaja2;
+    
+    public Kentta() {
+        this.pallo = new Pallo();
+        this.pelaaja1 = new Maila();
+        this.pelaaja2 = new Maila();
+    }
 
     public Pallo getPallo() {
         return pallo;
@@ -22,46 +27,6 @@ public class Kentta extends JPanel {
 
     public Maila getPelaaja2() {
         return pelaaja2;
-    }
-
-    public void aloita() {
-        pallo = new Pallo();
-        asetaPalloKeskelle();
-
-        pelaaja1 = new Maila();
-        pelaaja1.setX(0);
-        pelaaja1.setY(getHeight() / 2 - pelaaja1.getKorkeus() / 2);
-
-        pelaaja2 = new Maila();
-        pelaaja2.setX(getWidth() - pelaaja2.getLeveys());
-        pelaaja2.setY(getHeight() / 2 - pelaaja2.getKorkeus() / 2);
-    }
-
-    public void asetaPalloKeskelle() {
-        pallo.setX(getWidth() / 2 - pallo.getHalkaisija() / 2);
-        pallo.setY(getHeight() / 2 - pallo.getHalkaisija() / 2);
-    }
-
-    public void paivita() {
-        pallo.liiku();
-
-        if (pallo.getY() >= 0) {
-            pallo.setSuuntaY(-1);
-            pallo.setY(pallo.getY() - 1);
-        }
-
-        if (pallo.getY() <= -getHeight()) {
-            pallo.setSuuntaY(1);
-            pallo.setY(pallo.getY() + 1);
-        }
-
-        if (pallo.getX() <= 0) {
-            pelaaja2.lisaaPiste();
-        }
-
-        if (pallo.getX() >= getWidth()) {
-            pelaaja1.lisaaPiste();
-        }
     }
 
     @Override

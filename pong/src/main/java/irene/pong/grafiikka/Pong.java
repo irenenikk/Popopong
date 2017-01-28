@@ -1,6 +1,7 @@
 
 package irene.pong.grafiikka;
 
+import irene.pong.logiikka.KomponenttiHallinta;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JFrame;
@@ -9,6 +10,12 @@ public class Pong extends JFrame {
     private final int leveys = 500;
     private final int korkeus = 600;
     private Kentta kentta;
+    private final KomponenttiHallinta kontrolleri;
+    
+    public Pong() {
+        kentta = new Kentta();
+        kontrolleri = new KomponenttiHallinta(kentta);
+    }
 
     public int getLeveys() {
         return leveys;
@@ -33,11 +40,10 @@ public class Pong extends JFrame {
         setLayout(new BorderLayout());
         setResizable(false);
         
-        kentta = new Kentta();
         kentta.setBackground(Color.BLACK);
         add(kentta, BorderLayout.CENTER);
         
         setVisible(true);
-        kentta.aloita();
+        kontrolleri.aloita();
     }
 }

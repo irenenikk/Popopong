@@ -18,7 +18,7 @@ public class KenttaTest {
     @Test
     public void kentallaOnPalloJaKaksiMailaa() {
         assertTrue(kentta.getPelaaja1() != null);
-        assertTrue(kentta.getPallo() != null);
+        assertTrue(kentta.pallo() != null);
         assertTrue(kentta.getPelaaja2() != null);
     }
     
@@ -29,7 +29,7 @@ public class KenttaTest {
     
     @Test
     public void josPalloOsuuYlareunaanSuuntaVaihtuu() {
-        Pallo pallo = kentta.getPallo();
+        Pallo pallo = kentta.pallo();
         pallo.setX(1);
         pallo.setY(1);
         pallo.liiku();
@@ -39,7 +39,7 @@ public class KenttaTest {
     
     @Test
     public void josPalloOsuuAlareunaanSuuntaVaihtuu() {
-        Pallo pallo = kentta.getPallo();
+        Pallo pallo = kentta.pallo();
         pallo.setX(1);
         pallo.setY(-kentta.getHeight());
         pallo.setSuuntaY(-1);
@@ -50,7 +50,7 @@ public class KenttaTest {
     
     @Test
     public void palloMaalissaLisaaPisteitaVasemmalla() {
-        Pallo pallo = kentta.getPallo();
+        Pallo pallo = kentta.pallo();
         pallo.setX(1);
         pallo.setY(1);
         pallo.setSuuntaX(-1);
