@@ -6,11 +6,11 @@ import org.jdesktop.core.animation.timing.TimingTarget;
 
 public class Animoija implements TimingTarget {
     private final KomponenttiHallinta kontrolleri;
-    private final Animator animaattori;
+    private final Animator animoija;
     
     public Animoija(KomponenttiHallinta k) {
         kontrolleri = k;
-        animaattori = new Animator.Builder()
+        animoija = new Animator.Builder()
             .setRepeatCount(Animator.INFINITE)
             .addTarget(this)
             .build();
@@ -18,7 +18,7 @@ public class Animoija implements TimingTarget {
 
     
     public void aloitaPeli() {
-        animaattori.start();
+        animoija.start();
     }
 
     @Override

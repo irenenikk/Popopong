@@ -15,4 +15,4 @@ TODO:
 - Esteet
 - Pisteet näytölle
 
-![Määrittelyvaiheen luokkakaavio](luokkakaavio_maarittelyvaihe.png)
+![Luokkakaavio](luokkakaavio_tarkempi.png)
