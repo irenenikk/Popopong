@@ -9,10 +9,10 @@ Ideoita pelin vaikeuttamiseksi:
 - Varoittamatta ilmestyvä este keskelle kenttää
 
 TODO:
-- Suunta-enum
-- Järkevä tietorakenne pelaajille
-- Pelityylin valinta
-- Esteet
-- Pisteet näytölle
+[ ] Suunta-enum
+[ ] Järkevä tietorakenne pelaajille
+[ ] Pelityylin valinta
+[ ] Esteet
+[ ] Pisteet näytölle
 
 ![Luokkakaavio](luokkakaavio_tarkempi.png)

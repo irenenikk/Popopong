@@ -1,9 +1,9 @@
 # Popopong
 
-Tämä on Java-ohjelmoinnin harjoitustyön, jossa teen pong-pelin.
+Tämä on Java-ohjelmoinnin harjoitustyöni, jossa teen oman versioni klassisesta pong-pelistä käyttäen Swingiä.
 
 [Dokumentaatio](dokumentaatio)
 
-[uusin checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/checkstyle-raportti/checkstyle.html)
+[Uusin checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/checkstyle-raportti/checkstyle.html)
 
-[uusin pit-raportti](https://htmlpreview.github.io/?https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/pit-raportti/201702021650/index.html)
+[Uusin pit-raportti](https://htmlpreview.github.io/?https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/pit-raportti/201702021650/index.html)
