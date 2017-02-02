@@ -10,6 +10,7 @@ public class PongTest {
     @Before
     public void setUp() {
         pong = new Pong();
+        pong.aloita();
     }
     
     @Test
@@ -20,7 +21,6 @@ public class PongTest {
     
     @Test
     public void aloitaLisaaKentan() {
-        pong.aloita();
         assertFalse(pong.getKentta()==null);
     }
 }

@@ -15,16 +15,24 @@ public class MailaTest {
     @Test
     public void mailanKorkeusJaLeveysAinaSamat() {
         assertEquals(20, maila.getLeveys());
-        assertEquals(90, maila.getKorkeus());
+        assertEquals(100, maila.getKorkeus());
     }
     
     @Test
-    public void liikutaMuuttaaYnArvoa() {
+    public void liikuMuuttaaYnArvoaKiihdytaYlos() {
+        maila.setKiihdytaYlos(true);
         maila.setX(0);
-        maila.setY(0);
-        maila.liikuta(10);
-        assertEquals(10, maila.getY());
-        assertEquals(0, maila.getX());
+        maila.setY(10);
+        maila.liiku();
+        assertEquals(5, maila.getY());
     }
     
+    @Test
+    public void liikuMuuttaaYnArvoaKiihdytaAlas() {
+        maila.setKiihdytaAlas(true);
+        maila.setX(0);
+        maila.setY(0);
+        maila.liiku();
+        assertEquals(5, maila.getY());
+    }
 }

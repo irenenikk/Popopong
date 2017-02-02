@@ -21,17 +21,19 @@ public class PalloTest {
     }
     
     @Test
-    public void pallonNopeusAina5() {
-        assertEquals(5, pallo.getNopeus());
+    public void pallonNopeusAina3() {
+        assertEquals(3, pallo.getNopeus());
     }
         
     @Test
     public void liikutaMuuttaaKoordinaatteja() {
         pallo.setX(0);
         pallo.setY(0);
+        pallo.setSuuntaX(1);
+        pallo.setSuuntaY(1);
         pallo.liiku();
-        assertEquals(5, pallo.getX());
-        assertEquals(-5, pallo.getY());
+        assertEquals(3, pallo.getX());
+        assertEquals(3, pallo.getY());
     }
 
 }
