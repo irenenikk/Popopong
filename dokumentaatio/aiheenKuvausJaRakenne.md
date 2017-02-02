@@ -8,5 +8,11 @@ Ideoita pelin vaikeuttamiseksi:
 - "Ilkeä pallo": kun tarpeeksi onnistuneita osumia peräkkäin, pallo vaihtaa varoittamatta suuntaa
 - Varoittamatta ilmestyvä este keskelle kenttää
 
+TODO:
+- Suunta-enum
+- Järkevä tietorakenne pelaajille
+- Pelityylin valinta
+- Esteet
+- Pisteet näytölle
 
 ![Määrittelyvaiheen luokkakaavio](luokkakaavio_maarittelyvaihe.png)
