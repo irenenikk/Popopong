@@ -4,7 +4,9 @@ package irene.pong.logiikka;
 import irene.pong.grafiikka.Kentta;
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
+import irene.pong.komponentit.Pelaaja;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,23 +18,23 @@ public class KomponenttiHallintaTest {
         Kentta kentta = new Kentta();
         kentta.setSize(500, 600);
         kentta.setVisible(true);
-        kontrolleri = new KomponenttiHallinta(kentta);
+        kontrolleri = new KomponenttiHallinta(kentta, new Tilasto(kentta));
     }
     
     @Test
     public void palloKeskellaAlussa() {
-        kontrolleri.aloita();
+        kontrolleri.alustaKomponentit();
         assertEquals(240, kontrolleri.getPallo().getX());
         assertEquals(290, kontrolleri.getPallo().getY());
     }
      
     @Test
     public void pelaajatKeskellaAlussa() {
-        kontrolleri.aloita();
-        assertEquals(0, kontrolleri.getPelaaja1().getX());
-        assertEquals(480, kontrolleri.getPelaaja2().getX());
-        assertEquals(250, kontrolleri.getPelaaja1().getY());
-        assertEquals(250, kontrolleri.getPelaaja2().getY());
+        kontrolleri.alustaKomponentit();
+        assertEquals(0, kontrolleri.getMaila1().getX());
+        assertEquals(480, kontrolleri.getMaila2().getX());
+        assertEquals(250, kontrolleri.getMaila1().getY());
+        assertEquals(250, kontrolleri.getMaila2().getY());
     }
     
     @Test
@@ -40,12 +42,12 @@ public class KomponenttiHallintaTest {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(5);
         pallo.setY(5);
-        pallo.setSuuntaY(-1);
-        pallo.setSuuntaX(1);
+        pallo.setSuuntaY(Suunta.YLOS);
+        pallo.setSuuntaX(Suunta.OIKEA);
         pallo.liiku();
         pallo.liiku();
         kontrolleri.paivita();
-        assertEquals(1, pallo.getSuuntaY());
+        assertEquals(Suunta.ALAS, pallo.getSuuntaY());
     }
     
     @Test
@@ -53,11 +55,11 @@ public class KomponenttiHallintaTest {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(-1);
         pallo.setY(kontrolleri.getKentta().getHeight()-1);
-        pallo.setSuuntaY(1);
+        pallo.setSuuntaY(Suunta.ALAS);
         pallo.liiku();
         pallo.liiku();
         kontrolleri.paivita();
-        assertEquals(-1, pallo.getSuuntaY());
+        assertEquals(Suunta.YLOS, pallo.getSuuntaY());
     }    
     
     @Test
@@ -65,8 +67,8 @@ public class KomponenttiHallintaTest {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(1);
         pallo.setY(1);
-        pallo.setSuuntaX(-1);
-        pallo.setSuuntaY(-1);
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.YLOS);
         pallo.liiku();
         pallo.liiku();
         pallo.liiku();
@@ -76,7 +78,7 @@ public class KomponenttiHallintaTest {
         pallo.liiku();
         pallo.liiku();
         kontrolleri.paivita();
-        Maila pelaaja2 = kontrolleri.getPelaaja2();
+        Pelaaja pelaaja2 = kontrolleri.getKentta().getPelaaja2();
         assertEquals(1, pelaaja2.getPisteet());
     }
     
@@ -85,13 +87,42 @@ public class KomponenttiHallintaTest {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(495);
         pallo.setY(550);
-        pallo.setSuuntaX(1);
-        pallo.setSuuntaY(1);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.ALAS);
         pallo.liiku();
         pallo.liiku();
         kontrolleri.paivita();
-        Maila pelaaja1 = kontrolleri.getPelaaja1();
+        Pelaaja pelaaja1 = kontrolleri.getKentta().getPelaaja1();
         assertEquals(1, pelaaja1.getPisteet());
+    }
+    
+    @Test
+    public void tarkistaMaaliEiLisaaPisteitaTurhaan() {
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setX(5);
+        pallo.setY(5);
+        pallo.setSuuntaX(Suunta.ALAS);
+        pallo.setSuuntaY(Suunta.ALAS);
+        pallo.liiku();
+        kontrolleri.tarkistaMaali();
+        Pelaaja pelaaja1 = kontrolleri.getKentta().getPelaaja1();
+        Pelaaja pelaaja2 = kontrolleri.getKentta().getPelaaja2();
+        assertEquals(0, pelaaja1.getPisteet());
+        assertEquals(0, pelaaja2.getPisteet());
+    }
+    
+    @Test
+    public void palloKeskelleMaalinJalkeen() {
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setX(495);
+        pallo.setY(550);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.ALAS);
+        pallo.liiku();
+        pallo.liiku();
+        kontrolleri.paivita();
+        assertEquals(240, kontrolleri.getPallo().getX());
+        assertEquals(290, kontrolleri.getPallo().getY());
     }
     
     @Test
@@ -99,9 +130,9 @@ public class KomponenttiHallintaTest {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(40);
         pallo.setY(40);
-        pallo.setSuuntaX(-1);
-        pallo.setSuuntaY(-1);
-        Maila pelaaja = kontrolleri.getPelaaja1();
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.YLOS);
+        Maila pelaaja = kontrolleri.getMaila1();
         pelaaja.setX(0);
         pelaaja.setY(0);
         kontrolleri.paivita();
@@ -112,7 +143,7 @@ public class KomponenttiHallintaTest {
         kontrolleri.paivita();
         kontrolleri.paivita();
         kontrolleri.paivita();
-        assertEquals(1, pallo.getSuuntaX());
+        assertEquals(Suunta.OIKEA, pallo.getSuuntaX());
     }
     
     @Test
@@ -120,9 +151,9 @@ public class KomponenttiHallintaTest {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(kontrolleri.getKentta().getWidth() - pallo.getHalkaisija() - 30);
         pallo.setY(40);
-        pallo.setSuuntaX(1);
-        pallo.setSuuntaY(-1);
-        Maila pelaaja = kontrolleri.getPelaaja2();
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.YLOS);
+        Maila pelaaja = kontrolleri.getMaila2();
         pelaaja.setX(kontrolleri.getKentta().getWidth()-pelaaja.getLeveys());
         pelaaja.setY(0);
         kontrolleri.paivita();
@@ -130,7 +161,7 @@ public class KomponenttiHallintaTest {
         kontrolleri.paivita();
         kontrolleri.paivita();
         kontrolleri.paivita();
-        assertEquals(-1, pallo.getSuuntaX());
+        assertEquals(Suunta.VASEN, pallo.getSuuntaX());
     }
    
     @Test
@@ -138,8 +169,8 @@ public class KomponenttiHallintaTest {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(0);
         pallo.setY(0);
-        pallo.setSuuntaX(-1);
-        pallo.setSuuntaY(-1);
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.YLOS);
         pallo.liiku();
         pallo.liiku();
         pallo.liiku();
@@ -153,7 +184,7 @@ public class KomponenttiHallintaTest {
     
     @Test
     public void mailaEiMeneReunanYliYlhaalla() {
-        Maila maila = kontrolleri.getPelaaja1();
+        Maila maila = kontrolleri.getMaila1();
         maila.setX(0);
         maila.setY(1);
         maila.setKiihdytaYlos(true);
@@ -163,7 +194,7 @@ public class KomponenttiHallintaTest {
     
     @Test
     public void mailaEiMeneReunanYliAlhaalla() {
-        Maila maila = kontrolleri.getPelaaja1();
+        Maila maila = kontrolleri.getMaila1();
         maila.setX(0);
         maila.setY(kontrolleri.getKentta().getWidth());
         maila.setKiihdytaAlas(true);

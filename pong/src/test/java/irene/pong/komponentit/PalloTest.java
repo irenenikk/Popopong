@@ -1,5 +1,6 @@
 package irene.pong.komponentit;
 
+import irene.pong.logiikka.Suunta;
 import irene.pong.grafiikka.Kentta;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,8 +12,8 @@ public class PalloTest {
     
     @Before
     public void setUp() {
-        pallo = new Pallo();
         kentta = new Kentta();
+        pallo = kentta.getPallo();
     }
     
     @Test
@@ -21,7 +22,7 @@ public class PalloTest {
     }
     
     @Test
-    public void pallonNopeusAina3() {
+    public void pallonNopeusAluksi3() {
         assertEquals(3, pallo.getNopeus());
     }
         
@@ -29,8 +30,8 @@ public class PalloTest {
     public void liikutaMuuttaaKoordinaatteja() {
         pallo.setX(0);
         pallo.setY(0);
-        pallo.setSuuntaX(1);
-        pallo.setSuuntaY(1);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.ALAS);
         pallo.liiku();
         assertEquals(3, pallo.getX());
         assertEquals(3, pallo.getY());

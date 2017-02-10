@@ -1,22 +1,28 @@
+/**
+ * Luokka hallinnoi komponenttien liikkeitä kentällä. 
+ * Liikuttaa palloa sekä mailoja, saa pallon kimpoamaan seinistä ja mailoista, sekä tarkistaa maalit.
+ */
+
 package irene.pong.logiikka;
 
 import irene.pong.grafiikka.Kentta;
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
 
-public class KomponenttiHallinta {
+public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on osa UI:tä
 
     Kentta kentta;
-    Maila pelaaja1;
-    Maila pelaaja2;
+    Maila maila1;
+    Maila maila2;
     Pallo pallo;
+    Tilasto tilasto;
 
-    public KomponenttiHallinta(Kentta kentta) {
-        this.kentta = kentta;
+    public KomponenttiHallinta(Kentta k, Tilasto t) {
+        kentta = k;
         pallo = kentta.getPallo();
-        pelaaja1 = kentta.getPelaaja1();
-        pelaaja2 = kentta.getPelaaja2();
-               
+        maila1 = kentta.getPelaaja1().getMaila();
+        maila2 = kentta.getPelaaja2().getMaila();
+        tilasto = t;
     }
 
     public Kentta getKentta() {
@@ -27,20 +33,20 @@ public class KomponenttiHallinta {
         this.kentta = kentta;
     }
 
-    public Maila getPelaaja1() {
-        return pelaaja1;
+    public Maila getMaila1() {
+        return maila1;
     }
 
-    public void setPelaaja1(Maila pelaaja1) {
-        this.pelaaja1 = pelaaja1;
+    public void setMaila1(Maila pelaaja1) {
+        this.maila1 = pelaaja1;
     }
 
-    public Maila getPelaaja2() {
-        return pelaaja2;
+    public Maila getMaila2() {
+        return maila2;
     }
 
-    public void setPelaaja2(Maila pelaaja2) {
-        this.pelaaja2 = pelaaja2;
+    public void setMaila2(Maila pelaaja2) {
+        this.maila2 = pelaaja2;
     }
 
     public Pallo getPallo() {
@@ -51,7 +57,18 @@ public class KomponenttiHallinta {
         this.pallo = pallo;
     }
 
-    public void aloita() {
+    public Tilasto getTilasto() {
+        return tilasto;
+    }
+
+    public void setTilasto(Tilasto tilasto) {
+        this.tilasto = tilasto;
+    }
+
+    public void alustaKomponentit() {
+        /**
+         * Asettaa komponentit alun tilanteeseen, jossa pallo ja mailat ovat keskellä.
+         */
         asetaPalloKeskelle();
         asetaPelaaja1Keskelle();
         asetaPelaaja2Keskelle();
@@ -63,131 +80,81 @@ public class KomponenttiHallinta {
     }
 
     private void asetaPelaaja1Keskelle() {
-        pelaaja1.setX(0);
-        pelaaja1.setY(kentta.getHeight() / 2 - kentta.getPelaaja1().getKorkeus() / 2);
+        maila1.setX(0);
+        maila1.setY(kentta.getHeight() / 2 - maila1.getKorkeus() / 2);
     }
 
     private void asetaPelaaja2Keskelle() {
-        pelaaja2.setX(kentta.getWidth() - pelaaja2.getLeveys());
-        pelaaja2.setY(kentta.getHeight() / 2 - pelaaja2.getKorkeus() / 2);
+        maila2.setX(kentta.getWidth() - maila2.getLeveys());
+        maila2.setY(kentta.getHeight() / 2 - maila2.getKorkeus() / 2);
     }
 
     public void paivita() {
+        /**
+         * Liikuttaa komponentteja aiheuttaen myös niiden kimpoamisen seinistä ja mailoista, sekä tarkistaa maalit.
+         */
         pallo.liiku();
-        pelaaja1.liiku();
-        pelaaja2.liiku();
+        maila1.liiku();
+        maila2.liiku();
         tarkistaOsuukoMailaReunaan();
         tarkistaKimpoaakoPallo();
-        tarkistaMaali();
         tarkistaOsuukoPalloMailaan();
+        tarkistaMaali();
     }
-//    
-//    public void pelaaja2Kiihdyttaa(boolean kiihdyta, int suunta) {
-//        if (kiihdyta && suunta > 0) {
-//            pelaaja2.setKiihdytaYlos(true);
-//        }
-//        
-//        if (kiihdyta && suunta < 0) {
-//            pelaaja2.setKiihdytaAlas(true);
-//        }
-//        
-//        if (!kiihdyta && suunta > 0) {
-//            pelaaja2.setKiihdytaYlos(false);
-//        }
-//        
-//        if (!kiihdyta && suunta < 0) {
-//            pelaaja2.setKiihdytaAlas(false);
-//        }
-//        pelaaja2.liiku();
-//        
-//        tarkistaOsuukoMailaReunaan();
-//    }
-//    
-//    public void pelaaja1Kiihdyttaa(boolean kiihdyta, int suunta) {
-//        if (kiihdyta && suunta > 0) {
-//            pelaaja1.setKiihdytaYlos(true);
-//        }
-//        
-//        if (kiihdyta && suunta < 0) {
-//            pelaaja1.setKiihdytaAlas(true);
-//        }
-//        
-//        if (!kiihdyta && suunta > 0) {
-//            pelaaja1.setKiihdytaYlos(false);
-//        }
-//        
-//        if (!kiihdyta && suunta < 0) {
-//            pelaaja1.setKiihdytaAlas(false);
-//        }
-//        pelaaja1.liiku();
-//        
-//        tarkistaOsuukoMailaReunaan();
-//    }
-//    
 
     public void tarkistaKimpoaakoPallo() {
-//        System.out.println("PalloY: " + pallo.getY());
         if (pallo.getY() <= 0) {
-//            System.out.println("Pallo yläraeunassa");
-            pallo.setSuuntaY(1);
+            pallo.setSuuntaY(Suunta.ALAS);
             pallo.setY(pallo.getY() + pallo.getNopeus());
         }
 
         if (pallo.getY() + pallo.getHalkaisija() >= kentta.getHeight()) {
-//            System.out.println("Pallo alareunassa");
-            pallo.setSuuntaY(-1);
+            pallo.setSuuntaY(Suunta.YLOS);
             pallo.setY(pallo.getY() - pallo.getNopeus());
         }
     }
 
     public void tarkistaMaali() {
-        if (pallo.getX() + pallo.getHalkaisija() <= 0) {
-            pelaaja2.lisaaPiste();
+        if (pallo.getX() + pallo.getHalkaisija() <= 0) { //tähän tieto maalista --> pallon liike pysäytetään parin kierroksen ajaksi?
+            tilasto.lisaaPiste(kentta.getPelaaja2());
             asetaPalloKeskelle();
         }
 
         if (pallo.getX() >= kentta.getWidth()) {
-            pelaaja1.lisaaPiste();
+            tilasto.lisaaPiste(kentta.getPelaaja1());
             asetaPalloKeskelle();
         }
     }
 
     public void tarkistaOsuukoPalloMailaan() {
-        if (pallo.getRajat().intersects(pelaaja1.getRajat())) {
-            pallo.setSuuntaX(1);
+        if (pallo.getRajat().intersects(maila1.getRajat())) {
+            pallo.setSuuntaX(Suunta.OIKEA);
             pallo.setX(pallo.getX() + pallo.getNopeus());
         }
         
-        if (pallo.getRajat().intersects(pelaaja2.getRajat())) {
-            pallo.setSuuntaX(-1);
+        if (pallo.getRajat().intersects(maila2.getRajat())) {
+            pallo.setSuuntaX(Suunta.VASEN);
             pallo.setX(pallo.getX() - pallo.getNopeus());
         }
     }
     
     public void tarkistaOsuukoMailaReunaan() {
-        if (pelaaja1.getY() <= 0) {
-            pelaaja1.setY(0);
+        if (maila1.getY() <= 0) {
+            maila1.setY(0);
         }
         
-        if (pelaaja1.getY() + pelaaja1.getKorkeus() >= kentta.getHeight()) {
-            pelaaja1.setY(kentta.getHeight() - pelaaja1.getKorkeus());
+        if (maila1.getY() + maila1.getKorkeus() >= kentta.getHeight()) {
+            maila1.setY(kentta.getHeight() - maila1.getKorkeus());
         }
         
-        if (pelaaja2.getY() <= 0) {
-            pelaaja2.setY(0);
+        if (maila2.getY() <= 0) {
+            maila2.setY(0);
         }
         
-        if (pelaaja2.getY() + pelaaja1.getKorkeus() >= kentta.getHeight()) {
-            pelaaja2.setY(kentta.getHeight() - pelaaja2.getKorkeus());
+        if (maila2.getY() + maila1.getKorkeus() >= kentta.getHeight()) {
+            maila2.setY(kentta.getHeight() - maila2.getKorkeus());
         }
 
     }
-
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        paivita();
-//        kentta.repaint();
-//    }
-
-
+    
 }

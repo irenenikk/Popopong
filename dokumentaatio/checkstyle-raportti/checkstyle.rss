@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 5,
-             Errors: 0,
+      <title>File: 19,
+             Errors: 1,
              Warnings: 0,
              Infos: 0
       </title>
@@ -60,7 +60,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#irene.pong.grafiikka.Pong.java">irene/pong/grafiikka/Pong.java</a>
+                  <a href="${project.url}/checkstyle.html#irene.pong.kayttoliittyma.PainallusYlos.java">irene/pong/kayttoliittyma/PainallusYlos.java</a>
                 </td>
                 <td>
                   0
@@ -74,7 +74,35 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#irene.pong.komponentit.Pallo.java">irene/pong/komponentit/Pallo.java</a>
+                  <a href="${project.url}/checkstyle.html#irene.pong.kayttoliittyma.AloitusPainallus.java">irene/pong/kayttoliittyma/AloitusPainallus.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.kayttoliittyma.PelinValinta.java">irene/pong/kayttoliittyma/PelinValinta.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.logiikka.Pong.java">irene/pong/logiikka/Pong.java</a>
                 </td>
                 <td>
                   0
@@ -103,6 +131,174 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#irene.pong.Main.java">irene/pong/Main.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.logiikka.Pelityyppi.java">irene/pong/logiikka/Pelityyppi.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.komponentit.Pelaaja.java">irene/pong/komponentit/Pelaaja.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.kayttoliittyma.VapautusAlas.java">irene/pong/kayttoliittyma/VapautusAlas.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.kayttoliittyma.VapautusYlos.java">irene/pong/kayttoliittyma/VapautusYlos.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.logiikka.Tilasto.java">irene/pong/logiikka/Tilasto.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.kayttoliittyma.PauseNappi.java">irene/pong/kayttoliittyma/PauseNappi.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.komponentit.Pallo.java">irene/pong/komponentit/Pallo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.grafiikka.Ikkuna.java">irene/pong/grafiikka/Ikkuna.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.grafiikka.Animoija.java">irene/pong/grafiikka/Animoija.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.kayttoliittyma.PainallusAlas.java">irene/pong/kayttoliittyma/PainallusAlas.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.logiikka.Suunta.java">irene/pong/logiikka/Suunta.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#irene.pong.logiikka.KomponenttiHallinta.java">irene/pong/logiikka/KomponenttiHallinta.java</a>
                 </td>
                 <td>
                   0

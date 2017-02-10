@@ -1,18 +1,20 @@
 ### Aihemäärittely
 
 Tarkoituksena on koodata klassinen [Pong-peli](https://en.wikipedia.org/wiki/Pong).
-Pelaajalla on valinta pelattavasta versiosta: voittaa voi joko saavuttamalla tietyn pistemäärän ensin, saamalla enemmän pisteitä aikarajassa, tai pelaajan missatessa pallon kerran. Toinen laajennusmahdollisuus on, että pelaaja voi valita, haluaako hän pelata tekoälyä vai kaveria vastaan. Tekoälystä voi tehdä tyhmempiä ja älykkäämpiä versioita.
-
-Ideoita pelin vaikeuttamiseksi:
-- "Tennisverkon" tuntumaan alkaa ilmestyä neliöitä, jotka blokkaavat pallon liikettä. Blokit voivat varoittaa ilmestymisestään.
-- "Ilkeä pallo": kun tarpeeksi onnistuneita osumia peräkkäin, pallo vaihtaa varoittamatta suuntaa
-- Varoittamatta ilmestyvä este keskelle kenttää
+Pelaaja voi valita pelaako hän tekoälyä vai kaveria vastaan.
 
 TODO:
-- [ ] Suunta-enum
-- [ ] Järkevä tietorakenne pelaajille
-- [ ] Pelityylin valinta
+- [X] Suunta-enum
+- [X] Järkevä tietorakenne pelaajille
+- [X] Aloitus ja ohjeet
+- [X] Pausetus
+- [ ] Tekoäly
+- [X] Pelityylin valinta
 - [ ] Esteet
-- [ ] Pisteet näytölle
+- [X] Pisteet näytölle
+- [ ] Pallo kimpoaa kiinnostavast
+- [ ] Pallo nopeutuu pelin edetessä
+- [ ] Pallo odottaa hetken maalin jälkeen
 
-![Luokkakaavio](luokkakaavio_tarkempi.png)
+Koodissa käyttöliittymä ja logiikka ovat tällä hetkellä sekaisin, eli luokkakaavio tulee muuttumaan ensi viikolla.
+![Luokkakaavio](Pong-luokkakaavio vko4 v.2.png)

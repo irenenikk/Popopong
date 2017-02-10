@@ -1,3 +1,7 @@
+/**
+ * Luokka edustaa pelissä käytettyjä mailoja. Tarjoaa metodin liikuttamiseen ja rajojen tutkimiseen.
+ */
+
 package irene.pong.komponentit;
 
 import java.awt.Rectangle;
@@ -8,15 +12,9 @@ public class Maila {
     private int y;
     private boolean kiihdytaYlos;
     private boolean kiihdytaAlas;
-    private final int nopeus;
+    private final int nopeus = 5;
     private final int leveys = 20;
     private final int korkeus = 100;
-    private int pisteet;
-
-    public Maila() {
-        pisteet = 0;
-        nopeus = 5;
-    }
 
     public int getX() {
         return x;
@@ -42,14 +40,6 @@ public class Maila {
         this.y = y;
     }
 
-    public int getPisteet() {
-        return pisteet;
-    }
-
-    public void setPisteet(int pisteet) {
-        this.pisteet = pisteet;
-    }
-
     public boolean isKiihdytaYlos() {
         return kiihdytaYlos;
     }
@@ -72,10 +62,6 @@ public class Maila {
         } else if (kiihdytaYlos) {
             y -= nopeus;
         }
-    }
-
-    public void lisaaPiste() {
-        pisteet++;
     }
 
     public Rectangle getRajat() {

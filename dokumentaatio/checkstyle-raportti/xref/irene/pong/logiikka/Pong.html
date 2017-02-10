@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en_GB" lang="en_GB">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Pong xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../apidocs/irene/pong/logiikka/Pong.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> * Pelin tarvittavat osat luova luokka, joka myös säilyttää tiedon käyttäjän valitsemasta pelityypistä.</em>
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> * Asettaa näppäimet kuunneltaviksi ja aloittaa pelin.</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">package</strong> irene.pong.logiikka;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> irene.pong.grafiikka.Animoija;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> irene.pong.grafiikka.Ikkuna;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> irene.pong.kayttoliittyma.AloitusPainallus;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> irene.pong.kayttoliittyma.PainallusAlas;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> irene.pong.kayttoliittyma.PainallusYlos;
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> irene.pong.kayttoliittyma.PauseNappi;
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> irene.pong.kayttoliittyma.PelinValinta;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> irene.pong.kayttoliittyma.VapautusAlas;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> irene.pong.kayttoliittyma.VapautusYlos;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> javax.swing.KeyStroke;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> org.jdesktop.core.animation.timing.Animator;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.jdesktop.core.animation.timing.TimingSource;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../irene/pong/logiikka/Pong.html">Pong</a> { <em class="jxr_comment">//ei yhtä luokkaa, joka luo sekä UI:n että logiikan elementtejä. Tulisi muuttaa logiikan pääluokaksi.</em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <a href="../../../irene/pong/grafiikka/Ikkuna.html">Ikkuna</a> ikkuna;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <a href="../../../irene/pong/grafiikka/Animoija.html">Animoija</a> animoija;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      <a href="../../../irene/pong/logiikka/Tilasto.html">Tilasto</a> tilasto;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <a href="../../../irene/pong/logiikka/KomponenttiHallinta.html">KomponenttiHallinta</a> kontrolleri;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <a href="../../../irene/pong/logiikka/Pelityyppi.html">Pelityyppi</a> pelityyppi;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">public</strong> <a href="../../../irene/pong/logiikka/Pong.html">Pong</a>() {
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          ikkuna = <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/grafiikka/Ikkuna.html">Ikkuna</a>();
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>          tilasto = <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/logiikka/Tilasto.html">Tilasto</a>(ikkuna.getKentta());
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          TimingSource ts = <strong class="jxr_keyword">new</strong> SwingTimerTimingSource();
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          Animator.setDefaultTimingSource(ts);
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>          ts.init();
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      }
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">public</strong> <a href="../../../irene/pong/grafiikka/Ikkuna.html">Ikkuna</a> getIkkuna() {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          <strong class="jxr_keyword">return</strong> ikkuna;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      }
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setIkkuna(<a href="../../../irene/pong/grafiikka/Ikkuna.html">Ikkuna</a> ikkuna) {
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <strong class="jxr_keyword">this</strong>.ikkuna = ikkuna;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      }
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">public</strong> <a href="../../../irene/pong/logiikka/Pelityyppi.html">Pelityyppi</a> getPelityyppi() {
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">return</strong> pelityyppi;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">public</strong> <a href="../../../irene/pong/grafiikka/Animoija.html">Animoija</a> getAnimoija() {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">return</strong> animoija;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      }
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <a href="../../../irene/pong/logiikka/KomponenttiHallinta.html">KomponenttiHallinta</a> getKontrolleri() {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">return</strong> kontrolleri;
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      }
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setPelityyppi(<a href="../../../irene/pong/logiikka/Pelityyppi.html">Pelityyppi</a> pelityyppi) {
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">this</strong>.pelityyppi = pelityyppi;
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          lisaaPelaajienNappaimet(pelityyppi);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          <strong class="jxr_keyword">if</strong> (pelityyppi == Pelityyppi.KAKSINPELI) {
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>              ikkuna.asetaIlmoitus(<span class="jxr_string">"&lt;html&gt;&lt;div style='text-align: center;'&gt; Valitsit kaksinpelin &lt;br&gt; Paina SPACE aloittaaksesi &lt;/div&gt;&lt;/html&gt;"</span>);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (pelityyppi == Pelityyppi.YKSINPELI) {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>              ikkuna.asetaIlmoitus(<span class="jxr_string">"&lt;html&gt;&lt;div style='text-align: center;'&gt; Valitsit yksinpelin (tekoäly) &lt;br&gt; Paina SPACE aloittaaksesi &lt;/div&gt;&lt;/html"</span>);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          }
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> aloita() {
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          ikkuna.alusta();
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          kontrolleri = <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/logiikka/KomponenttiHallinta.html">KomponenttiHallinta</a>(ikkuna.getKentta(), tilasto);
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          kontrolleri.alustaKomponentit();
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          animoija = <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/grafiikka/Animoija.html">Animoija</a>(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          lisaaKayttoLiittymaNappaimet();
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          ikkuna.asetaIlmoitus(<span class="jxr_string">"&lt;html&gt;&lt;div style='text-align: center;'&gt; Tervetuloa Pong-peliin!&lt;br&gt;Valitse pelityyppi: &lt;br&gt; 1 - yksinpeli &lt;br&gt; 2 - kaksinpeli &lt;/div&gt;&lt;/html&gt;"</span>);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_comment">//        animoija.aloitaPeli();</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      }
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> lisaaKayttoLiittymaNappaimet() {
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"pressed P"</span>), <span class="jxr_string">"P painettu"</span>);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"pressed SPACE"</span>), <span class="jxr_string">"SPACE painettu"</span>);
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"pressed 1"</span>), <span class="jxr_string">"1 painettu"</span>);
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"pressed 2"</span>), <span class="jxr_string">"2 painettu"</span>);
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"P painettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/PauseNappi.html">PauseNappi</a>(animoija, ikkuna));
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"SPACE painettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/AloitusPainallus.html">AloitusPainallus</a>(animoija, ikkuna));
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"1 painettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/PelinValinta.html">PelinValinta</a>(<strong class="jxr_keyword">this</strong>, <span class="jxr_string">"1"</span>));
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"2 painettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/PelinValinta.html">PelinValinta</a>(<strong class="jxr_keyword">this</strong>, <span class="jxr_string">"2"</span>));
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> lisaaPelaajienNappaimet(<a href="../../../irene/pong/logiikka/Pelityyppi.html">Pelityyppi</a> tyyppi) {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>  
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"pressed UP"</span>), <span class="jxr_string">"UP painettu"</span>);
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"released UP"</span>), <span class="jxr_string">"UP vapautettu"</span>);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"pressed DOWN"</span>), <span class="jxr_string">"DOWN painettu"</span>);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"released DOWN"</span>), <span class="jxr_string">"DOWN vapautettu"</span>);
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"UP painettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/PainallusYlos.html">PainallusYlos</a>(kontrolleri, <span class="jxr_string">"UP"</span>));
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"UP vapautettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/VapautusYlos.html">VapautusYlos</a>(kontrolleri, <span class="jxr_string">"UP"</span>));
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"DOWN painettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/PainallusAlas.html">PainallusAlas</a>(kontrolleri, <span class="jxr_string">"DOWN"</span>));
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"DOWN vapautettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/VapautusAlas.html">VapautusAlas</a>(kontrolleri, <span class="jxr_string">"DOWN"</span>));
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         <strong class="jxr_keyword">if</strong> (tyyppi == Pelityyppi.KAKSINPELI) {
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>             ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"pressed W"</span>), <span class="jxr_string">"W painettu"</span>);
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>             ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"released W"</span>), <span class="jxr_string">"W vapautettu"</span>);
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>             ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"pressed S"</span>), <span class="jxr_string">"S painettu"</span>);
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>             ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(<span class="jxr_string">"released S"</span>), <span class="jxr_string">"S vapautettu"</span>);
+<a class="jxr_linenumber" name="L107" href="#L107">107</a> 
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>             ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"W painettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/PainallusYlos.html">PainallusYlos</a>(kontrolleri, <span class="jxr_string">"W"</span>));
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>             ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"W vapautettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/VapautusYlos.html">VapautusYlos</a>(kontrolleri, <span class="jxr_string">"W"</span>));
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>             ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"S painettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/PainallusAlas.html">PainallusAlas</a>(kontrolleri, <span class="jxr_string">"S"</span>));
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>             ikkuna.getKentta().getActionMap().put(<span class="jxr_string">"S vapautettu"</span>, <strong class="jxr_keyword">new</strong> <a href="../../../irene/pong/kayttoliittyma/VapautusAlas.html">VapautusAlas</a>(kontrolleri, <span class="jxr_string">"S"</span>));
+<a class="jxr_linenumber" name="L112" href="#L112">112</a> 
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         }
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> 
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>     }
+<a class="jxr_linenumber" name="L116" href="#L116">116</a> }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>
