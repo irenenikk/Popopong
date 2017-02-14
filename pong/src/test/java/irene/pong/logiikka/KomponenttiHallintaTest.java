@@ -1,10 +1,8 @@
 
 package irene.pong.logiikka;
 
-import irene.pong.grafiikka.Kentta;
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
-import irene.pong.komponentit.Pelaaja;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -16,9 +14,34 @@ public class KomponenttiHallintaTest {
     @Before
     public void setUp() {
         Kentta kentta = new Kentta();
-        kentta.setSize(500, 600);
-        kentta.setVisible(true);
-        kontrolleri = new KomponenttiHallinta(kentta, new Tilasto(kentta));
+        kontrolleri = new KomponenttiHallinta(kentta, new Tilasto());
+    }
+    
+    @Test
+    public void paivitaLiikuttaaPalloa() {
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setX(0);
+        pallo.setY(0);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.ALAS);
+        kontrolleri.paivita();
+        assertEquals(3, pallo.getX());
+        assertEquals(3, pallo.getY());
+    }
+    
+    @Test
+    public void paivitaLiikuttaaMailoja() {
+        Maila oikea = kontrolleri.getKentta().getVasenPelaaja();
+        oikea.setX(480);
+        oikea.setY(0);
+        oikea.setKiihdytaAlas(true);
+        Maila vasen = kontrolleri.getKentta().getVasenPelaaja();
+        vasen.setX(0);
+        vasen.setY(0);
+        vasen.setKiihdytaAlas(true);
+        kontrolleri.paivita();
+        assertEquals(5, vasen.getY());
+        assertEquals(5, oikea.getY());
     }
     
     @Test
@@ -54,7 +77,7 @@ public class KomponenttiHallintaTest {
     public void josPalloOsuuAlareunaanSuuntaVaihtuu() {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(-1);
-        pallo.setY(kontrolleri.getKentta().getHeight()-1);
+        pallo.setY(kontrolleri.getKentta().getKorkeus()-1);
         pallo.setSuuntaY(Suunta.ALAS);
         pallo.liiku();
         pallo.liiku();
@@ -78,8 +101,7 @@ public class KomponenttiHallintaTest {
         pallo.liiku();
         pallo.liiku();
         kontrolleri.paivita();
-        Pelaaja pelaaja2 = kontrolleri.getKentta().getPelaaja2();
-        assertEquals(1, pelaaja2.getPisteet());
+        assertEquals(1, kontrolleri.getTilasto().oikeanPelaajanPisteet());
     }
     
     @Test
@@ -92,8 +114,7 @@ public class KomponenttiHallintaTest {
         pallo.liiku();
         pallo.liiku();
         kontrolleri.paivita();
-        Pelaaja pelaaja1 = kontrolleri.getKentta().getPelaaja1();
-        assertEquals(1, pelaaja1.getPisteet());
+        assertEquals(1, kontrolleri.getTilasto().vasemmanPelaajanPisteet());
     }
     
     @Test
@@ -105,10 +126,8 @@ public class KomponenttiHallintaTest {
         pallo.setSuuntaY(Suunta.ALAS);
         pallo.liiku();
         kontrolleri.tarkistaMaali();
-        Pelaaja pelaaja1 = kontrolleri.getKentta().getPelaaja1();
-        Pelaaja pelaaja2 = kontrolleri.getKentta().getPelaaja2();
-        assertEquals(0, pelaaja1.getPisteet());
-        assertEquals(0, pelaaja2.getPisteet());
+        assertEquals(0, kontrolleri.getTilasto().vasemmanPelaajanPisteet());
+        assertEquals(0, kontrolleri.getTilasto().oikeanPelaajanPisteet());
     }
     
     @Test
@@ -149,14 +168,13 @@ public class KomponenttiHallintaTest {
     @Test
     public void josPalloOsuuMailaanPalloKimpoaaVasemmalle() {
         Pallo pallo = kontrolleri.getPallo();
-        pallo.setX(kontrolleri.getKentta().getWidth() - pallo.getHalkaisija() - 30);
+        pallo.setX(kontrolleri.getKentta().getLeveys()- pallo.getHalkaisija() - 30);
         pallo.setY(40);
         pallo.setSuuntaX(Suunta.OIKEA);
         pallo.setSuuntaY(Suunta.YLOS);
         Maila pelaaja = kontrolleri.getMaila2();
-        pelaaja.setX(kontrolleri.getKentta().getWidth()-pelaaja.getLeveys());
+        pelaaja.setX(kontrolleri.getKentta().getLeveys()-pelaaja.getLeveys());
         pelaaja.setY(0);
-        kontrolleri.paivita();
         kontrolleri.paivita();
         kontrolleri.paivita();
         kontrolleri.paivita();
@@ -196,7 +214,7 @@ public class KomponenttiHallintaTest {
     public void mailaEiMeneReunanYliAlhaalla() {
         Maila maila = kontrolleri.getMaila1();
         maila.setX(0);
-        maila.setY(kontrolleri.getKentta().getWidth());
+        maila.setY(kontrolleri.getKentta().getLeveys());
         maila.setKiihdytaAlas(true);
         kontrolleri.paivita();
         assertEquals(600-maila.getKorkeus(), maila.getY());

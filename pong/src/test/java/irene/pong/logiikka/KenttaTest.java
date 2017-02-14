@@ -1,5 +1,6 @@
-package irene.pong.grafiikka;
+package irene.pong.logiikka;
 
+import irene.pong.logiikka.Kentta;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,13 +15,13 @@ public class KenttaTest {
     
     @Test
     public void kentallaOnPalloJaKaksiMailaa() {
-        assertTrue(kentta.getPelaaja1() != null);
+        assertTrue(kentta.getOikeaPelaaja()!= null);
         assertTrue(kentta.getPallo() != null);
-        assertTrue(kentta.getPelaaja2() != null);
+        assertTrue(kentta.getVasenPelaaja()!= null);
     }
     
     @Test
     public void kentallaKaksiEriPelaajaa() {
-        assertFalse(kentta.getPelaaja1() == kentta.getPelaaja2());
+        assertFalse(kentta.getOikeaPelaaja()== kentta.getVasenPelaaja());
     }
 }

@@ -1,35 +1,59 @@
 /**
- * Luokka lisää pelaajille pisteitä käyttämällä niiden omaa metodia, sekä tarkistaa, onko pelillä voittaja.
+ * Luokka lisää pelaajille pisteitä ja tarkistaa voittajan.
  * 
- * @see komponentit.Pelaaja#lisaaPiste}
  */
 
 package irene.pong.logiikka;
 
-import irene.pong.grafiikka.Kentta;
-import irene.pong.komponentit.Pelaaja;
-
 public class Tilasto {
 
-    private Kentta kentta;
-    private final int voittoPisteet = 15;
+//    private Kentta kentta;
+    private final int voittoPisteet = 3;
+    private int vasenPisteet;
+    private int oikeaPisteet;
     
-    public Tilasto(Kentta k) {
-        kentta = k;
+    public Tilasto() {
+//        kentta = k;
+        vasenPisteet = 0;
+        oikeaPisteet = 0;
     }
     
-    public void lisaaPiste(Pelaaja p) {
-        p.lisaaPiste();
+    public void lisaaPistePelaajalle(Pelaaja p) {
+        if (p == Pelaaja.VASEN) {
+            vasenPisteet++;
+        } else if(p == Pelaaja.OIKEA) {
+            oikeaPisteet++;
+        }
     }
     
+    public int vasemmanPelaajanPisteet() {
+        return vasenPisteet;
+    }
+    
+    public int oikeanPelaajanPisteet() {
+        return oikeaPisteet;
+    }    
+
+    public void setVasenPisteet(int vasenPisteet) {
+        this.vasenPisteet = vasenPisteet;
+    }
+
+    public void setOikeaPisteet(int oikeaPisteet) {
+        this.oikeaPisteet = oikeaPisteet;
+    }
 
     public Pelaaja voittaja() {
-        if (kentta.getPelaaja1().getPisteet() >= voittoPisteet) {
-            return kentta.getPelaaja1();
-        } else if (kentta.getPelaaja2().getPisteet() >= voittoPisteet) {
-            return kentta.getPelaaja2();
+        if (vasenPisteet >= voittoPisteet) {
+            return Pelaaja.VASEN;
+        } else if (oikeaPisteet >= voittoPisteet) {
+            return Pelaaja.OIKEA;
         } else {
             return null;
         }
+    }
+    
+    public void nollaaPisteet() {
+        vasenPisteet = 0;
+        oikeaPisteet = 0;
     }
 }

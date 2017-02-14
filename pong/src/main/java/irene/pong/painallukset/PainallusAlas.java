@@ -2,31 +2,31 @@
  * Luokka sitoo napin painalluksen mailan liikkeeseen.
  */
 
-package irene.pong.kayttoliittyma;
+package irene.pong.painallukset;
 
 import irene.pong.logiikka.KomponenttiHallinta;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
-public class VapautusAlas extends AbstractAction {
+public class PainallusAlas extends AbstractAction {
+
     private final KomponenttiHallinta kontrolleri;
     private final String kirjain;
 
-    
-    public VapautusAlas(KomponenttiHallinta kh, String k) {
+    public PainallusAlas(KomponenttiHallinta kh, String k) {
         kontrolleri = kh;
         kirjain = k;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println("Vapautit napin alas");
+//        System.out.println("Painoit alas");
         if (kirjain.equals("S")) {
-            kontrolleri.getMaila1().setKiihdytaAlas(false);
+            kontrolleri.getMaila1().setKiihdytaAlas(true);
         }
-        
+
         if (kirjain.equals("DOWN")) {
-            kontrolleri.getMaila2().setKiihdytaAlas(false);            
-        }        
+            kontrolleri.getMaila2().setKiihdytaAlas(true);
+        }
     }
 }

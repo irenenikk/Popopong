@@ -5,11 +5,10 @@
 
 package irene.pong.logiikka;
 
-import irene.pong.grafiikka.Kentta;
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
 
-public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on osa UI:tä
+public class KomponenttiHallinta {
 
     Kentta kentta;
     Maila maila1;
@@ -20,8 +19,8 @@ public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on 
     public KomponenttiHallinta(Kentta k, Tilasto t) {
         kentta = k;
         pallo = kentta.getPallo();
-        maila1 = kentta.getPelaaja1().getMaila();
-        maila2 = kentta.getPelaaja2().getMaila();
+        maila1 = kentta.getVasenPelaaja();
+        maila2 = kentta.getOikeaPelaaja();
         tilasto = t;
     }
 
@@ -29,40 +28,20 @@ public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on 
         return kentta;
     }
 
-    public void setKentta(Kentta kentta) {
-        this.kentta = kentta;
-    }
-
     public Maila getMaila1() {
         return maila1;
-    }
-
-    public void setMaila1(Maila pelaaja1) {
-        this.maila1 = pelaaja1;
     }
 
     public Maila getMaila2() {
         return maila2;
     }
 
-    public void setMaila2(Maila pelaaja2) {
-        this.maila2 = pelaaja2;
-    }
-
     public Pallo getPallo() {
         return pallo;
     }
 
-    public void setPallo(Pallo pallo) {
-        this.pallo = pallo;
-    }
-
     public Tilasto getTilasto() {
         return tilasto;
-    }
-
-    public void setTilasto(Tilasto tilasto) {
-        this.tilasto = tilasto;
     }
 
     public void alustaKomponentit() {
@@ -75,18 +54,18 @@ public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on 
     }
 
     private void asetaPalloKeskelle() {
-        pallo.setX(kentta.getWidth() / 2 - pallo.getHalkaisija() / 2);
-        pallo.setY(kentta.getHeight() / 2 - pallo.getHalkaisija() / 2);
+        pallo.setX(kentta.getLeveys()/ 2 - pallo.getHalkaisija() / 2);
+        pallo.setY(kentta.getKorkeus()/ 2 - pallo.getHalkaisija() / 2);
     }
 
     private void asetaPelaaja1Keskelle() {
         maila1.setX(0);
-        maila1.setY(kentta.getHeight() / 2 - maila1.getKorkeus() / 2);
+        maila1.setY(kentta.getKorkeus()/ 2 - maila1.getKorkeus() / 2);
     }
 
     private void asetaPelaaja2Keskelle() {
-        maila2.setX(kentta.getWidth() - maila2.getLeveys());
-        maila2.setY(kentta.getHeight() / 2 - maila2.getKorkeus() / 2);
+        maila2.setX(kentta.getLeveys()- maila2.getLeveys());
+        maila2.setY(kentta.getKorkeus()/ 2 - maila2.getKorkeus() / 2);
     }
 
     public void paivita() {
@@ -96,9 +75,9 @@ public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on 
         pallo.liiku();
         maila1.liiku();
         maila2.liiku();
-        tarkistaOsuukoMailaReunaan();
         tarkistaKimpoaakoPallo();
         tarkistaOsuukoPalloMailaan();
+        tarkistaOsuvatkoMailatReunaan();
         tarkistaMaali();
     }
 
@@ -108,7 +87,7 @@ public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on 
             pallo.setY(pallo.getY() + pallo.getNopeus());
         }
 
-        if (pallo.getY() + pallo.getHalkaisija() >= kentta.getHeight()) {
+        if (pallo.getY() + pallo.getHalkaisija() >= kentta.getKorkeus()) {
             pallo.setSuuntaY(Suunta.YLOS);
             pallo.setY(pallo.getY() - pallo.getNopeus());
         }
@@ -116,12 +95,12 @@ public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on 
 
     public void tarkistaMaali() {
         if (pallo.getX() + pallo.getHalkaisija() <= 0) { //tähän tieto maalista --> pallon liike pysäytetään parin kierroksen ajaksi?
-            tilasto.lisaaPiste(kentta.getPelaaja2());
+            tilasto.lisaaPistePelaajalle(Pelaaja.OIKEA);
             asetaPalloKeskelle();
         }
 
-        if (pallo.getX() >= kentta.getWidth()) {
-            tilasto.lisaaPiste(kentta.getPelaaja1());
+        if (pallo.getX() >= kentta.getLeveys()) {
+            tilasto.lisaaPistePelaajalle(Pelaaja.VASEN);
             asetaPalloKeskelle();
         }
     }
@@ -138,21 +117,21 @@ public class KomponenttiHallinta { //ei pitäisi tuntea Kenttää, sillä se on 
         }
     }
     
-    public void tarkistaOsuukoMailaReunaan() {
+    public void tarkistaOsuvatkoMailatReunaan() {
         if (maila1.getY() <= 0) {
             maila1.setY(0);
         }
         
-        if (maila1.getY() + maila1.getKorkeus() >= kentta.getHeight()) {
-            maila1.setY(kentta.getHeight() - maila1.getKorkeus());
+        if (maila1.getY() + maila1.getKorkeus() >= kentta.getKorkeus()) {
+            maila1.setY(kentta.getKorkeus() - maila1.getKorkeus());
         }
         
         if (maila2.getY() <= 0) {
             maila2.setY(0);
         }
         
-        if (maila2.getY() + maila1.getKorkeus() >= kentta.getHeight()) {
-            maila2.setY(kentta.getHeight() - maila2.getKorkeus());
+        if (maila2.getY() + maila2.getKorkeus() >= kentta.getKorkeus()) {
+            maila2.setY(kentta.getKorkeus() - maila2.getKorkeus());
         }
 
     }

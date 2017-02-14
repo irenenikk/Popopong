@@ -1,7 +1,7 @@
 package irene.pong.komponentit;
 
 import irene.pong.logiikka.Suunta;
-import irene.pong.grafiikka.Kentta;
+import irene.pong.logiikka.Kentta;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

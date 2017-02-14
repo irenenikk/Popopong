@@ -4,113 +4,117 @@
  */
 package irene.pong.logiikka;
 
-import irene.pong.grafiikka.Animoija;
-import irene.pong.grafiikka.Ikkuna;
-import irene.pong.kayttoliittyma.AloitusPainallus;
-import irene.pong.kayttoliittyma.PainallusAlas;
-import irene.pong.kayttoliittyma.PainallusYlos;
-import irene.pong.kayttoliittyma.PauseNappi;
-import irene.pong.kayttoliittyma.PelinValinta;
-import irene.pong.kayttoliittyma.VapautusAlas;
-import irene.pong.kayttoliittyma.VapautusYlos;
-import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
-import javax.swing.KeyStroke;
+import irene.pong.kayttoliittyma.Paivitettava;
 import org.jdesktop.core.animation.timing.Animator;
-import org.jdesktop.core.animation.timing.TimingSource;
-import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
+import org.jdesktop.core.animation.timing.TimingTarget;
 
-public class Pong { //ei yhtä luokkaa, joka luo sekä UI:n että logiikan elementtejä. Tulisi muuttaa logiikan pääluokaksi.
+public class Pong implements TimingTarget { 
 
-    Ikkuna ikkuna;
-    Animoija animoija;
-    Tilasto tilasto;
-    KomponenttiHallinta kontrolleri;
-    Pelityyppi pelityyppi;
+    private final Tilasto tilasto;
+    private final KomponenttiHallinta kontrolleri;
+    private final Kentta kentta;
+    private Pelityyppi pelityyppi;
+    private Paivitettava liikePaivitettava;
+    private Paivitettava tilannePaivitettava;
+    private boolean peliKaynnissa;
+    private boolean peliAlkanut;
+
 
     public Pong() {
-        ikkuna = new Ikkuna();
-        tilasto = new Tilasto(ikkuna.getKentta());
-        TimingSource ts = new SwingTimerTimingSource();
-        Animator.setDefaultTimingSource(ts);
-        ts.init();
-    }
-
-    public Ikkuna getIkkuna() {
-        return ikkuna;
-    }
-
-    public void setIkkuna(Ikkuna ikkuna) {
-        this.ikkuna = ikkuna;
+        tilasto = new Tilasto();
+        kentta = new Kentta();
+        kontrolleri = new KomponenttiHallinta(kentta, tilasto);
+        peliKaynnissa = false;
+        peliAlkanut = false;
     }
 
     public Pelityyppi getPelityyppi() {
         return pelityyppi;
     }
+    public boolean isPeliKaynnissa() {
+        return peliKaynnissa;
+    }
 
-    public Animoija getAnimoija() {
-        return animoija;
+    public boolean peliAlkanut() {
+        return peliAlkanut;
+    }
+
+    public void setPeliAlkanut(boolean peliAlkanut) {
+        this.peliAlkanut = peliAlkanut;
+    }
+
+    public void setPeliKaynnissa(boolean peliKaynnissa) {
+        this.peliKaynnissa = peliKaynnissa;
+    }
+
+    public Tilasto getTilasto() {
+        return tilasto;
     }
 
     public KomponenttiHallinta getKontrolleri() {
         return kontrolleri;
     }
 
+    public Kentta getKentta() {
+        return kentta;
+    }
+
     public void setPelityyppi(Pelityyppi pelityyppi) {
         this.pelityyppi = pelityyppi;
-        lisaaPelaajienNappaimet(pelityyppi);
-        if (pelityyppi == Pelityyppi.KAKSINPELI) {
-            ikkuna.asetaIlmoitus("<html><div style='text-align: center;'> Valitsit kaksinpelin <br> Paina SPACE aloittaaksesi </div></html>");
-        } else if (pelityyppi == Pelityyppi.YKSINPELI) {
-            ikkuna.asetaIlmoitus("<html><div style='text-align: center;'> Valitsit yksinpelin (tekoäly) <br> Paina SPACE aloittaaksesi </div></html");
-        }
+    }
+
+    public Paivitettava getLiikePaivitettava() {
+        return liikePaivitettava;
+    }
+
+    public void setLiikePaivitettava(Paivitettava liikePaivitettava) {
+        this.liikePaivitettava = liikePaivitettava;
+    }
+
+    public Paivitettava getTilannePaivitettava() {
+        return tilannePaivitettava;
+    }
+
+    public void setTilannePaivitettava(Paivitettava tilannePaivitettava) {
+        this.tilannePaivitettava = tilannePaivitettava;
     }
 
     public void aloita() {
-        ikkuna.alusta();
-        kontrolleri = new KomponenttiHallinta(ikkuna.getKentta(), tilasto);
         kontrolleri.alustaKomponentit();
-        animoija = new Animoija(this);
-        lisaaKayttoLiittymaNappaimet();
-        ikkuna.asetaIlmoitus("<html><div style='text-align: center;'> Tervetuloa Pong-peliin!<br>Valitse pelityyppi: <br> 1 - yksinpeli <br> 2 - kaksinpeli </div></html>");
-//        animoija.aloitaPeli();
+        tilannePaivitettava.paivita();
     }
 
-    public void lisaaKayttoLiittymaNappaimet() {
-        ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed P"), "P painettu");
-        ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed SPACE"), "SPACE painettu");
-        ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed 1"), "1 painettu");
-        ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed 2"), "2 painettu");
-
-        ikkuna.getKentta().getActionMap().put("P painettu", new PauseNappi(animoija, ikkuna));
-        ikkuna.getKentta().getActionMap().put("SPACE painettu", new AloitusPainallus(animoija, ikkuna));
-        ikkuna.getKentta().getActionMap().put("1 painettu", new PelinValinta(this, "1"));
-        ikkuna.getKentta().getActionMap().put("2 painettu", new PelinValinta(this, "2"));
+    @Override
+    public void begin(Animator source) {
     }
 
-    public void lisaaPelaajienNappaimet(Pelityyppi tyyppi) {
+    @Override
+    public void end(Animator source) {
+    }
 
-        ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed UP"), "UP painettu");
-        ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released UP"), "UP vapautettu");
-        ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed DOWN"), "DOWN painettu");
-        ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released DOWN"), "DOWN vapautettu");
+    @Override
+    public void repeat(Animator source) {
+    }
 
-        ikkuna.getKentta().getActionMap().put("UP painettu", new PainallusYlos(kontrolleri, "UP"));
-        ikkuna.getKentta().getActionMap().put("UP vapautettu", new VapautusYlos(kontrolleri, "UP"));
-        ikkuna.getKentta().getActionMap().put("DOWN painettu", new PainallusAlas(kontrolleri, "DOWN"));
-        ikkuna.getKentta().getActionMap().put("DOWN vapautettu", new VapautusAlas(kontrolleri, "DOWN"));
+    @Override
+    public void reverse(Animator source) {
+    }
 
-        if (tyyppi == Pelityyppi.KAKSINPELI) {
-            ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed W"), "W painettu");
-            ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released W"), "W vapautettu");
-            ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed S"), "S painettu");
-            ikkuna.getKentta().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released S"), "S vapautettu");
+    @Override
+    public void timingEvent(Animator source, double fraction) {
+        if (peliKaynnissa) {
+            kontrolleri.paivita();
+    //        if (kontrolleri.tarkistaMaali()) {
+    //            animoija.stop();                  //miten saada pallo pysymään paikoillaan hetken ennen uuden kierroksen aloittamista?
+    //        }
 
-            ikkuna.getKentta().getActionMap().put("W painettu", new PainallusYlos(kontrolleri, "W"));
-            ikkuna.getKentta().getActionMap().put("W vapautettu", new VapautusYlos(kontrolleri, "W"));
-            ikkuna.getKentta().getActionMap().put("S painettu", new PainallusAlas(kontrolleri, "S"));
-            ikkuna.getKentta().getActionMap().put("S vapautettu", new VapautusAlas(kontrolleri, "S"));
-
+            if (tilasto.voittaja() != null) {
+                peliKaynnissa = false;
+                tilannePaivitettava.paivita(); 
+                peliAlkanut = false;
+                pelityyppi = null;
+            }
         }
-
+        liikePaivitettava.paivita();
     }
 }
