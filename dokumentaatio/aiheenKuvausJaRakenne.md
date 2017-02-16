@@ -17,8 +17,11 @@ TODO:
 - [X] Pallo nopeutuu pelin edetessä
 - [X] Pallo odottaa hetken maalin jälkeen
 
+####Luokkakaavio
 ![Luokkakaavio](Pong_refaktoroinnin_jalkeen.png)
 
+####Sekvenssikaavio pelitypin valitsemisesta
 ![Sekvenssikaavio pelityypin valitsemisesta](sekvenssikaavio_pelinvalinta.png)
 
+####Sekvenssikaavio pausettamisesta
 ![Sekvenssikaavio pelin pausettamisesta](sekvenssikaavio_pausettaminen.png)
