@@ -1,7 +1,6 @@
 package irene.pong.komponentit;
 
 import irene.pong.logiikka.Suunta;
-import irene.pong.logiikka.Kentta;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,7 +22,7 @@ public class PalloTest {
     
     @Test
     public void pallonNopeusAluksi3() {
-        assertEquals(3, pallo.getNopeus());
+        assertEquals(3.0, pallo.getNopeus(), 0.1);
     }
         
     @Test

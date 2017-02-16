@@ -1,12 +1,11 @@
 /**
- * Ikkuna luo varsinaiset komponentit sisältävän luokan Kenttä, sekä siinä ilmestyvät ilmoitukset. 
- * Luokka tarjoaa mahdollisuuden ilmoitusten tekstin muuttamiseen Kenttä-luokan kautta. 
+ * Pääkäyttöliittymäluokka, joka luo käyttöliittymän osat, sekä saa konstruktorissa parametrina pelin logiikan. 
  * 
- * @see grafiikka.Kentta
  */
 
 package irene.pong.kayttoliittyma;
 
+import irene.pong.logiikka.Paivitettava;
 import irene.pong.logiikka.Pelaaja;
 import irene.pong.painallukset.AloitusPainallus;
 import irene.pong.painallukset.PainallusAlas;
@@ -30,7 +29,7 @@ import org.jdesktop.core.animation.timing.Animator;
 import org.jdesktop.core.animation.timing.TimingSource;
 import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
-public class Kayttoliittyma implements Runnable, Paivitettava{ //hyvä lähtökohta pääUI-luokalle
+public class Kayttoliittyma implements Runnable, Paivitettava { //hyvä lähtökohta pääUI-luokalle
 
     private JFrame ikkuna;
 //    private final Kentta kentta;
@@ -42,7 +41,14 @@ public class Kayttoliittyma implements Runnable, Paivitettava{ //hyvä lähtöko
     
 
     public Kayttoliittyma(Pong pong) {
-//        kentta = new Kentta();
+        /**
+         * Luo kaikki käyttöliittymän komponentit, ja asettaa itsensä päälogiikkaluokan päivitettävä-olioksi.
+         * 
+         * @param pong päälogiikkaluokka Pong
+         * 
+         * @see Pong
+         * @see Piirturi 
+         */
         TimingSource ts = new SwingTimerTimingSource();
         Animator.setDefaultTimingSource(ts);
         ts.init();
@@ -56,10 +62,6 @@ public class Kayttoliittyma implements Runnable, Paivitettava{ //hyvä lähtöko
         logiikka.setLiikePaivitettava(piirturi);
         logiikka.setTilannePaivitettava(this);
     }
-
-//    public Kentta getKentta() {
-//        return kentta;
-//    }
     
     public Pong getLogiikka() {
         return logiikka;

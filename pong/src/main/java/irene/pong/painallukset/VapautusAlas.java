@@ -1,5 +1,5 @@
 /**
- * Luokka sitoo napin painalluksen mailan liikkeeseen.
+ * Luokka sitoo napin vapauttamisen mailan liikkeeseen.
  */
 
 package irene.pong.painallukset;
@@ -20,7 +20,6 @@ public class VapautusAlas extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println("Vapautit napin alas");
         if (kirjain.equals("S")) {
             kontrolleri.getMaila1().setKiihdytaAlas(false);
         }

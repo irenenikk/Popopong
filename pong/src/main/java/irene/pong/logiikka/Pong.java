@@ -1,10 +1,10 @@
 /**
- * Pelin tarvittavat osat luova luokka, joka myös säilyttää tiedon käyttäjän valitsemasta pelityypistä.
- * Asettaa näppäimet kuunneltaviksi ja aloittaa pelin.
+ * Päälogiikkaluokka, joka luo kentän, sen tilaa hallinnoivan kontrollerin sekä pisteet laskevan tilaston.
+ * Pong myös säilyttää tiedon pelin nykyisestä tilasta.
  */
 package irene.pong.logiikka;
 
-import irene.pong.kayttoliittyma.Paivitettava;
+import irene.pong.komponentit.Kentta;
 import org.jdesktop.core.animation.timing.Animator;
 import org.jdesktop.core.animation.timing.TimingTarget;
 
@@ -80,6 +80,14 @@ public class Pong implements TimingTarget {
     }
 
     public void aloita() {
+        /**
+         * Kutsuu kontrollerin metodia, joka järjestää kentän aloitusasetelman. 
+         * Pyytää mahdollista käyttöliittymää päivittämään, jotta käyttäjä saa seuraavat ohjeet.
+         * 
+         * @see KomponenttiHallinta
+         * 
+         * @see Paivitettava
+         */
         kontrolleri.alustaKomponentit();
         tilannePaivitettava.paivita();
     }

@@ -1,5 +1,6 @@
 package irene.pong.logiikka;
 
+import irene.pong.komponentit.Kentta;
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
 import static org.junit.Assert.assertEquals;
@@ -15,6 +16,12 @@ public class TilastoTest {
     public void setUp() {
         kentta = new Kentta();
         tilasto = new Tilasto();
+    }
+    
+    @Test
+    public void pelaajillaAluksiNollaPistetta() {
+        assertEquals(0, tilasto.oikeanPelaajanPisteet());
+        assertEquals(0, tilasto.vasemmanPelaajanPisteet());
     }
     
     @Test
@@ -51,6 +58,15 @@ public class TilastoTest {
         tilasto.setOikeaPisteet(2);
         tilasto.setVasenPisteet(0);
         assertEquals(null, tilasto.voittaja());
+    }
+    
+    @Test
+    public void nollaaPisteetToimii() {
+        tilasto.setOikeaPisteet(1);
+        tilasto.setVasenPisteet(2);
+        tilasto.nollaaPisteet();
+        assertEquals(0, tilasto.oikeanPelaajanPisteet());
+        assertEquals(0, tilasto.vasemmanPelaajanPisteet());
     }
     
 }

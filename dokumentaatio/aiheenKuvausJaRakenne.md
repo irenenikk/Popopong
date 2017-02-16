@@ -7,14 +7,18 @@ TODO:
 - [X] Suunta-enum
 - [X] Järkevä tietorakenne pelaajille
 - [X] Aloitus ja ohjeet
+- [X] Lopetus ja uudelleen aloittaminen
 - [X] Pausetus
-- [ ] Tekoäly
+- [X] Tekoäly
 - [X] Pelityylin valinta
 - [ ] Esteet
 - [X] Pisteet näytölle
-- [ ] Pallo kimpoaa kiinnostavast
-- [ ] Pallo nopeutuu pelin edetessä
-- [ ] Pallo odottaa hetken maalin jälkeen
+- [ ] Pallo kimpoaa kiinnostavasti/ei mene mailan läpi jos lyödään ylä- tai alapäällä
+- [X] Pallo nopeutuu pelin edetessä
+- [X] Pallo odottaa hetken maalin jälkeen
 
-Koodissa käyttöliittymä ja logiikka ovat tällä hetkellä sekaisin, eli luokkakaavio tulee muuttumaan ensi viikolla.
-![Luokkakaavio](Pong-luokkakaavio vko4 v.2.png)
+![Luokkakaavio](Pong_refaktoroinnin_jalkeen.png)
+
+![Sekvenssikaavio pelityypin valitsemisesta](sekvenssikaavio_pelinvalinta.png)
+
+![Sekvenssikaavio pelin pausettamisesta](sekvenssikaavio_pausettaminen.png)

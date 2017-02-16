@@ -1,6 +1,5 @@
 package irene.pong.logiikka;
 
-import irene.pong.kayttoliittyma.Paivitettava;
 import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -43,5 +42,5 @@ public class PongTest {
                 && pong.getKentta().getVasenPelaaja().getY() == 250 
                 && pong.getKentta().getOikeaPelaaja().getY() == 250;
     }
-    
+        
 }

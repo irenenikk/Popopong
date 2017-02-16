@@ -67,4 +67,11 @@ public class Maila {
     public Rectangle getRajat() {
         return new Rectangle(getX(), getY(), getLeveys(), getKorkeus());
     }
+    
+    public boolean osuu(int x, int y) {
+        if (x <= getX() + getLeveys() && x >= getX() && y <= getY() + getKorkeus() && y >= getY()) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,5 +1,5 @@
 /**
- * Luokka sitoo napin painalluksen mailan liikkeeseen.
+ * Luokka sitoo p-näppäimen painalluksen pelin pysäyttämiseen.
  */
 
 package irene.pong.painallukset;
@@ -12,12 +12,10 @@ import javax.swing.AbstractAction;
 
 public class PauseNappi extends AbstractAction {
 
-//    private final Animoija animoija;
     private final Pong pong;
     private final Kayttoliittyma kali;
     
-    public PauseNappi (Pong p, Kayttoliittyma i) {
-//        animoija = a;
+    public PauseNappi(Pong p, Kayttoliittyma i) {
         pong = p;
         kali = i;
     }

@@ -1,5 +1,5 @@
 /**
- * Luokka sitoo napin painalluksen mailan liikkeeseen.
+ * Luokka sitoo napin vapauttamisen mailan liikkeeseen.
  */
 
 package irene.pong.painallukset;

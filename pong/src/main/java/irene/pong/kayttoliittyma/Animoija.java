@@ -37,35 +37,4 @@ public class Animoija {
         animoija.resume();
     }
 
-//    @Override
-//    public void begin(Animator anmtr) {
-//    }
-//
-//    @Override
-//    public void end(Animator anmtr) {
-//    }
-//
-//    @Override
-//    public void repeat(Animator anmtr) {
-//    }
-//
-//    @Override
-//    public void reverse(Animator anmtr) {
-//    }
-//
-//    @Override
-//    public void timingEvent(Animator anmtr, double d) {
-//        if (peliKaynnissa) {
-//            pong.getKontrolleri().paivita();
-//            //        if (kontrolleri.tarkistaMaali()) {
-//            //            animoija.stop();                  //miten saada pallo pysymään paikoillaan hetken ennen uuden kierroksen aloittamista?
-//            //        }
-//
-//            if (pong.getKontrolleri().getTilasto().voittaja() != null) {
-//                peliKaynnissa = false;
-//                pong.getIkkuna().asetaIlmoitus("Pelaaja " + pong.getKontrolleri().getTilasto().voittaja().getId() + " voitti"); //mitä sitten?
-//            }
-//        }
-//        pong.getKontrolleri().getKentta().repaint();
-//    }
 }

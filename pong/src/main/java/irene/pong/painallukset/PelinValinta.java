@@ -1,6 +1,7 @@
 /**
  * Luokka sitoo näppäimen painallukseen pelityypin asettamisen.
  */
+
 package irene.pong.painallukset;
 
 import irene.pong.kayttoliittyma.Kayttoliittyma;
@@ -27,11 +28,11 @@ public class PelinValinta extends AbstractAction {
             if (kirjain.equals("1")) {
                 peli.setPelityyppi(Pelityyppi.YKSINPELI);
                 kali.lisaaPelaajienNappaimet(Pelityyppi.YKSINPELI);
+                peli.getKontrolleri().kaytaTekoalya();
             } else if (kirjain.equals("2")) {
                 peli.setPelityyppi(Pelityyppi.KAKSINPELI);
                 kali.lisaaPelaajienNappaimet(Pelityyppi.KAKSINPELI);
             }
-//            peli.setPeliAlkanut(true);
             kali.paivita();
         }
     }
