@@ -29,7 +29,7 @@ import org.jdesktop.core.animation.timing.Animator;
 import org.jdesktop.core.animation.timing.TimingSource;
 import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
-public class Kayttoliittyma implements Runnable, Paivitettava { //hyvä lähtökohta pääUI-luokalle
+public class Kayttoliittyma implements Runnable, Paivitettava {
 
     private JFrame ikkuna;
 //    private final Kentta kentta;
@@ -76,18 +76,30 @@ public class Kayttoliittyma implements Runnable, Paivitettava { //hyvä lähtök
     }
     
     public void tyhjennaIlmoitus() {
+        /**
+         * Poistaa pelikentän yläreunassa sijaitsevan ilmoituksen.
+         */
         ilmoitus.setText("");
     }
     
     public void pauseNakyvaksi() {
+        /**
+         * Asettaa ohjeen pelin pausettamisesta näkyville.
+         */
         pause.setVisible(true);
     }
     
     public void pausePiiloon() {
+        /**
+         * Piilottaa ohjeen pelin pausettamisesta.
+         */
         pause.setVisible(false);
     }
     
     public void alustaIkkuna() {
+        /**
+         * Alustaa JFrame-olion stabiilin kokoiseksi, ja antaa sille otsikon.
+         */
         ikkuna.setPreferredSize(new Dimension(logiikka.getKentta().getLeveys(), logiikka.getKentta().getKorkeus()));
         ikkuna.setTitle("Pong");
         ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,6 +107,9 @@ public class Kayttoliittyma implements Runnable, Paivitettava { //hyvä lähtök
     }
     
     public void alustaIlmoitus() {        
+        /**
+         * Alustaa paikan pelikentän yläreunassa näkyville ilmoituksille.
+         */
         ilmoitus.setFont(new Font("", Font.PLAIN, 20)); //Fontin nimen muuttaminen ei vaikuta
         ilmoitus.setHorizontalAlignment(SwingConstants.CENTER);  
         ilmoitus.setVerticalAlignment(SwingConstants.NORTH);
@@ -103,12 +118,20 @@ public class Kayttoliittyma implements Runnable, Paivitettava { //hyvä lähtök
     }
     
     public void alustaPauseNappi() {
+        /**
+         * Alustaa ohjeet pelin pausettamisesta.
+         */
         pause.setHorizontalAlignment(SwingConstants.RIGHT);
         pause.setForeground(Color.WHITE);  
         pause.setVisible(false);
     }  
     
     public void alustaPiirturi() {
+        /**
+         * Tekee piirturista kentän kokoisen, lisää piirturiin ilmoituksen ja pauseohjeen, sekä lisää piirturin JFrame-olioon.
+         * 
+         * @see Piirturi
+         */
         piirturi.setPreferredSize(new Dimension(logiikka.getKentta().getLeveys(), logiikka.getKentta().getKorkeus()));
         piirturi.setBackground(Color.BLACK);
         piirturi.add(ilmoitus, BorderLayout.CENTER);
@@ -117,6 +140,9 @@ public class Kayttoliittyma implements Runnable, Paivitettava { //hyvä lähtök
     }
 
     public void lisaaKayttoLiittymaNappaimet() {
+        /**
+         * Lisää KeyBindingsit, jotka kuuntelevat pelityypin valitsemiseen, pelin aloittamiseen ja pausettamiseen käytetyt näppäimet.
+         */
         piirturi.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed P"), "P painettu");
         piirturi.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed SPACE"), "SPACE painettu");
         piirturi.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed 1"), "1 painettu");
@@ -129,6 +155,12 @@ public class Kayttoliittyma implements Runnable, Paivitettava { //hyvä lähtök
     }
 
     public void lisaaPelaajienNappaimet(Pelityyppi tyyppi) {
+        /**
+         * Lisää KeyBindingsit, joiden avulla pelaaja tai pelaajat voivat ohjata mailoja riippuen pelityypistä.
+         * Jos pelityyppi on yksinpeli, vasemmanpuoleisen pelaajan näppäimiä ei kuunnella.
+         * 
+         * @param Pelityyppi käyttäjän valitsema pelityyppi(yksin- tai kaksinpeli)
+         */
 
         piirturi.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed UP"), "UP painettu");
         piirturi.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released UP"), "UP vapautettu");
@@ -171,6 +203,10 @@ public class Kayttoliittyma implements Runnable, Paivitettava { //hyvä lähtök
 
     @Override
     public void paivita() {
+        /**
+         * Asettaa kentän yläosan ilmoitukseen tekstin riippuen pelin tilasta.
+         * Jos peli on vasta aloitettu, antaa ohjeet pelityypin valitsemiseksi, sitten ohjeistaa pelin aloittamisen ja pelin loputtua kertoo voittajan.
+         */
         
         if (logiikka.getTilasto().voittaja() != null && !logiikka.isPeliKaynnissa() && logiikka.peliAlkanut()) {
             String voittaja = "";

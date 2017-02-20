@@ -23,10 +23,7 @@ public class Pallo {
     public Pallo() {
         this.suuntaX = Suunta.VASEN;
         this.suuntaY = Suunta.ALAS;
-        odottaa = false;
-//        dX = 3.5;
-//        dY = 2;
-        
+        odottaa = false;        
     }
 
     public int getX() {
@@ -46,7 +43,7 @@ public class Pallo {
     }
     
     public void nopeuta() {
-        nopeus += 0.01;
+        nopeus += 0.08;
     }
 
     public void setX(int x) {
@@ -97,6 +94,9 @@ public class Pallo {
         this.odottaa = paikallaan;
     }
     
+    public void palautaNopeus() {
+        nopeus = 3;
+    }
     public void liiku() {
         /**
          * Liikuttaa palloa, jos sitä ei ole asetettu odottamaan maalin jälkeen.
@@ -119,10 +119,6 @@ public class Pallo {
                     x -= nopeus;
                     break;
             }            
-//            x += (int) dXs;
-//            System.out.println("X: " + x);
-//            y += (int) dY;
-//            System.out.println("Y: " + y);
         }
     }
     
@@ -145,6 +141,26 @@ public class Pallo {
         }
 
     }
+    
+    public void vaihdaSuuntaaPäinvastaiseen() {
+            switch (suuntaY) {
+                case YLOS:
+                    suuntaY = Suunta.ALAS;
+                    break;
+                case ALAS:
+                    suuntaY = Suunta.YLOS;
+                    break;
+            }
+
+            switch (suuntaX) {
+                case OIKEA:
+                    suuntaX = Suunta.VASEN;
+                    break;
+                case VASEN:
+                    suuntaX = Suunta.OIKEA;
+                    break;
+            }            
+    }
 
     public Rectangle getRajat() {
         /**
@@ -152,5 +168,4 @@ public class Pallo {
          */
         return new Rectangle(getX(), getY(), getHalkaisija(), getHalkaisija());
     }
-    
 }

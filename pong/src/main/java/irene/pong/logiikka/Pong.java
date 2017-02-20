@@ -21,6 +21,9 @@ public class Pong implements TimingTarget {
 
 
     public Pong() {
+        /**
+         * Luokka luo loogiset komponentit. Aluksi peli ei ole käynnissä, eikä alkanut.
+         */
         tilasto = new Tilasto();
         kentta = new Kentta();
         kontrolleri = new KomponenttiHallinta(kentta, tilasto);
@@ -82,7 +85,7 @@ public class Pong implements TimingTarget {
     public void aloita() {
         /**
          * Kutsuu kontrollerin metodia, joka järjestää kentän aloitusasetelman. 
-         * Pyytää mahdollista käyttöliittymää päivittämään, jotta käyttäjä saa seuraavat ohjeet.
+         * Pyytää mahdollista käyttöliittymää päivittymään, jotta käyttäjä saa seuraavat ohjeet.
          * 
          * @see KomponenttiHallinta
          * 
@@ -110,6 +113,9 @@ public class Pong implements TimingTarget {
 
     @Override
     public void timingEvent(Animator source, double fraction) {
+        /**
+         * Animoija kutsuu tätä metodia ollessaan käynnissä. Varsinainen "pelilooppi".
+         */
         if (peliKaynnissa) {
             kontrolleri.paivita();
     //        if (kontrolleri.tarkistaMaali()) {

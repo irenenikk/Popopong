@@ -4,7 +4,7 @@ Tämä on Java-ohjelmoinnin harjoitustyöni, jossa teen oman versioni klassisest
 
 ##Dokumentaatio:
 
-[Aiheen määrittely](https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/aiheenKuvausJaRakenne.md)
+[Aihemäärittely](https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/aiheenKuvausJaRakenne.md)
 
 [Tuntikirjanpito](https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/tuntikirjanpito.md)
 

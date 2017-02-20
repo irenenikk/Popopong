@@ -16,6 +16,15 @@ public class PauseNappi extends AbstractAction {
     private final Kayttoliittyma kali;
     
     public PauseNappi(Pong p, Kayttoliittyma i) {
+        /**
+         * Luokka saa sekä päälogiikkaluokan sekä pääkäyttöliittymäluokan, jotta se voi muokata pelin tilaa sekä käyttäjälle näkyviä ilmoituksia.
+         * 
+         * @param p päälogiikkaluokka
+         * @para, i pääkäyttöliittymäluokka
+         * 
+         * @see logiikka.Pong
+         * @see kayttoliittyma.Kayttoliittyma
+         */
         pong = p;
         kali = i;
     }

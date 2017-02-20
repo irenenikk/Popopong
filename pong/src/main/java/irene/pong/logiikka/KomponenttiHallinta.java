@@ -6,6 +6,7 @@
  */
 package irene.pong.logiikka;
 
+import irene.pong.komponentit.Este;
 import irene.pong.komponentit.Kentta;
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
@@ -19,7 +20,9 @@ public class KomponenttiHallinta {
     Tilasto tilasto;
     int pallonOsumat;
     int pallonOdotusaika;
+    int esteidenTiheys;
     Aly aly;
+    boolean kaytaAlya;
 
     public KomponenttiHallinta(Kentta k, Tilasto t) {
         /**
@@ -29,11 +32,16 @@ public class KomponenttiHallinta {
          * @see Tilasto
          */
         kentta = k;
+        tilasto = t;
+
         pallo = kentta.getPallo();
         maila1 = kentta.getVasenPelaaja();
         maila2 = kentta.getOikeaPelaaja();
-        tilasto = t;
+        
+        aly = new Aly(kentta);
+        kaytaAlya = false;
         pallonOsumat = 1;
+        esteidenTiheys = 15;
     }
 
     public Kentta getKentta() {
@@ -57,7 +65,11 @@ public class KomponenttiHallinta {
     }
     
     public void kaytaTekoalya() {
-        aly = new Aly(kentta);
+        kaytaAlya = true;
+    }
+    
+    public void poistaTekoAlY() {
+        kaytaAlya = false;
     }
 
     public Aly getAly() {
@@ -99,67 +111,81 @@ public class KomponenttiHallinta {
          * 
          * @see Maila
          * @see Pallo
+         * @see Kentta
          */
         
         tarkistaLiikkuukoPallo();
         pallo.liiku();
-        if (aly != null) {
+        
+        if (kaytaAlya) {
             aly.liikutaMailaa();
         }
+        
         maila1.liiku();
         maila2.liiku();
+        
         tarkistaKimpoaakoPallo();
         tarkistaOsuukoPalloMailaan();
         tarkistaOsuvatkoMailatReunaan();
         tarkistaMaali();
+        tarkistaLuodaankoEste();
+        tarkistaOsuukoEsteeseen();
         tarkistaNopeutus();
     }
 
     private void asetaPalloKeskelle() {
+        /**
+         * Asettaa pallon pelikentän keskelle.
+         * 
+         * @see Pallo
+         */
         pallo.setX(kentta.getLeveys() / 2 - pallo.getHalkaisija() / 2);
         pallo.setY(kentta.getKorkeus() / 2 - pallo.getHalkaisija() / 2);
     }
 
     private void asetaPelaaja1Keskelle() {
+        /**
+         * Asettaa vasemmanpuoleisen pelaajan kiinni vasemmanpuoleiseen seinään ja keskelle korkeussuunnassa.
+         * 
+         * @see Maila
+         */
         maila1.setX(0);
         maila1.setY(kentta.getKorkeus() / 2 - maila1.getKorkeus() / 2);
     }
 
     private void asetaPelaaja2Keskelle() {
+        /**
+         * Asettaa oikeanpuoleisen pelaajan kiinni oikeanpuoleiseen seinään ja keskelle korkeussuunnassa.
+         * 
+         * @see Maila
+         */
         maila2.setX(kentta.getLeveys() - maila2.getLeveys());
         maila2.setY(kentta.getKorkeus() / 2 - maila2.getKorkeus() / 2);
     }
 
     private void tarkistaKimpoaakoPallo() { //kommentit johtuu testailusta erilaisen pallonliikkeen kanssa
+        /**
+         * Tarkistaa osuuko pallo seinään, ja aihetuttaa sen kimpoamisen.
+         * 
+         * @see Pallo
+         */
         if (pallo.getY() <= 0) {
             pallo.setSuuntaY(Suunta.ALAS);
             pallo.setY(pallo.getY() + (int) pallo.getNopeus());
-            
-//        if (pallo.getY() <= 0 || pallo.getY() + pallo.getHalkaisija() >= kentta.getKorkeus()) {
-//            double x = pallo.getX();
-//            double y = pallo.getY();
-//            double c = -2 * (pallo.getdX() * x + pallo.getdY() * y) / (x * x + y * y);
-//            pallo.setdX(pallo.getdX() + c * x);
-//            pallo.setdY(pallo.getdY() + c * y);
-//            pallo.setdY(pallo.getdY()*-1);
-//            pallo.setY(pallo.getY() + (int) pallo.getdY());
         }
 
         if (pallo.getY() + pallo.getHalkaisija() >= kentta.getKorkeus()) {
             pallo.setSuuntaY(Suunta.YLOS);
             pallo.setY(pallo.getY() - (int) pallo.getNopeus());
-            
-//            pallo.setdY(pallo.getdY()*-1);
-////            double x = pallo.getX() ;
-////            double y = pallo.getY() - kentta.getKorkeus();
-////            double c = -2 * (pallo.getdX() * x + pallo.getdY() * y) / (x * x + y * y);
-////            pallo.setdX(pallo.getdX() + c * x);
-////            pallo.setdY(pallo.getdY() + c * y);
-//        }
         }
     }
 
     private void tarkistaMaali() {
+        /**
+         * Tarkistaa, meni pallo vasemmalta tai oikealta yli, lisää tilastoon maalintekijälle pisteen ja asettaa pallon odottamaan keskellä 15 kierroksen ajan.
+         * 
+         * @see Tilasto
+         */
         if (pallo.getX() + pallo.getHalkaisija() <= 0) { 
             tilasto.lisaaPistePelaajalle(Pelaaja.OIKEA);
             asetaPalloKeskelle();
@@ -178,105 +204,41 @@ public class KomponenttiHallinta {
     }
 
     private void tarkistaOsuukoPalloMailaan() {
-        if (pallo.getRajat().intersects(maila1.getRajat())) {
-//        if (pallo.getX() <= maila1.getX() + maila1.getLeveys() && pallo.getY() >= maila1.getY() && pallo.getY() <= maila1.getY() + maila1.getKorkeus()) {
-//            System.out.println("osui mailaan 1");
-            
-//            if (pallo.getX() == maila1.getX() + maila1.getLeveys()) {
-                pallo.setSuuntaX(Suunta.OIKEA);
-                pallo.setX(pallo.getX() + (int) pallo.getNopeus());
-//                pallo.setdX(pallo.getdX()*-1);
-//                pallo.setX(pallo.getX() + (int) pallo.getdX());            
-                pallonOsumat++;
-//                if (Math.abs(pallo.getY() - maila1.getY()) != 0) {
-//                    pallo.setdY(pallo.getdY()*-1);
-//                }
-//            }
-//            
-//            if (pallo.getY() < maila1.getY()) {
-//                pallo.setSuuntaY(Suunta.YLOS);
-//                pallo.setY(pallo.getY() - (int)pallo.getNopeus());
-//            } else if (pallo.getY() > maila1.getY() + maila1.getKorkeus()) {
-//                pallo.setSuuntaY(Suunta.ALAS);
-//                pallo.setY(pallo.getY() + (int)pallo.getNopeus());
-//            }
-            
-//            double x = pallo.getX();
-//            double y = pallo.getY();
-//            double c = -2 * (pallo.getdX() * x + pallo.getdY() * y) / (x * x + y * y);
-//            pallo.setdX(pallo.getdX() + c * x);
-//            pallo.setdY(pallo.getdY() + c * y);
-            
+        /**
+         * Tarkistaa, osuuko pallo mailaan ja aiheuttaa siitä kimpoamisen.
+         * Kimpoaminen tarkistetaan erikseen mailan ylä- ja alapäälle, jotta pallo kimpoaan myös ylöspäin.
+         * 
+         * @see Pallo
+         * @see Maila
+         */
+        
+        if (pallo.getRajat().intersects(maila1.getYlapaa()) || pallo.getRajat().intersects(maila2.getYlapaa())) {
+            pallo.setSuuntaY(Suunta.YLOS);
+            pallo.setY(pallo.getY() - (int) pallo.getNopeus());
+            pallonOsumat++;
+        } else if (pallo.getRajat().intersects(maila1.getAlapaa()) || pallo.getRajat().intersects(maila2.getAlapaa())) {
+            pallo.setSuuntaY(Suunta.ALAS);
+            pallo.setY(pallo.getY() + (int) pallo.getNopeus());
+            pallonOsumat++;
+        } else if (pallo.getRajat().intersects(maila1.getRajat())) {
+            pallo.setSuuntaX(Suunta.OIKEA);
+            pallo.setX(pallo.getX() + (int) pallo.getNopeus());
+            pallonOsumat++;
+        } else if (pallo.getRajat().intersects(maila2.getRajat())) {
+            pallo.setSuuntaX(Suunta.VASEN);
+            pallo.setX(pallo.getX() - (int) pallo.getNopeus());
+            pallonOsumat++;
         }
 
-        if (pallo.getRajat().intersects(maila2.getRajat())) {
-//        if (pallo.getX() + pallo.getHalkaisija() >= maila2.getX() && pallo.getY() >= maila2.getY() && pallo.getY() <= maila2.getY() + maila2.getKorkeus()) {
-//            if (pallo.getX() + pallo.getHalkaisija() == maila2.getX()) {
-                pallo.setSuuntaX(Suunta.VASEN);
-                pallo.setX(pallo.getX() - (int) pallo.getNopeus());
-//                pallo.setdX(pallo.getdX()*-1);
-//                pallo.setX(maila2.getLeveys());            
-                pallonOsumat++;
-//            }
-//            
-//            if (pallo.getSuuntaY() == Suunta.ALAS) {
-//                pallo.setSuuntaY(Suunta.YLOS);
-//            }
-//            if (pallo.getSuuntaY() == Suunta.YLOS) {
-//                pallo.setSuuntaY(Suunta.ALAS);
-//            }
-//            
-//            if (pallo.getY() < maila2.getY()) {
-//                pallo.setSuuntaY(Suunta.YLOS);
-//                pallo.setY(pallo.getY() - (int)pallo.getNopeus());
-//            } else if (pallo.getY() > maila2.getY() + maila2.getKorkeus()) {
-//                pallo.setSuuntaY(Suunta.ALAS);
-//                pallo.setY(pallo.getY() + (int)pallo.getNopeus());
-//            }
-
-//            
-//            double x = pallo.getX();
-//            double y = pallo.getY();
-//            double c = -2 * (pallo.getdX() * x + pallo.getdY() * y) / (x * x + y * y);
-//            pallo.setdX(pallo.getdX() + c * x);
-//            pallo.setdY(pallo.getdY() + c * y);
-
-        }
-
-
-//        if (maila1.osuu(pallo.getX(), pallo.getY())) {
-//            System.out.println("Osui mailaan 1");
-//        }
-//        
-
-//        if (maila2.osuu(pallo.getX() + pallo.getHalkaisija(), pallo.getY())) {
-//            if (pallo.getX() + pallo.getHalkaisija() >= maila2.getX()) {
-//                pallo.setSuuntaX(Suunta.VASEN);
-//                pallo.setX(pallo.getX() - (int) pallo.getNopeus());
-//            }
-//            
-//            if (pallo.getY() + pallo.getHalkaisija() >= maila2.getY()) {
-//               pallo.setSuuntaY(Suunta.YLOS);
-//               pallo.setY(pallo.getY() - (int) pallo.getNopeus());
-//            }
-//
-//            if (pallo.getY() + pallo.getHalkaisija() <= maila2.getY() + maila2.getKorkeus()) {
-//               pallo.setSuuntaY(Suunta.ALAS);
-//               pallo.setY(pallo.getY() + (int) pallo.getNopeus());
-//            }
-//                        
-//        }
-//        
-//        if (maila1.osuu(pallo.getX(), pallo.getY())) {
-//            if (pallo.getX() + pallo.getHalkaisija() >= maila1.getX()) {
-//                pallo.setSuuntaX(Suunta.OIKEA);
-//                pallo.setX(pallo.getX() + (int) pallo.getNopeus());
-//            }
-//            
         
     }
 
     private void tarkistaOsuvatkoMailatReunaan() {
+        /**
+         * Estää pelaajien mailojen menemisen kentän ulkopuolelle.
+         * 
+         * @see Kentta
+         */
         if (maila1.getY() <= 0) {
             maila1.setY(0);
         }
@@ -296,13 +258,25 @@ public class KomponenttiHallinta {
     }
 
     public void tarkistaNopeutus() {
-        if (pallonOsumat % 10 == 0) {
+        /**
+         * Nopeuttaa pallon liikettä, jos se on osunut pelaajien mailoihin tarpeeksi monta kertaa.
+         * 
+         * @see Pallo#nopeuta()
+         */
+        if (pallonOsumat % 5 == 0) {
+            System.out.println("Nopeutin kun osumia oli " + pallonOsumat);
             pallo.nopeuta();
+            pallonOsumat++;
         }
         
     }
     
     private void tarkistaLiikkuukoPallo() {
+        /**
+         * Tarkistaa, onko pallo odottanut sille annetun määrän kierroksia, ja tulisiko sen siis liikkua.
+         * 
+         * @see Pallo
+         */
         if (pallo.isPaikallaan()) {
             pallonOdotusaika--;
             if (pallonOdotusaika == 0) {
@@ -310,5 +284,39 @@ public class KomponenttiHallinta {
             }
         }
     }
-
+    
+    private void tarkistaLuodaankoEste() {
+        /**
+         * Tarkistaa, onko aika luoda uusi este.
+         */
+        if (pallonOsumat % esteidenTiheys == 0) { //ei toimi
+            kentta.lisaaEste();
+            if (esteidenTiheys > 2) {
+                esteidenTiheys--;   
+            }
+            pallonOsumat++;
+            System.out.println("Esteiden tiheys: " + esteidenTiheys);
+        }
+    }
+    
+    private void tarkistaOsuukoEsteeseen() {
+        /**
+         * Tarkistaa, törmääkö pallo esteeseen ja poistaa tällöin sen.
+         * Este tuntee varoitusaikansa ja näkyvyytensä, muttei itse vaihda näkyvyyden tilaa, vaan sen tekee kontrolleri.
+         */
+        kentta.getEsteet().stream().forEach((Este este) ->{
+            if (este.isNakyvissa()) {
+                if (pallo.getRajat().intersects(este.getRajat())) {
+                    pallo.vaihdaSuuntaaPäinvastaiseen();
+                    este.setPoistettava(true);
+                }                
+            } else {
+                este.vahennaVaroitusaikaa();
+                if (este.getVaroitusaika() == 0) {
+                    este.setNakyvissa(true);
+                }
+            }
+        });
+        kentta.poistaPoistettavat();
+    }
 }

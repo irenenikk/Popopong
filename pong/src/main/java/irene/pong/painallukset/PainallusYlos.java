@@ -14,6 +14,14 @@ public class PainallusYlos extends AbstractAction {
     private final String kirjain;
 
     public PainallusYlos(KomponenttiHallinta kh, String k) {
+        /**
+         * Luokka saa konstruktorissaan komponenttien hallinnoijan, sekä painetun näppäimen kirjaimen.
+         * 
+         * @param kh pelin komponenttien hallintaluokka
+         * @param k painetun näppäimen kirjain
+         * 
+         * @see logiikka.KomponenttiHallinta
+         */
         kontrolleri = kh;
         kirjain = k;
     }

@@ -17,6 +17,16 @@ public class PelinValinta extends AbstractAction {
     private Kayttoliittyma kali;
 
     public PelinValinta(Pong p, String k, Kayttoliittyma kl) {
+        /**
+         * Luokka saa päälogiikkaluokan, pääkäyttöliittymäluokan, sillä se muokkaa sekä pelin tilaa että käyttäjälle näkyviä ilmoituksia. Luokka saa myös painetun näppäimen kirjaimen.
+         * 
+         * @param p päälogiikkaluokka
+         * @param k painetun näppäimen kirjain
+         * @param kl pääkäyttöliittymäluokka
+         * 
+         * @see logiikka.Pong
+         * @see kayttoliittyma.Kayttoliittyma
+         */
         peli = p;
         kirjain = k;
         kali = kl;
