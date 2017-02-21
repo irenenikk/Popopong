@@ -1,6 +1,7 @@
 package irene.pong.komponentit;
 
-import irene.pong.komponentit.Kentta;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,5 +24,35 @@ public class KenttaTest {
     @Test
     public void kentallaKaksiEriPelaajaa() {
         assertFalse(kentta.getOikeaPelaaja()== kentta.getVasenPelaaja());
+    }
+    
+    @Test
+    public void alustaKenttaPalauttaaPallonNopeuden() {
+        kentta.getPallo().nopeuta();
+        kentta.getPallo().nopeuta();
+        kentta.getPallo().nopeuta();
+        kentta.alustaKentta();
+        assertEquals(3.0, kentta.getPallo().getNopeus(), 0.1);
+    }
+    
+    @Test
+    public void alustaKenttaNollaaMailojenSuunnat() {
+        kentta.getOikeaPelaaja().setKiihdytaAlas(true);
+        kentta.getOikeaPelaaja().setKiihdytaYlos(true);
+        kentta.getVasenPelaaja().setKiihdytaAlas(true);
+        kentta.getVasenPelaaja().setKiihdytaAlas(true);
+        kentta.alustaKentta();
+        assertFalse(kentta.getOikeaPelaaja().isKiihdytaAlas());
+        assertFalse(kentta.getOikeaPelaaja().isKiihdytaYlos());
+        assertFalse(kentta.getVasenPelaaja().isKiihdytaAlas());
+        assertFalse(kentta.getVasenPelaaja().isKiihdytaYlos());
+    }
+    
+    @Test
+    public void alustaKenttaPoistaaEsteet() {
+        kentta.lisaaEste();
+        kentta.lisaaEste();
+        kentta.alustaKentta();
+        assertEquals(0, kentta.getEsteet().size());
     }
 }

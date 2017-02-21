@@ -7,7 +7,9 @@ package irene.pong.komponentit;
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import javafx.util.Pair;
 
 public class Kentta {
     
@@ -58,13 +60,50 @@ public class Kentta {
     }
     
     public void lisaaEste() {
-        int x = random.nextInt(50) + getLeveys()/3;
-        int y = random.nextInt(getKorkeus());
-        esteet.add(new Este(x, y));
+        /**
+         * Lisää kentän keskiosaan uuden esteen varmistaen ensin, että uutta estettä ei luoda vanhan päälle.
+         * 
+         * @see Este
+         */
+        Este uusi;
+        while(true) {
+            boolean osuuEsteeseen = false;
+            int x = random.nextInt(50) + getLeveys()/3;
+            int y = random.nextInt(getKorkeus()-20) + 20;
+            uusi = new Este(x, y);
+            System.out.println("Luodaan uusi este");
+            for (Este este: esteet) {
+                if (este.getRajat().intersects(uusi.getRajat())) {
+                    osuuEsteeseen = true;
+                    System.out.println("Olisi osunut esteeseen");
+                }
+            }
+            if (!osuuEsteeseen) {
+                break;
+            }
+        }
+            
+        esteet.add(uusi);
     }
     
     public void poistaPoistettavat() {
+        /**
+         * Poistaa esteistä ne, joihin pallo on osunut.
+         */
         List<Este> poistettavat = esteet.stream().filter(este -> este.isPoistettava()).collect(Collectors.toList());
         esteet.removeAll(poistettavat);
+    }
+    
+    public void alustaKentta() {
+        /**
+         * Palauttaa kentän alun tilanteeseen, eli palauttaa pallon nopeuden, poistaa kaikki esteet ja tyhjentää mailojen vanhat suunnat.
+         * 
+         * @see Pallo
+         * @see Maila
+         */
+        pallo.palautaNopeus();
+        oikea.nollaaSuunnat();
+        vasen.nollaaSuunnat();  
+        esteet.clear();
     }
 }

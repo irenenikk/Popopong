@@ -10,19 +10,25 @@ import irene.pong.logiikka.Pong;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.Random;
+import java.util.*;
 import javax.swing.JPanel;
 
 public class Piirturi extends JPanel implements Paivitettava {
     private final Pong logiikka;
-    private final Random random;
+    private HashMap<Este, Color> esteidenVarit;
+    private final Random r;
     
     public Piirturi(Pong pong) {
         /**
          * @param pong peli, jonka kentän sisältö ja pisteet luokan tulee piirtää.
          */
         logiikka = pong;
-        random = new Random();
+        r = new Random();
+        esteidenVarit = new HashMap();
+    }
+    
+    public void tyhjennaEsteidenVarit() {
+        esteidenVarit.clear();
     }
     
     @Override
@@ -35,14 +41,19 @@ public class Piirturi extends JPanel implements Paivitettava {
         g.drawString(Integer.toString(logiikka.getTilasto().vasemmanPelaajanPisteet()), 50, 50);
         g.drawString(Integer.toString(logiikka.getTilasto().oikeanPelaajanPisteet()), getWidth() - 100, 50);
                 
-        logiikka.getKentta().getEsteet().stream().forEach((este) -> {
+        if (logiikka.getKentta().getEsteet().size() > 0 ){
+            logiikka.getKentta().getEsteet().stream().forEach((este) -> {
             if (!este.isNakyvissa()) {
                 g.setColor(Color.DARK_GRAY);
             } else {
-                g.setColor(Color.WHITE);
+                if (!esteidenVarit.containsKey(este)) {
+                    esteidenVarit.put(este, new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
+                }
+                g.setColor(esteidenVarit.get(este));
             }
             g.fillRect(este.getX(), este.getY(), este.getLeveys(), este.getKorkeus());
-        });
+            });
+        }
 
         g.setColor(Color.WHITE);        
         

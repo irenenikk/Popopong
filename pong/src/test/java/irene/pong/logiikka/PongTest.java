@@ -42,5 +42,4 @@ public class PongTest {
                 && pong.getKentta().getVasenPelaaja().getY() == 250 
                 && pong.getKentta().getOikeaPelaaja().getY() == 250;
     }
-        
 }

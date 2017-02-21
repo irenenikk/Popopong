@@ -4,10 +4,9 @@
 
 package irene.pong.komponentit;
 
-import irene.pong.logiikka.Tormattava;
 import java.awt.Rectangle;
 
-public class Maila implements Tormattava{
+public class Maila {
 
     private int x;
     private int y;
@@ -17,22 +16,18 @@ public class Maila implements Tormattava{
     private final int leveys = 20;
     private final int korkeus = 100;
 
-    @Override
     public int getX() {
         return x;
     }
 
-    @Override
     public int getY() {
         return y;
     }
 
-    @Override
     public int getLeveys() {
         return leveys;
     }
 
-    @Override
     public int getKorkeus() {
         return korkeus;
     }
@@ -98,7 +93,7 @@ public class Maila implements Tormattava{
         /**
          * Palauttaa mailan alapään rajat.
          */
-        return new Rectangle(getX() + 5, getY() + getKorkeus() - 5, getLeveys() - 5, 5);
+        return new Rectangle(getX() + 5, getY() + getKorkeus(), getLeveys() - 5, 5);
     }
 
 }

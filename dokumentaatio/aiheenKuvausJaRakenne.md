@@ -1,7 +1,7 @@
 ### Aihemäärittely
 
 Tarkoituksena on koodata klassinen [Pong-peli](https://en.wikipedia.org/wiki/Pong).
-Pelaaja voi valita pelaako hän tekoälyä vai kaveria vastaan.
+Pelaaja voi valita pelaako hän tekoälyä vai kaveria vastaan. Pallon liike nopeutuu pelin edetessä, ja kentälle ilmestyy esteitä. Esteet varoittavat ilmestymisestään harmaalla värillä.
 
 TODO:
 - [X] Suunta-enum
@@ -11,14 +11,16 @@ TODO:
 - [X] Pausetus
 - [X] Tekoäly
 - [X] Pelityylin valinta
-- [ ] Esteet
+- [X] Esteet
 - [X] Pisteet näytölle
-- [ ] Pallo kimpoaa kiinnostavasti/ei mene mailan läpi jos lyödään ylä- tai alapäällä
+- [X] Pallo ei mene mailan läpi jos lyödään ylä- tai alapäällä
 - [X] Pallo nopeutuu pelin edetessä
 - [X] Pallo odottaa hetken maalin jälkeen
+- [X] Esteiden hallinta
+- [ ] Realistinen kimpoaminen esteistä
 
 ####Luokkakaavio
-![Luokkakaavio](Pong_refaktoroinnin_jalkeen.png)
+![Luokkakaavio](Pong_refaktoroinnin_jalkeen_esteilla.png)
 
 ####Sekvenssikaavio pelitypin valitsemisesta
 ![Sekvenssikaavio pelityypin valitsemisesta](sekvenssikaavio_pelinvalinta.png)

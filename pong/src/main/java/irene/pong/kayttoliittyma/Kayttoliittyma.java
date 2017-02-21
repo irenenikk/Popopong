@@ -32,7 +32,6 @@ import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 public class Kayttoliittyma implements Runnable, Paivitettava {
 
     private JFrame ikkuna;
-//    private final Kentta kentta;
     private JLabel ilmoitus;
     private JLabel pause;
     private Pong logiikka;
@@ -69,6 +68,10 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
     
     public Animoija getAnimoija() {
         return animoija;
+    }
+    
+    public Piirturi getPiirturi() {
+        return piirturi;
     }
     
     public void asetaIlmoitus(String ilmo) {
@@ -217,9 +220,7 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
             } else if (logiikka.getTilasto().voittaja() == Pelaaja.OIKEA) {
                 voittaja = "Player 2";
             }
-            asetaIlmoitus("<html><div style='text-align: center;'> <strong> " + voittaja + " wins </strong> <br> Press SPACE to restart <br> or close the window </div></html>");
-            animoija.getAnimoija().stop();
-            
+            asetaIlmoitus("<html><div style='text-align: center;'> <strong> " + voittaja + " wins </strong> <br> Press SPACE to restart <br> or close the window </div></html>");            
         } else if (!logiikka.peliAlkanut() && !logiikka.isPeliKaynnissa() && logiikka.getPelityyppi() != null) {
             String pelityyppi = "";
             String ohjeet = "";

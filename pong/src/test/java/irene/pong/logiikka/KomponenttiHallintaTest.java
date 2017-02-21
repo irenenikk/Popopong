@@ -1,6 +1,7 @@
 
 package irene.pong.logiikka;
 
+import irene.pong.komponentit.Este;
 import irene.pong.komponentit.Kentta;
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
@@ -17,6 +18,7 @@ public class KomponenttiHallintaTest {
     public void setUp() {
         Kentta kentta = new Kentta();
         kontrolleri = new KomponenttiHallinta(kentta, new Tilasto());
+        kontrolleri.alustaKomponentit();
     }
     
     @Test
@@ -72,6 +74,8 @@ public class KomponenttiHallintaTest {
         pallo.setSuuntaX(Suunta.OIKEA);
         pallo.liiku();
         pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
         kontrolleri.paivita();
         assertEquals(Suunta.ALAS, pallo.getSuuntaY());
     }
@@ -111,7 +115,7 @@ public class KomponenttiHallintaTest {
     }    
     
     @Test
-    public void palloMaalissaLisaaPisteitaVasemmalla() {
+    public void palloMaalissaLisaaPisteitaVasemmallaJaPysayttaaPallon() {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(1);
         pallo.setY(1);
@@ -127,10 +131,11 @@ public class KomponenttiHallintaTest {
         pallo.liiku();
         kontrolleri.paivita();
         assertEquals(1, kontrolleri.getTilasto().oikeanPelaajanPisteet());
+        assertTrue(pallo.isPaikallaan());
     }
     
     @Test
-    public void palloMaalissaLisaaPisteitaOikealla() {
+    public void palloMaalissaLisaaPisteitaOikeallaJaPysayttaaPallon() {
         Pallo pallo = kontrolleri.getPallo();
         pallo.setX(495);
         pallo.setY(550);
@@ -140,6 +145,8 @@ public class KomponenttiHallintaTest {
         pallo.liiku();
         kontrolleri.paivita();
         assertEquals(1, kontrolleri.getTilasto().vasemmanPelaajanPisteet());
+        assertTrue(pallo.isPaikallaan());
+
     }
     
     @Test
@@ -205,6 +212,27 @@ public class KomponenttiHallintaTest {
         kontrolleri.paivita();
         kontrolleri.paivita();
         assertEquals(Suunta.VASEN, pallo.getSuuntaX());
+    }
+    
+    @Test
+    public void pallonOsumatKasvavatKimmotessa() {
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setX(40);
+        pallo.setY(40);
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.YLOS);
+        Maila pelaaja = kontrolleri.getMaila1();
+        pelaaja.setX(0);
+        pelaaja.setY(0);
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        assertEquals(2, kontrolleri.getPallonOsumat());
     }
    
     @Test
@@ -312,16 +340,14 @@ public class KomponenttiHallintaTest {
         pelaaja.setY(0);
         kontrolleri.paivita();
         kontrolleri.paivita();
-        kontrolleri.paivita();
-        kontrolleri.paivita();
         assertEquals(1, kontrolleri.getPallonOsumat());
     }
     
     @Test
-    public void palloNopeutuu10sumanJalkeen() {
-        kontrolleri.setPallonOsumat(10);
-        kontrolleri.tarkistaNopeutus();
-        assertEquals(3.01, kontrolleri.getKentta().getPallo().getNopeus(), 0.0001);
+    public void palloNopeutuu6sumanJalkeen() {
+        kontrolleri.setPallonOsumat(6);
+        kontrolleri.tarkistaPallonNopeutus();
+        assertEquals(3.5, kontrolleri.getKentta().getPallo().getNopeus(), 0.0001);
     }
     
     @Test
@@ -337,5 +363,95 @@ public class KomponenttiHallintaTest {
         kontrolleri.setPallonOdotusaika(0);
         kontrolleri.paivita();
         assertFalse(kontrolleri.getPallo().isPaikallaan());
+    }
+    
+    @Test
+    public void josPallonosumiaOikeaMaaraEsteitaLisataan() {
+        kontrolleri.setPallonOsumat(12);
+        kontrolleri.paivita();
+        assertEquals(1, kontrolleri.getKentta().getEsteet().size());
+    }
+    
+    @Test 
+    public void josEsteitaLiikaaEiLisata() {
+        Kentta k = kontrolleri.getKentta();
+        for (int i = 0; i < 8; i++) {
+            k.lisaaEste();
+        }
+        kontrolleri.setPallonOsumat(12);
+        kontrolleri.paivita();
+        assertEquals(8, kontrolleri.getKentta().getEsteet().size());
+    }
+    
+    @Test
+    public void esteidenTiheysAinaYli2() {
+        kontrolleri.setPallonOsumat(0);
+    }
+    
+    @Test
+    public void palloKimpoaaYlosJosMailaOsuuYlapaall() {
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setX(5);
+        pallo.setY(10);
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.ALAS);
+        Maila pelaaja = kontrolleri.getMaila1();
+        pelaaja.setX(0);
+        pelaaja.setY(20);
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        assertEquals(Suunta.YLOS, pallo.getSuuntaY());
+    }
+    
+    @Test
+    public void palloKimpoaaAlasJosMailaOsuuAlapaalla() {
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setX(5);
+        pallo.setY(kontrolleri.getKentta().getKorkeus() - 10 - pallo.getHalkaisija());
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.YLOS);
+        Maila pelaaja = kontrolleri.getMaila1();
+        pelaaja.setX(0);
+        pelaaja.setY(kontrolleri.getKentta().getKorkeus() - 20 - pelaaja.getKorkeus());
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        assertEquals(Suunta.ALAS, pallo.getSuuntaY());
+    }
+    
+    @Test
+    public void josEsteEiNakyvissaPalloMeneeOhi() {
+        kontrolleri.getKentta().lisaaEste();
+        Este este = kontrolleri.getKentta().getEsteet().get(0);
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setX(este.getX() + 5);
+        pallo.setY(este.getY() + 5);
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.YLOS);
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        assertEquals(Suunta.VASEN, pallo.getSuuntaX());
+    }
+    
+    @Test
+    public void josEsteNakyvissaPalloKimpoaa() {
+        kontrolleri.getKentta().lisaaEste();
+        Este este = kontrolleri.getKentta().getEsteet().get(0);
+        este.setVaroitusaika(0);
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setX(este.getX() + 5);
+        pallo.setY(este.getY() + 5);
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.YLOS);
+        kontrolleri.paivita();
+        kontrolleri.paivita();
+        assertEquals(Suunta.OIKEA, pallo.getSuuntaX());
+    }
+    
+    @Test
+    public void paivitaAsettaaEsteetNakyviksi() {
+        kontrolleri.setEsteidenTiheys(2);
+        kontrolleri.setPallonOsumat(12);
+        kontrolleri.paivita();
+        assertEquals(kontrolleri.getEsteidenTiheys(), 2);
     }
 }

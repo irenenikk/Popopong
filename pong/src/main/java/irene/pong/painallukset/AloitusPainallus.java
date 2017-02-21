@@ -33,12 +33,13 @@ public class AloitusPainallus extends AbstractAction {
          */
         if (!pong.isPeliKaynnissa() && !kali.getAnimoija().getAnimoija().isPaused() && !pong.peliAlkanut() && pong.getPelityyppi() == null) {
             pong.getTilasto().nollaaPisteet();
-            pong.getKontrolleri().poistaTekoAlY();
-            pong.getKontrolleri().getKentta().getPallo().palautaNopeus();
-            pong.getKontrolleri().getKentta().getOikeaPelaaja().nollaaSuunnat();
-            pong.getKontrolleri().getKentta().getVasenPelaaja().nollaaSuunnat();  
-            pong.getKentta().getEsteet().clear();
+            pong.getKentta().alustaKentta();
+            kali.getPiirturi().tyhjennaEsteidenVarit();
+            pong.getKontrolleri().alustaKomponentit();
+            kali.pausePiiloon();
             kali.paivita();
+            kali.getAnimoija().getAnimoija().stop();
+
         }
         if (!pong.isPeliKaynnissa() && !kali.getAnimoija().getAnimoija().isPaused() && !pong.peliAlkanut() && pong.getPelityyppi() != null) {
             pong.setPeliKaynnissa(true);

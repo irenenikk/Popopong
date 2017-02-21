@@ -26,20 +26,35 @@ public class Aly {
          * @see komponentit.Pallo
          * @see komponentit.Maila
          */
-        if (kentta.getPallo().getX() < kentta.getLeveys() / 2) {
-            if (kentta.getPallo().getY() + kentta.getPallo().getHalkaisija() < kentta.getVasenPelaaja().getY()) {
+        if (kentta.getPallo().getSuuntaX() == Suunta.VASEN) {
+            if (palloYlapuolella() && kentta.getPallo().getSuuntaY() == Suunta.YLOS || palloYlapuolella() && palloOmallaPuolella()) {
                 kentta.getVasenPelaaja().setKiihdytaYlos(true);
                 kentta.getVasenPelaaja().setKiihdytaAlas(false);
-            } else if (kentta.getPallo().getY() >= kentta.getVasenPelaaja().getY() + kentta.getVasenPelaaja().getKorkeus()) {
+            } else if (!palloYlapuolella() && kentta.getPallo().getSuuntaY() == Suunta.ALAS || !palloYlapuolella() && palloOmallaPuolella()) {
                 kentta.getVasenPelaaja().setKiihdytaAlas(true);
                 kentta.getVasenPelaaja().setKiihdytaYlos(false);
+            } else {
+                kentta.getVasenPelaaja().setKiihdytaAlas(false);
+                kentta.getVasenPelaaja().setKiihdytaYlos(false);
             }
-        } else if (kentta.getOikeaPelaaja().getY() >= kentta.getKorkeus() / 2 && kentta.getVasenPelaaja().getY() >= kentta.getKorkeus() / 2) {
+        } else if (oikeaPelaajaKentanAlapuolella()) {
             kentta.getVasenPelaaja().setKiihdytaAlas(false);
             kentta.getVasenPelaaja().setKiihdytaYlos(true);
-        } else if (kentta.getOikeaPelaaja().getY() < kentta.getKorkeus() / 2 && kentta.getVasenPelaaja().getY() < kentta.getKorkeus() / 2) {
+        } else if (!oikeaPelaajaKentanAlapuolella()) {
             kentta.getVasenPelaaja().setKiihdytaYlos(false);
             kentta.getVasenPelaaja().setKiihdytaAlas(true);
         }
+    }
+    
+    private boolean palloYlapuolella() {
+        return kentta.getPallo().getY() + kentta.getPallo().getHalkaisija() < kentta.getVasenPelaaja().getY() + kentta.getVasenPelaaja().getKorkeus()/2 ;
+    }
+    
+    private boolean oikeaPelaajaKentanAlapuolella() {
+        return kentta.getOikeaPelaaja().getY() >= kentta.getKorkeus() / 2;
+    }
+    
+    private boolean palloOmallaPuolella() {
+        return kentta.getPallo().getX() < kentta.getLeveys() / 2;
     }
 }

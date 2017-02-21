@@ -1,10 +1,9 @@
 package irene.pong.komponentit;
 
-import irene.pong.logiikka.Tormattava;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class Este implements Tormattava{
+public class Este {
     private int x;
     private int y;
     private int leveys;
@@ -12,16 +11,19 @@ public class Este implements Tormattava{
     private int varoitusaika;
     private final Random random;
     private boolean poistettava;
-    private boolean nakyvissa;
+    private boolean tormattava;
     
     public Este(int x, int y) {
+        /**
+         * Luo uuden satunnaisen esteen annettuihin koordinaatteihin. Pallo voi törmätä esteeseen vasta 100 kierrosta sen luomisen jälkeen.
+         */
         random = new Random();
-        leveys = random.nextInt(80) + 20;
-        korkeus = random.nextInt(80) + 20;
+        leveys = random.nextInt(40) + 20;
+        korkeus = random.nextInt(40) + 20;
         this.x = x;
         this.y = y;
         poistettava = false;
-        nakyvissa = false;
+        tormattava = false;
         varoitusaika = 100;
     }
 
@@ -34,11 +36,11 @@ public class Este implements Tormattava{
     }
 
     public boolean isNakyvissa() {
-        return nakyvissa;
+        return tormattava;
     }
 
     public void setNakyvissa(boolean nakyvissa) {
-        this.nakyvissa = nakyvissa;
+        this.tormattava = nakyvissa;
     }
 
     public int getVaroitusaika() {
@@ -53,7 +55,6 @@ public class Este implements Tormattava{
         varoitusaika--;
     }
 
-    @Override
     public int getX() {
         return x;
     }
@@ -62,7 +63,6 @@ public class Este implements Tormattava{
         this.x = x;
     }
 
-    @Override
     public int getY() {
         return y;
     }
@@ -71,7 +71,7 @@ public class Este implements Tormattava{
         this.y = y;
     }
 
-    @Override
+    
     public int getLeveys() {
         return leveys;
     }
@@ -80,7 +80,6 @@ public class Este implements Tormattava{
         this.leveys = leveys;
     }
 
-    @Override
     public int getKorkeus() {
         return korkeus;
     }

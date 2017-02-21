@@ -13,16 +13,16 @@ import irene.pong.komponentit.Pallo;
 
 public class KomponenttiHallinta {
 
-    Kentta kentta;
-    Maila maila1;
-    Maila maila2;
-    Pallo pallo;
-    Tilasto tilasto;
-    int pallonOsumat;
-    int pallonOdotusaika;
-    int esteidenTiheys;
-    Aly aly;
-    boolean kaytaAlya;
+    private Kentta kentta;
+    private Maila maila1;
+    private Maila maila2;
+    private Pallo pallo;
+    private Tilasto tilasto;
+    private int pallonOsumat;
+    private int pallonOdotusaika;
+    private int esteidenTiheys;
+    private Aly aly;
+    private boolean kaytaAlya;
 
     public KomponenttiHallinta(Kentta k, Tilasto t) {
         /**
@@ -39,9 +39,6 @@ public class KomponenttiHallinta {
         maila2 = kentta.getOikeaPelaaja();
         
         aly = new Aly(kentta);
-        kaytaAlya = false;
-        pallonOsumat = 1;
-        esteidenTiheys = 15;
     }
 
     public Kentta getKentta() {
@@ -91,6 +88,18 @@ public class KomponenttiHallinta {
     public void setPallonOdotusaika(int i) {
         pallonOdotusaika = i;
     }
+    
+    public void alustaEsteidenTiheys() {
+        esteidenTiheys = 12;
+    }
+
+    public void setEsteidenTiheys(int esteidenTiheys) {
+        this.esteidenTiheys = esteidenTiheys;
+    }
+
+    public int getEsteidenTiheys() {
+        return esteidenTiheys;
+    }
 
     public void alustaKomponentit() {
         /**
@@ -103,6 +112,9 @@ public class KomponenttiHallinta {
         asetaPalloKeskelle();
         asetaPelaaja1Keskelle();
         asetaPelaaja2Keskelle();
+        esteidenTiheys = 12;
+        pallonOsumat = 1;
+        kaytaAlya = false;
     }
 
     public void paivita() {
@@ -129,8 +141,9 @@ public class KomponenttiHallinta {
         tarkistaOsuvatkoMailatReunaan();
         tarkistaMaali();
         tarkistaLuodaankoEste();
-        tarkistaOsuukoEsteeseen();
-        tarkistaNopeutus();
+        tarkistaEsteidenNakyvyys();
+        tarkistaOsuukoPalloEsteeseen();
+        tarkistaPallonNopeutus();
     }
 
     private void asetaPalloKeskelle() {
@@ -212,15 +225,7 @@ public class KomponenttiHallinta {
          * @see Maila
          */
         
-        if (pallo.getRajat().intersects(maila1.getYlapaa()) || pallo.getRajat().intersects(maila2.getYlapaa())) {
-            pallo.setSuuntaY(Suunta.YLOS);
-            pallo.setY(pallo.getY() - (int) pallo.getNopeus());
-            pallonOsumat++;
-        } else if (pallo.getRajat().intersects(maila1.getAlapaa()) || pallo.getRajat().intersects(maila2.getAlapaa())) {
-            pallo.setSuuntaY(Suunta.ALAS);
-            pallo.setY(pallo.getY() + (int) pallo.getNopeus());
-            pallonOsumat++;
-        } else if (pallo.getRajat().intersects(maila1.getRajat())) {
+        if (pallo.getRajat().intersects(maila1.getRajat())) {
             pallo.setSuuntaX(Suunta.OIKEA);
             pallo.setX(pallo.getX() + (int) pallo.getNopeus());
             pallonOsumat++;
@@ -230,6 +235,18 @@ public class KomponenttiHallinta {
             pallonOsumat++;
         }
 
+        if (pallo.getRajat().intersects(maila2.getAlapaa()) || pallo.getRajat().intersects(maila1.getAlapaa())) {
+            pallo.setSuuntaY(Suunta.ALAS);
+            pallo.setY(pallo.getY() + (int) pallo.getNopeus());
+            pallonOsumat++;
+        }
+        if (pallo.getRajat().intersects(maila2.getYlapaa()) || pallo.getRajat().intersects(maila1.getYlapaa())) {
+            pallo.setSuuntaY(Suunta.YLOS);
+            pallo.setY(pallo.getY() - (int) pallo.getNopeus());
+            pallonOsumat++;
+        }
+
+        
         
     }
 
@@ -257,14 +274,13 @@ public class KomponenttiHallinta {
 
     }
 
-    public void tarkistaNopeutus() {
+    public void tarkistaPallonNopeutus() {
         /**
          * Nopeuttaa pallon liikettä, jos se on osunut pelaajien mailoihin tarpeeksi monta kertaa.
          * 
          * @see Pallo#nopeuta()
          */
-        if (pallonOsumat % 5 == 0) {
-            System.out.println("Nopeutin kun osumia oli " + pallonOsumat);
+        if (pallonOsumat % 6 == 0) {
             pallo.nopeuta();
             pallonOsumat++;
         }
@@ -287,19 +303,18 @@ public class KomponenttiHallinta {
     
     private void tarkistaLuodaankoEste() {
         /**
-         * Tarkistaa, onko aika luoda uusi este.
+         * Tarkistaa, onko aika luoda uusi este, eli onko aikaa kulunut tarpeeksi ja onko esteet-lista liian iso.
          */
-        if (pallonOsumat % esteidenTiheys == 0) { //ei toimi
+        if (pallonOsumat % esteidenTiheys == 0 && kentta.getEsteet().size() < 8) { 
             kentta.lisaaEste();
             if (esteidenTiheys > 2) {
                 esteidenTiheys--;   
             }
             pallonOsumat++;
-            System.out.println("Esteiden tiheys: " + esteidenTiheys);
         }
     }
     
-    private void tarkistaOsuukoEsteeseen() {
+    private void tarkistaOsuukoPalloEsteeseen() {
         /**
          * Tarkistaa, törmääkö pallo esteeseen ja poistaa tällöin sen.
          * Este tuntee varoitusaikansa ja näkyvyytensä, muttei itse vaihda näkyvyyden tilaa, vaan sen tekee kontrolleri.
@@ -310,13 +325,18 @@ public class KomponenttiHallinta {
                     pallo.vaihdaSuuntaaPäinvastaiseen();
                     este.setPoistettava(true);
                 }                
-            } else {
-                este.vahennaVaroitusaikaa();
-                if (este.getVaroitusaika() == 0) {
-                    este.setNakyvissa(true);
-                }
             }
         });
         kentta.poistaPoistettavat();
+    }
+    
+    private void tarkistaEsteidenNakyvyys() {
+        kentta.getEsteet().stream().forEach((Este este) ->{
+            if (este.getVaroitusaika() == 0) {
+                este.setNakyvissa(true);
+            } else {
+                este.vahennaVaroitusaikaa();
+            }
+        });
     }
 }

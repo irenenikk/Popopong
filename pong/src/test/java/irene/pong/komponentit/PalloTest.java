@@ -35,5 +35,13 @@ public class PalloTest {
         assertEquals(3, pallo.getX());
         assertEquals(3, pallo.getY());
     }
+    
+    @Test
+    public void palautaNopeusPalauttaaNopeudenKolmeen() {
+        pallo.nopeuta();
+        pallo.nopeuta();
+        pallo.palautaNopeus();
+        assertEquals(3.0, pallo.getNopeus(), 0.1);
+    }
 
 }

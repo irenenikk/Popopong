@@ -11,8 +11,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Pallo {
 
     private final int halkaisija = 20;
-    private double dX; //testailua pallon liikeperiaatteen vaihtamiseksi
-    private double dY;
     private double nopeus = 3;
     private int x;
     private int y;
@@ -43,7 +41,7 @@ public class Pallo {
     }
     
     public void nopeuta() {
-        nopeus += 0.08;
+        nopeus += 0.5;
     }
 
     public void setX(int x) {
@@ -52,22 +50,6 @@ public class Pallo {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public double getdX() {
-        return dX;
-    }
-
-    public void setdX(double dX) {
-        this.dX = dX;
-    }
-
-    public double getdY() {
-        return dY;
-    }
-
-    public void setdY(double dY) {
-        this.dY = dY;
     }
 
     public Suunta getSuuntaY() {
