@@ -71,11 +71,9 @@ public class Kentta {
             int x = random.nextInt(50) + getLeveys()/3;
             int y = random.nextInt(getKorkeus()-20) + 20;
             uusi = new Este(x, y);
-            System.out.println("Luodaan uusi este");
             for (Este este: esteet) {
                 if (este.getRajat().intersects(uusi.getRajat())) {
                     osuuEsteeseen = true;
-                    System.out.println("Olisi osunut esteeseen");
                 }
             }
             if (!osuuEsteeseen) {
