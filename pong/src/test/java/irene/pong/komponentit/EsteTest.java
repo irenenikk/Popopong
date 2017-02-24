@@ -1,8 +1,10 @@
 package irene.pong.komponentit;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import org.junit.Before;
@@ -44,5 +46,13 @@ public class EsteTest {
         Este este = new Este(1, 1);
         este.vahennaVaroitusaikaa();
         assertEquals(99, este.getVaroitusaika());
+    }
+    
+    @Test
+    public void rajatPalauttaaRectanglet() {
+        Assert.assertEquals(new Rectangle().getClass(), este.getAlarajat().getClass());
+        Assert.assertEquals(new Rectangle().getClass(), este.getYlarajat().getClass());
+        Assert.assertEquals(new Rectangle().getClass(), este.getVasenRajat().getClass());
+        Assert.assertEquals(new Rectangle().getClass(), este.getOikeaRajat().getClass());
     }
 }

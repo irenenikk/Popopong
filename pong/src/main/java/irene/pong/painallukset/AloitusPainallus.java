@@ -1,6 +1,3 @@
-/**
- * Luokka sitoo välilyönnin painamiseen pelin aloittamisen.
- */
 package irene.pong.painallukset;
 
 import irene.pong.kayttoliittyma.Animoija;
@@ -9,18 +6,21 @@ import irene.pong.logiikka.Pong;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+/**
+ * Luokka sitoo välilyönnin painamiseen pelin aloittamisen.
+ */
 public class AloitusPainallus extends AbstractAction {
 
     private final Pong pong;
     private final Kayttoliittyma kali;
 
+    /**
+     * Luokka saa konstruktorissaan sekä päälogiikkaluokan, että pääkäyttöliittymäluokan.
+     * 
+     * @param p Pelin päälogiikkaluokka
+     * @param k Pelin pääkäyttöliittymäluokka
+     */
     public AloitusPainallus(Pong p, Kayttoliittyma k) {
-        /**
-         * Luokka saa konstruktorissaan sekä päälogiikkaluokan, että pääkäyttöliittymäluokan.
-         * 
-         * @see logiikka.Pong
-         * @see logiikka.Kayttoliittyma
-         */
         pong = p;
         kali = k;
     }

@@ -20,7 +20,7 @@ TODO:
 - [ ] Realistinen kimpoaminen esteistä
 
 ####Luokkakaavio
-![Luokkakaavio](Pong_refaktoroinnin_jalkeen_esteilla.png)
+![Luokkakaavio](Pong_vko6.png)
 
 ####Sekvenssikaavio pelitypin valitsemisesta
 ![Sekvenssikaavio pelityypin valitsemisesta](sekvenssikaavio_pelinvalinta.png)

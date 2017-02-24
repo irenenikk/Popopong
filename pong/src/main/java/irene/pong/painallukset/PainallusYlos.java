@@ -1,13 +1,12 @@
-/**
- * Luokka sitoo napin painalluksen mailan liikkeeseen.
- */
-
 package irene.pong.painallukset;
 
 import irene.pong.logiikka.KomponenttiHallinta;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+/**
+ * Luokka sitoo napin painalluksen mailan liikkeeseen.
+ */
 public class PainallusYlos extends AbstractAction {
 
     private final KomponenttiHallinta kontrolleri;

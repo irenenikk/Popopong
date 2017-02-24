@@ -1,14 +1,14 @@
-/**
- * Pelissä käytetty pallo. Tarjoaa metodin liikuttamiseen, sekä rajojen tutkimiseen.
- */
-
 package irene.pong.komponentit;
 
 import irene.pong.logiikka.Suunta;
 import java.awt.Rectangle;
 import java.util.concurrent.ThreadLocalRandom;
+import irene.pong.logiikka.Liikkuja;
 
-public class Pallo {
+/**
+ * Pelissä käytetty pallo. Tarjoaa metodin liikuttamiseen, sekä rajojen tutkimiseen.
+ */
+public class Pallo implements Liikkuja {
 
     private final int halkaisija = 20;
     private double nopeus = 3;
@@ -24,10 +24,12 @@ public class Pallo {
         odottaa = false;        
     }
 
+    @Override
     public int getX() {
         return x;
     }
 
+    @Override
     public int getY() {
         return y;
     }
@@ -44,10 +46,12 @@ public class Pallo {
         nopeus += 0.5;
     }
 
+    @Override
     public void setX(int x) {
         this.x = x;
     }
 
+    @Override
     public void setY(int y) {
         this.y = y;
     }
@@ -76,13 +80,17 @@ public class Pallo {
         this.odottaa = paikallaan;
     }
     
+    /**
+     * Palauttaa pallon nopeuden takaisin alkuperäiseksi.
+     */
     public void palautaNopeus() {
         nopeus = 3;
     }
+    
+    /**
+     * Liikuttaa palloa, jos sitä ei ole asetettu odottamaan maalin jälkeen.
+     */
     public void liiku() {
-        /**
-         * Liikuttaa palloa, jos sitä ei ole asetettu odottamaan maalin jälkeen.
-         */
         if (!odottaa) {
             switch (suuntaY) {
                 case YLOS:
@@ -104,10 +112,10 @@ public class Pallo {
         }
     }
     
+    /**
+     * Vaihtaa pallon suuntaa. Kutsutaan maalin jälkeen, jotta pallon lähtosuuntaa ei voi ennakoida.
+     */
     public void vaihdaSuuntaaSatunnaisesti() {
-        /**
-         * Vaihtaa pallon suuntaa. Kutsutaan maalin jälkeen, jotta pallon lähtosuuntaa ei voi ennakoida.
-         */
         int randomX = ThreadLocalRandom.current().nextInt(0, 2);
         if (randomX == 0) {
             suuntaX = Suunta.VASEN;
@@ -123,31 +131,24 @@ public class Pallo {
         }
 
     }
-    
-    public void vaihdaSuuntaaPäinvastaiseen() {
-            switch (suuntaY) {
-                case YLOS:
-                    suuntaY = Suunta.ALAS;
-                    break;
-                case ALAS:
-                    suuntaY = Suunta.YLOS;
-                    break;
-            }
 
-            switch (suuntaX) {
-                case OIKEA:
-                    suuntaX = Suunta.VASEN;
-                    break;
-                case VASEN:
-                    suuntaX = Suunta.OIKEA;
-                    break;
-            }            
+    /**
+     * Palauttaa pallon rajat Rectangle-oliona, jonka avulla voidaan tarkistaa, osuuko pallo mailaan.
+     * 
+     * @return Palauttaa pallon rajan Rectangle oliona, jonka avulla voidaan
+     * tarkistaa, törmääkö se johonkin kentän komponenttiin.
+     */
+    public Rectangle getRajat() {
+        return new Rectangle(getX(), getY(), getHalkaisija(), getHalkaisija());
     }
 
-    public Rectangle getRajat() {
-        /**
-         * Palauttaa pallon rajat Rectangle-oliona, jonka avulla voidaan tarkistaa, osuuko pallo mailaan.
-         */
-        return new Rectangle(getX(), getY(), getHalkaisija(), getHalkaisija());
+    @Override
+    public int getKorkeus() {
+        return this.halkaisija;
+    }
+
+    @Override
+    public int getLeveys() {
+        return this.halkaisija;
     }
 }

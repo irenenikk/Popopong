@@ -21,13 +21,13 @@ public class Kentta {
     private final List<Este> esteet;
     private final Random random;
     
+    /**
+     * Luokan vastuulla on luoda kentän komponentit, eli pallo ja mailat.
+     * 
+     * @see Pallo
+     * @see Maila
+     */
     public Kentta() {  
-        /**
-         * Luokan vastuulla on luoda kentän komponentit, eli pallo ja mailat.
-         * 
-         * @see Pallo
-         * @see Maila
-         */
         pallo = new Pallo();
         vasen = new Maila();
         oikea = new Maila();
@@ -59,12 +59,12 @@ public class Kentta {
         return esteet;
     }
     
+    /**
+     * Lisää kentän keskiosaan uuden esteen varmistaen ensin, että uutta estettä ei luoda vanhan päälle.
+     * 
+     * @see Este
+     */
     public void lisaaEste() {
-        /**
-         * Lisää kentän keskiosaan uuden esteen varmistaen ensin, että uutta estettä ei luoda vanhan päälle.
-         * 
-         * @see Este
-         */
         Este uusi;
         while(true) {
             boolean osuuEsteeseen = false;
@@ -84,21 +84,21 @@ public class Kentta {
         esteet.add(uusi);
     }
     
-    public void poistaPoistettavat() {
-        /**
-         * Poistaa esteistä ne, joihin pallo on osunut.
-         */
+    /**
+     * Poistaa esteistä ne, joihin pallo on osunut.
+     */
+    public void poistaPoistettavatEsteet() {
         List<Este> poistettavat = esteet.stream().filter(este -> este.isPoistettava()).collect(Collectors.toList());
         esteet.removeAll(poistettavat);
     }
     
+    /**
+     * Palauttaa kentän alun tilanteeseen, eli palauttaa pallon nopeuden, poistaa kaikki esteet ja tyhjentää mailojen vanhat suunnat.
+     * 
+     * @see Pallo
+     * @see Maila
+     */
     public void alustaKentta() {
-        /**
-         * Palauttaa kentän alun tilanteeseen, eli palauttaa pallon nopeuden, poistaa kaikki esteet ja tyhjentää mailojen vanhat suunnat.
-         * 
-         * @see Pallo
-         * @see Maila
-         */
         pallo.palautaNopeus();
         oikea.nollaaSuunnat();
         vasen.nollaaSuunnat();  

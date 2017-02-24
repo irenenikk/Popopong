@@ -1,9 +1,14 @@
 package irene.pong.komponentit;
 
+import irene.pong.logiikka.Tormattava;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class Este {
+/**
+ * Este, johon pallo voi osua kentällä.
+ * 
+ */
+public class Este implements Tormattava {
     private int x;
     private int y;
     private int leveys;
@@ -13,10 +18,13 @@ public class Este {
     private boolean poistettava;
     private boolean tormattava;
     
+    /**
+     * Luo uuden satunnaisen esteen annettuihin koordinaatteihin. Pallo voi törmätä esteeseen vasta 100 kierrosta sen luomisen jälkeen.
+     * 
+     * @param x Luotavan esteen x-koordinaatti.
+     * @param y Luotavan esteen y-koordinaatti.
+     */
     public Este(int x, int y) {
-        /**
-         * Luo uuden satunnaisen esteen annettuihin koordinaatteihin. Pallo voi törmätä esteeseen vasta 100 kierrosta sen luomisen jälkeen.
-         */
         random = new Random();
         leveys = random.nextInt(40) + 20;
         korkeus = random.nextInt(40) + 20;
@@ -59,40 +67,47 @@ public class Este {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
     }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     
     public int getLeveys() {
         return leveys;
-    }
-
-    public void setLeveys(int leveys) {
-        this.leveys = leveys;
     }
 
     public int getKorkeus() {
         return korkeus;
     }
 
-    public void setKorkeus(int korkeus) {
-        this.korkeus = korkeus;
-    }
     
+    /**
+     * Palauttaa esteen rajat Rectangle-oliona, jonka avulla voidaan tarkistaa, 
+     * osuuko pallo törmättävään komponenttiin.
+     * 
+     * @return Reactangle-olion, jonka avulla voidaan tarkistaa, ollaanko
+     * estettä luomassa toisen päälle
+     */
     public Rectangle getRajat() {
-        /**
-         * Palauttaa esteen rajat Rectangle-oliona, jonka avulla voidaan tarkistaa, osuuko pallo esteeseen.
-         */
         return new Rectangle(getX(), getY(), getLeveys(), getKorkeus());
     }
-    
+
+    @Override
+    public Rectangle getYlarajat() {
+        return new Rectangle(getX(), getY() - 2, getLeveys(), 5);
+    }
+
+    @Override
+    public Rectangle getAlarajat() {
+        return new Rectangle(getX(), getY() + getKorkeus(), getLeveys(), 5);
+    }
+
+    @Override
+    public Rectangle getVasenRajat() {
+        return new Rectangle(getX(), getY(), 5, getKorkeus());
+    }
+
+    @Override
+    public Rectangle getOikeaRajat() {
+        return new Rectangle(getX() + getLeveys() - 5, getY(), 5, getKorkeus());
+    }    
 }

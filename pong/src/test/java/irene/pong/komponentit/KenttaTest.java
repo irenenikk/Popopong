@@ -55,4 +55,15 @@ public class KenttaTest {
         kentta.alustaKentta();
         assertEquals(0, kentta.getEsteet().size());
     }
+    
+    @Test
+    public void poistaPoistettavatPoistaaJosPoistettava() {
+        kentta.lisaaEste();
+        kentta.lisaaEste();
+        kentta.getEsteet().get(0).setPoistettava(true);
+        kentta.poistaPoistettavatEsteet();
+        assertEquals(1, kentta.getEsteet().size());
+    }
+    
+     
 }

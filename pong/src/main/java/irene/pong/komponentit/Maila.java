@@ -1,12 +1,13 @@
+package irene.pong.komponentit;
+
+import irene.pong.logiikka.Tormattava;
+import java.awt.Rectangle;
+import irene.pong.logiikka.Liikkuja;
+
 /**
  * Luokka edustaa pelissä käytettyjä mailoja. Tarjoaa metodin liikuttamiseen ja rajojen tutkimiseen.
  */
-
-package irene.pong.komponentit;
-
-import java.awt.Rectangle;
-
-public class Maila {
+public class Maila implements Tormattava, Liikkuja {
 
     private int x;
     private int y;
@@ -16,28 +17,35 @@ public class Maila {
     private final int leveys = 20;
     private final int korkeus = 100;
 
+
+    @Override
     public int getX() {
         return x;
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public int getLeveys() {
-        return leveys;
-    }
-
-    public int getKorkeus() {
-        return korkeus;
-    }
-
+    @Override
     public void setX(int x) {
         this.x = x;
     }
 
+    @Override
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public int getLeveys() {
+        return leveys;
+    }
+
+    @Override
+    public int getKorkeus() {
+        return korkeus;
     }
 
     public boolean isKiihdytaYlos() {
@@ -56,18 +64,18 @@ public class Maila {
         this.kiihdytaAlas = kiihdytaAlas;
     }
     
+    /**
+     * Nollaa mailan suunnat.
+     */
     public void nollaaSuunnat() {
-        /**
-         * Nollaa mailan suunnat.
-         */
         this.kiihdytaAlas = false;
         this.kiihdytaYlos = false;
     }
 
+    /**
+     * Muuttaa mailan y-koordinaatin arvoa riippuen suunnista.
+     */
     public void liiku() { 
-        /**
-         * Muuttaa mailan y-koordinaatin arvoa riippuen suunnista.
-         */
         if (kiihdytaAlas) {
             y += nopeus;
         } else if (kiihdytaYlos) {
@@ -75,25 +83,23 @@ public class Maila {
         }
     }
 
-    public Rectangle getRajat() {
-        /**
-         * Palauttaa mailan rajat rectangle-oliona, joka helpottaa törmäysten tarkistamista.
-         */
-        return new Rectangle(getX(), getY(), getLeveys(), getKorkeus());
-    }
-    
-    public Rectangle getYlapaa() {
-        /**
-         * Palauttaa mailan yläpään rajat.
-         */
-        return new Rectangle(getX() + 5, getY() - 5, getLeveys() - 5, 5);
-    }
-    
-    public Rectangle getAlapaa() {
-        /**
-         * Palauttaa mailan alapään rajat.
-         */
-        return new Rectangle(getX() + 5, getY() + getKorkeus(), getLeveys() - 5, 5);
+    @Override
+    public Rectangle getYlarajat() {
+        return new Rectangle(getX(), getY() - 5, getLeveys(), 5);
     }
 
+    @Override
+    public Rectangle getAlarajat() {
+        return new Rectangle(getX(), getY() + getKorkeus(), getLeveys(), 5);
+    }
+
+    @Override
+    public Rectangle getVasenRajat() {
+        return new Rectangle(getX(), getY(), 5, getKorkeus());
+    }
+
+    @Override
+    public Rectangle getOikeaRajat() {
+        return new Rectangle(getX() + getLeveys(), getY(), 5, getKorkeus());
+    }
 }

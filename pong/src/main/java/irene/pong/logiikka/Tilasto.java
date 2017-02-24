@@ -1,32 +1,30 @@
+
+package irene.pong.logiikka;
+
 /**
  * Luokka lisää pelaajille pisteitä ja tarkistaa voittajan.
  * 
  */
-
-package irene.pong.logiikka;
-
 public class Tilasto {
 
-//    private Kentta kentta;
     private final int voittoPisteet = 15;
     private int vasenPisteet;
     private int oikeaPisteet;
     
     public Tilasto() {
-//        kentta = k;
         vasenPisteet = 0;
         oikeaPisteet = 0;
     }
     
+    /**
+     * Lisää pelaajalle pisteen.
+     * 
+     * @param p Pelaaja, jolle piste annetaan
+     */
     public void lisaaPistePelaajalle(Pelaaja p) {
-        /**
-         * Lisää pelaajalle pisteen.
-         * 
-         * @param p Pelaaja, jolle piste annetaan
-         */
         if (p == Pelaaja.VASEN) {
             vasenPisteet++;
-        } else if(p == Pelaaja.OIKEA) {
+        } else if (p == Pelaaja.OIKEA) {
             oikeaPisteet++;
         }
     }
@@ -47,12 +45,12 @@ public class Tilasto {
         this.oikeaPisteet = oikeaPisteet;
     }
 
+    /**
+     * Vertailee pelaajien pisteitä keskenään ja palauttaa voittajan.
+     * 
+     * @return Voittanut pelaaja
+     */
     public Pelaaja voittaja() {
-        /**
-         * Vertailee pelaajien pisteitä keskenään ja palauttaa voittajan.
-         * 
-         * @return Voittanut pelaaja
-         */
         if (vasenPisteet >= voittoPisteet) {
             return Pelaaja.VASEN;
         } else if (oikeaPisteet >= voittoPisteet) {
@@ -62,10 +60,10 @@ public class Tilasto {
         }
     }
     
+    /**
+     * Nollaa pisteet. Kutsutaan, kun aloitetaan uusi peli.
+     */
     public void nollaaPisteet() {
-        /**
-         * Nollaa pisteet. Kutsutaan, kun aloitetaan uusi peli.
-         */
         vasenPisteet = 0;
         oikeaPisteet = 0;
     }

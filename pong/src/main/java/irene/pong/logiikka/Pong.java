@@ -20,10 +20,10 @@ public class Pong implements TimingTarget {
     private boolean peliAlkanut;
 
 
+/**
+ * Luokka luo loogiset komponentit. Aluksi peli ei ole käynnissä, eikä alkanut.
+ */
     public Pong() {
-        /**
-         * Luokka luo loogiset komponentit. Aluksi peli ei ole käynnissä, eikä alkanut.
-         */
         tilasto = new Tilasto();
         kentta = new Kentta();
         kontrolleri = new KomponenttiHallinta(kentta, tilasto);
@@ -82,15 +82,15 @@ public class Pong implements TimingTarget {
         this.tilannePaivitettava = tilannePaivitettava;
     }
 
+    /**
+     * Kutsuu kontrollerin metodia, joka järjestää kentän aloitusasetelman. 
+     * Pyytää mahdollista käyttöliittymää päivittymään, jotta käyttäjä saa seuraavat ohjeet.
+     * 
+     * @see KomponenttiHallinta
+     * 
+     * @see Paivitettava
+     */
     public void aloita() {
-        /**
-         * Kutsuu kontrollerin metodia, joka järjestää kentän aloitusasetelman. 
-         * Pyytää mahdollista käyttöliittymää päivittymään, jotta käyttäjä saa seuraavat ohjeet.
-         * 
-         * @see KomponenttiHallinta
-         * 
-         * @see Paivitettava
-         */
         kontrolleri.alustaKomponentit();
         tilannePaivitettava.paivita();
     }
@@ -113,15 +113,8 @@ public class Pong implements TimingTarget {
 
     @Override
     public void timingEvent(Animator source, double fraction) {
-        /**
-         * Animoija kutsuu tätä metodia ollessaan käynnissä. Varsinainen "pelilooppi".
-         */
         if (peliKaynnissa) {
             kontrolleri.paivita();
-    //        if (kontrolleri.tarkistaMaali()) {
-    //            animoija.stop();                  //miten saada pallo pysymään paikoillaan hetken ennen uuden kierroksen aloittamista?
-    //        }
-
             if (tilasto.voittaja() != null) {
                 peliKaynnissa = false;
                 tilannePaivitettava.paivita(); 

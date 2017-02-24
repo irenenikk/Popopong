@@ -1,5 +1,7 @@
 package irene.pong.komponentit;
 
+import java.awt.Rectangle;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -35,4 +37,13 @@ public class MailaTest {
         maila.liiku();
         assertEquals(5, maila.getY());
     }
+    
+    @Test
+    public void rajatPalauttaaRectanglet() {
+        Assert.assertEquals(new Rectangle().getClass(), maila.getAlarajat().getClass());
+        Assert.assertEquals(new Rectangle().getClass(), maila.getYlarajat().getClass());
+        Assert.assertEquals(new Rectangle().getClass(), maila.getVasenRajat().getClass());
+        Assert.assertEquals(new Rectangle().getClass(), maila.getOikeaRajat().getClass());
+    }
+    
 }

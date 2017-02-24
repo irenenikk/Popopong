@@ -1,31 +1,35 @@
-/**
- * Yksinpelissä vasemmanpuoleista mailaa liikuttava tekoäly.
- */
 package irene.pong.logiikka;
 
 import irene.pong.komponentit.Kentta;
 
+/**
+ * Yksinpelissä vasemmanpuoleista mailaa liikuttava tekoäly.
+ */
 public class Aly {
 
     private Kentta kentta;
 
+    /**
+     * Aly saa konstruktorissaan kentän, jonka vasemmanpuoleista mailaa se
+     * liikuttaa. Alyn on tunnettava koko kenttä, jotta se voi tarkkaila sekä
+     * pallon, että vastapuolen pelaajan liikettä.
+     * 
+     * @param k Pelin kenttä
+     */
     public Aly(Kentta k) {
-        /**
-         * Aly saa konstruktorissaan kentän, jonka vasemmanpuoleista mailaa se liikuttaa.
-         * Alyn on tunnettava koko kenttä, jotta se voi tarkkaila sekä pallon, että vastapuolen pelaajan liikettä.
-         */
         kentta = k;
     }
 
+    /**
+     * Liikuttaa vasemmanpuoleista mailaa. Jos pallo on vasemmanpuoleisen
+     * pelaajan puolella, maila liikkuu palloa kohti. Jos pallo on toisen
+     * pelaajan puolella, maila pyrkii vastakkaiseen suuntaan, kuin
+     * oikeanpuoleinen pelaaja.
+     *
+     * @see komponentit.Pallo
+     * @see komponentit.Maila
+     */
     public void liikutaMailaa() {
-        /**
-         * Liikuttaa vasemmanpuoleista mailaa. 
-         * Jos pallo on vasemmanpuoleisen pelaajan puolella, maila liikkuu palloa kohti.
-         * Jos pallo on toisen pelaajan puolella, maila pyrkii vastakkaiseen suuntaan, kuin oikeanpuoleinen pelaaja.
-         * 
-         * @see komponentit.Pallo
-         * @see komponentit.Maila
-         */
         if (kentta.getPallo().getSuuntaX() == Suunta.VASEN) {
             if (palloYlapuolella() && kentta.getPallo().getSuuntaY() == Suunta.YLOS || palloYlapuolella() && palloOmallaPuolella()) {
                 kentta.getVasenPelaaja().setKiihdytaYlos(true);
@@ -45,15 +49,15 @@ public class Aly {
             kentta.getVasenPelaaja().setKiihdytaAlas(true);
         }
     }
-    
+
     private boolean palloYlapuolella() {
-        return kentta.getPallo().getY() + kentta.getPallo().getHalkaisija() < kentta.getVasenPelaaja().getY() + kentta.getVasenPelaaja().getKorkeus()/2 ;
+        return kentta.getPallo().getY() + kentta.getPallo().getHalkaisija() < kentta.getVasenPelaaja().getY() + kentta.getVasenPelaaja().getKorkeus() / 2;
     }
-    
+
     private boolean oikeaPelaajaKentanAlapuolella() {
         return kentta.getOikeaPelaaja().getY() >= kentta.getKorkeus() / 2;
     }
-    
+
     private boolean palloOmallaPuolella() {
         return kentta.getPallo().getX() < kentta.getLeveys() / 2;
     }
