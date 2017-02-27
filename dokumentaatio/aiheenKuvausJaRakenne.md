@@ -17,7 +17,10 @@ TODO:
 - [X] Pallo nopeutuu pelin edetessä
 - [X] Pallo odottaa hetken maalin jälkeen
 - [X] Esteiden hallinta
-- [ ] Realistinen kimpoaminen esteistä
+- [X] Realistinen kimpoaminen esteistä
+
+####Rakennekuvaus
+Pelin loogiset pääkomponentit ovat Pong-, Kentta- ja KomponenttiHallintaluokat. Pong pitää kirjaa pelin tilasta, kenttä luo ja säilyttää pelin komponentteja, eli palloa, mailaa ja esteitä, ja komponenttihallinta hallinnoi näiden osasten liikettä kentällä, esimerkiksi tarkistaen, onko aika luoda uusi este, ja tuleeko komponentteja liikuttaa. Pallon törmäilemisten käsittely on siirretty oman luokan vastuulle, samoin mailojen kentän ulkopuolelle menemisen estäminen. Pisteistä pidetään kirjaa Tilasto-luokan avulla. Logiikka kommunikoi käyttöliittymän kanssa Paivitettava-rajapinnan kautta.
 
 ####Luokkakaavio
 ![Luokkakaavio](Pong_vko6.png)
