@@ -218,7 +218,7 @@ public class KomponenttiHallinta {
     }
     
     private void tarkistaLuodaankoEste() {
-        if (pallonOsumat % esteidenTiheys == 0 && kentta.getEsteet().size() < 8) { 
+        if (pallonOsumat % esteidenTiheys == 0 && kentta.getEsteet().size() < 5) { 
             kentta.lisaaEste();
             if (esteidenTiheys > 2) {
                 esteidenTiheys--;   

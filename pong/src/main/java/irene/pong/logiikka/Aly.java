@@ -8,6 +8,7 @@ import irene.pong.komponentit.Kentta;
 public class Aly {
 
     private Kentta kentta;
+    private boolean vaikea;
 
     /**
      * Aly saa konstruktorissaan kentän, jonka vasemmanpuoleista mailaa se
@@ -18,6 +19,11 @@ public class Aly {
      */
     public Aly(Kentta k) {
         kentta = k;
+        vaikea = true;
+    }
+    
+    public void setVaikea(boolean v) {
+        vaikea = v;
     }
 
     /**
@@ -31,20 +37,20 @@ public class Aly {
      */
     public void liikutaMailaa() {
         if (kentta.getPallo().getSuuntaX() == Suunta.VASEN) {
-            if (palloYlapuolella() && kentta.getPallo().getSuuntaY() == Suunta.YLOS || palloYlapuolella() && palloOmallaPuolella()) {
+            if (vaikea && palloYlapuolella() && kentta.getPallo().getSuuntaY() == Suunta.YLOS || palloYlapuolella() && palloOmallaPuolella()) {
                 kentta.getVasenPelaaja().setKiihdytaYlos(true);
                 kentta.getVasenPelaaja().setKiihdytaAlas(false);
-            } else if (!palloYlapuolella() && kentta.getPallo().getSuuntaY() == Suunta.ALAS || !palloYlapuolella() && palloOmallaPuolella()) {
+            } else if (vaikea &&!palloYlapuolella() && kentta.getPallo().getSuuntaY() == Suunta.ALAS || !palloYlapuolella() && palloOmallaPuolella()) {
                 kentta.getVasenPelaaja().setKiihdytaAlas(true);
                 kentta.getVasenPelaaja().setKiihdytaYlos(false);
-            } else {
+            } else if (vaikea){
                 kentta.getVasenPelaaja().setKiihdytaAlas(false);
                 kentta.getVasenPelaaja().setKiihdytaYlos(false);
             }
-        } else if (oikeaPelaajaKentanAlapuolella()) {
+        } else if (vaikea && oikeaPelaajaKentanAlapuolella()) {
             kentta.getVasenPelaaja().setKiihdytaAlas(false);
             kentta.getVasenPelaaja().setKiihdytaYlos(true);
-        } else if (!oikeaPelaajaKentanAlapuolella()) {
+        } else if (vaikea && !oikeaPelaajaKentanAlapuolella()) {
             kentta.getVasenPelaaja().setKiihdytaYlos(false);
             kentta.getVasenPelaaja().setKiihdytaAlas(true);
         }

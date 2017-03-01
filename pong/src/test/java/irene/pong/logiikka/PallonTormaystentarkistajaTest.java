@@ -7,20 +7,36 @@ import irene.pong.komponentit.Pallo;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class PallonTormaystentarkistajaTest {
     private PallonTormaystenTarkistaja tt;
     private Kentta k;
-    private KomponenttiHallinta kontrolleri;
         
     @Before
     public void setUp() {
         k = new Kentta();
         tt = new PallonTormaystenTarkistaja(k);
-        kontrolleri = new KomponenttiHallinta(k, new Tilasto());
     }
-    
+
+    @Test
+    public void palloTormaaPalauttaaFalseEikaMaaliaJosPalloEiMaalissaTaiMailassa() {
+        Pallo pallo = k.getPallo();
+        pallo.setX(100);
+        pallo.setY(100);
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setSuuntaY(Suunta.YLOS);
+        Maila pelaaja1 = k.getVasenPelaaja();
+        pelaaja1.setX(0);
+        pelaaja1.setY(0);
+        Maila pelaaja2 = k.getOikeaPelaaja();
+        pelaaja2.setX(300);
+        pelaaja2.setY(300);
+        assertFalse(tt.palloTormaa(pelaaja1));
+        assertFalse(tt.palloTormaa(pelaaja2));
+        assertEquals(null, tt.tarkistaMaali());
+    }
     @Test
     public void josPalloOsuuMailaanPalloKimpoaaOikealle() {
         Pallo pallo = k.getPallo();
@@ -41,6 +57,7 @@ public class PallonTormaystentarkistajaTest {
         pallo.liiku();
         tt.palloTormaa(pelaaja);
         assertEquals(Suunta.OIKEA, pallo.getSuuntaX());
+        assertTrue(tt.palloTormaa(pelaaja));
     }
     
     @Test
@@ -63,6 +80,21 @@ public class PallonTormaystentarkistajaTest {
         pallo.liiku();
         tt.palloTormaa(pelaaja);
         assertEquals(Suunta.VASEN, pallo.getSuuntaX());
+        assertTrue(tt.palloTormaa(pelaaja));
+    }
+    
+    @Test
+    public void palloKimpoaaNakyvastaEsteesta() {
+        k.lisaaEste();
+        Este este = k.getEsteet().get(0);
+        este.setNakyvissa(true);
+        Pallo pallo = k.getPallo();
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.YLOS);
+        pallo.setX(este.getX()-15);
+        pallo.setY(este.getY());
+        tt.tarkistaOsuukoPalloEsteeseen();
+        assertEquals(Suunta.VASEN, pallo.getSuuntaX());
     }
     
     @Test
@@ -82,7 +114,7 @@ public class PallonTormaystentarkistajaTest {
     }
     
     @Test
-    public void palloMaalinJalkeenPaikallaan() {
+    public void palloVasemmanMaalinJalkeenPaikallaan() {
         Pallo pallo = k.getPallo();
         pallo.setX(0);
         pallo.setY(0);
@@ -103,9 +135,25 @@ public class PallonTormaystentarkistajaTest {
         tt.tarkistaMaali();
         assertTrue(pallo.isPaikallaan());
     }
-   
+      
     @Test
-    public void palloAsetetaanMaalinJalkeenKeskelle() {
+    public void palloOikeanMaalinJalkeenPaikallaan() {
+        Pallo pallo = k.getPallo();
+        pallo.setX(k.getLeveys());
+        pallo.setY(200);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.ALAS);
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        tt.tarkistaMaali();
+        assertTrue(pallo.isPaikallaan());
+    }
+    
+    @Test
+    public void palloAsetetaanVasemmanMaalinJalkeenKeskelle() {
         Pallo pallo = k.getPallo();
         pallo.setX(0);
         pallo.setY(0);
@@ -124,6 +172,25 @@ public class PallonTormaystentarkistajaTest {
         assertEquals(290, pallo.getY());
     }
     
+    @Test
+    public void palloAsetetaanOikeanMaalinJalkeenKeskelle() {
+        Pallo pallo = k.getPallo();
+        pallo.setX(k.getLeveys());
+        pallo.setY(200);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.ALAS);
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        tt.tarkistaMaali();
+        assertEquals(240, pallo.getX());
+        assertEquals(290, pallo.getY());
+    }
     
     @Test
     public void kunMaaliVasemmallaPalauttaaOikeanPelaajan() {
@@ -160,4 +227,69 @@ public class PallonTormaystentarkistajaTest {
         pallo.liiku();
         assertEquals(Pelaaja.VASEN, tt.tarkistaMaali());
     }
+    
+    @Test
+    public void josPalloOsuuYlareunaanSuuntaVaihtuu() {
+        Pallo pallo = k.getPallo();
+        pallo.setX(5);
+        pallo.setY(5);
+        pallo.setSuuntaY(Suunta.YLOS);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        pallo.liiku();
+        tt.tormaakoPalloSeinaan();
+        assertEquals(Suunta.ALAS, pallo.getSuuntaY());
+    }
+    
+    @Test
+    public void josPalloOsuuYlareunaanSeKimpoaa() {
+        Pallo pallo = k.getPallo();
+        pallo.setX(2);
+        pallo.setY(0);
+        pallo.setSuuntaY(Suunta.YLOS);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        tt.tormaakoPalloSeinaan();
+        assertEquals(3, pallo.getY());
+    }
+
+    @Test
+    public void josPalloOsuuAlareunaanSeKimpoaa() {
+        Pallo pallo = k.getPallo();
+        pallo.setX(2);
+        pallo.setY(580);
+        pallo.setSuuntaY(Suunta.ALAS);
+        pallo.setSuuntaX(Suunta.OIKEA);
+        tt.tormaakoPalloSeinaan();
+        assertEquals(577, pallo.getY());
+    }
+
+    @Test
+    public void josPalloOsuuAlareunaanSuuntaVaihtuu() {
+        Pallo pallo = k.getPallo();
+        pallo.setX(-1);
+        pallo.setY(k.getKorkeus()-1);
+        pallo.setSuuntaY(Suunta.ALAS);
+        pallo.liiku();
+        pallo.liiku();
+        tt.tormaakoPalloSeinaan();
+        assertEquals(Suunta.YLOS, pallo.getSuuntaY());
+    }    
+    
+    @Test
+    public void josPalloOsuuEsteeseenEsteestaPoistettava() {
+        k.lisaaEste();
+        Este este = k.getEsteet().get(0);
+        este.setNakyvissa(true);
+        Pallo pallo = k.getPallo();
+        pallo.setSuuntaX(Suunta.OIKEA);
+        pallo.setSuuntaY(Suunta.YLOS);
+        pallo.setX(este.getX()-15);
+        pallo.setY(este.getY());
+        tt.tarkistaOsuukoPalloEsteeseen();
+        assertTrue(este.isPoistettava());
+    }
+    
+
 }

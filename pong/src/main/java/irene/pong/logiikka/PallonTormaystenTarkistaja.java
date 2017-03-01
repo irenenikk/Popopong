@@ -43,13 +43,11 @@ public class PallonTormaystenTarkistaja {
             return true;
         }
         if (kentta.getPallo().getRajat().intersects(t.getYlarajat())) {
-            System.out.println("Törmäsi ylös");
             kentta.getPallo().setSuuntaY(Suunta.YLOS);
             kentta.getPallo().setY(kentta.getPallo().getY() - (int) kentta.getPallo().getNopeus());
             return true;
         }
         if (kentta.getPallo().getRajat().intersects(t.getAlarajat())) {
-            System.out.println("Törmäasi alas");
             kentta.getPallo().setSuuntaY(Suunta.ALAS);
             kentta.getPallo().setY(kentta.getPallo().getY() + (int) kentta.getPallo().getNopeus());
             return true;

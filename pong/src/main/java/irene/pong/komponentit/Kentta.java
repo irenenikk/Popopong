@@ -5,6 +5,7 @@ package irene.pong.komponentit;
 
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
+import java.awt.Rectangle;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -21,7 +22,8 @@ public class Kentta {
     private final Random random;
 
     /**
-     * Luokan vastuulla on luoda kentän komponentit, eli pallo ja mailat.
+     * Luokan vastuulla on luoda kentän komponentit, eli pallo, mailat ja
+     * esteet.
      *
      * @see Pallo
      * @see Maila
@@ -60,7 +62,7 @@ public class Kentta {
 
     /**
      * Lisää kentän keskiosaan uuden esteen varmistaen ensin, että uutta estettä
-     * ei luoda vanhan päälle.
+     * ei luoda vanhan päälle, tai keskelle kenttää, josta pallo lähtee.
      *
      * @see Este
      */
@@ -69,7 +71,7 @@ public class Kentta {
         while (true) {
             boolean osuuEsteeseen = false;
             int x = random.nextInt(50) + getLeveys() / 3;
-            int y = random.nextInt(getKorkeus() - 20) + 20;
+            int y = random.nextInt(getKorkeus() - 70) + 10;
             uusi = new Este(x, y);
             for (Este este : esteet) {
                 if (este.getRajat().intersects(uusi.getRajat())) {

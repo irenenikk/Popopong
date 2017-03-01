@@ -85,21 +85,21 @@ public class Maila implements Tormattava, Liikkuja {
 
     @Override
     public Rectangle getYlarajat() {
-        return new Rectangle(getX(), getY() - 5, getLeveys(), 5);
+        return new Rectangle(getX(), getY() - 2, getLeveys(), 5);
     }
 
     @Override
     public Rectangle getAlarajat() {
-        return new Rectangle(getX(), getY() + getKorkeus(), getLeveys(), 5);
+        return new Rectangle(getX(), getY() + getKorkeus() - 2, getLeveys(), 5);
     }
 
     @Override
     public Rectangle getVasenRajat() {
-        return new Rectangle(getX(), getY(), 5, getKorkeus());
+        return new Rectangle(getX() - 2, getY(), 5, getKorkeus());
     }
 
     @Override
     public Rectangle getOikeaRajat() {
-        return new Rectangle(getX() + getLeveys() - 5, getY(), 5, getKorkeus());
+        return new Rectangle(getX() + getLeveys() - 2, getY(), 5, getKorkeus());
     }
 }

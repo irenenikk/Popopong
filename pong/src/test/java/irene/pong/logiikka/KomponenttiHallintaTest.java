@@ -64,56 +64,6 @@ public class KomponenttiHallintaTest {
         assertEquals(250, kontrolleri.getMaila2().getY());
     }
     
-    
-    @Test
-    public void josPalloOsuuYlareunaanSuuntaVaihtuu() {
-        Pallo pallo = kontrolleri.getPallo();
-        pallo.setX(5);
-        pallo.setY(5);
-        pallo.setSuuntaY(Suunta.YLOS);
-        pallo.setSuuntaX(Suunta.OIKEA);
-        pallo.liiku();
-        pallo.liiku();
-        pallo.liiku();
-        pallo.liiku();
-        kontrolleri.paivita();
-        assertEquals(Suunta.ALAS, pallo.getSuuntaY());
-    }
-    
-    @Test
-    public void josPalloOsuuYlareunaanSeKimpoaa() {
-        Pallo pallo = kontrolleri.getPallo();
-        pallo.setX(2);
-        pallo.setY(1);
-        pallo.setSuuntaY(Suunta.YLOS);
-        pallo.setSuuntaX(Suunta.OIKEA);
-        kontrolleri.paivita();
-        assertEquals(1, pallo.getY());
-    }
-
-    @Test
-    public void josPalloOsuuAlareunaanSeKimpoaa() {
-        Pallo pallo = kontrolleri.getPallo();
-        pallo.setX(2);
-        pallo.setY(580);
-        pallo.setSuuntaY(Suunta.ALAS);
-        pallo.setSuuntaX(Suunta.OIKEA);
-        kontrolleri.paivita();
-        assertEquals(580, pallo.getY());
-    }
-
-    @Test
-    public void josPalloOsuuAlareunaanSuuntaVaihtuu() {
-        Pallo pallo = kontrolleri.getPallo();
-        pallo.setX(-1);
-        pallo.setY(kontrolleri.getKentta().getKorkeus()-1);
-        pallo.setSuuntaY(Suunta.ALAS);
-        pallo.liiku();
-        pallo.liiku();
-        kontrolleri.paivita();
-        assertEquals(Suunta.YLOS, pallo.getSuuntaY());
-    }    
-    
     @Test
     public void palloMaalissaLisaaPisteitaVasemmallaJaPysayttaaPallon() {
         Pallo pallo = kontrolleri.getPallo();
@@ -246,12 +196,12 @@ public class KomponenttiHallintaTest {
     @Test 
     public void josEsteitaLiikaaEiLisata() {
         Kentta k = kontrolleri.getKentta();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 5; i++) {
             k.lisaaEste();
         }
         kontrolleri.setPallonOsumat(12);
         kontrolleri.paivita();
-        assertEquals(8, kontrolleri.getKentta().getEsteet().size());
+        assertEquals(5, kontrolleri.getKentta().getEsteet().size());
     }
     
     @Test
