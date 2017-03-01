@@ -39,17 +39,17 @@
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">         * Jos peli on vasta aloitettu, päivittää päälogiikkaluokan tilan, tyhjentää kentän yläreunan ilmoituksen ja aloittaa pelianimaation.</em>
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment">         * Jos peli on juuri loppunut, nollaa pelitilanteen nollaamalla tilastoluokan pisteetsekä mailoille viimeksi annetut suunnat, poistaa tekoälyn käytöstä, ja palauttaa pallon nopeuden aloitusnopeudeksi.</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>          <strong class="jxr_keyword">if</strong> (!pong.isPeliKaynnissa() &amp;&amp; !kali.getAnimoija().getAnimoija().isPaused() &amp;&amp; !pong.peliAlkanut() &amp;&amp; pong.getPelityyppi() == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          <strong class="jxr_keyword">if</strong> (!pong.isPeliKaynnissa() &amp;&amp; !kali.getAnimoija().getAnimaatio().isPaused() &amp;&amp; !pong.isPeliAlkanut() &amp;&amp; pong.getPelityyppi() == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>              pong.getTilasto().nollaaPisteet();
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>              pong.getKentta().alustaKentta();
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>              kali.getPiirturi().tyhjennaEsteidenVarit();
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>              pong.getKontrolleri().alustaKomponentit();
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>              kali.pausePiiloon();
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>              kali.paivita();
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>              kali.getAnimoija().getAnimoija().stop();
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>              kali.getAnimoija().getAnimaatio().stop();
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>          }
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          <strong class="jxr_keyword">if</strong> (!pong.isPeliKaynnissa() &amp;&amp; !kali.getAnimoija().getAnimoija().isPaused() &amp;&amp; !pong.peliAlkanut() &amp;&amp; pong.getPelityyppi() != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          <strong class="jxr_keyword">if</strong> (!pong.isPeliKaynnissa() &amp;&amp; !kali.getAnimoija().getAnimaatio().isPaused() &amp;&amp; !pong.isPeliAlkanut() &amp;&amp; pong.getPelityyppi() != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>              pong.setPeliKaynnissa(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>              pong.setPeliAlkanut(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>              kali.getAnimoija().aloitaPeli();

@@ -26,7 +26,7 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment">     * Luokka saa sekä päälogiikkaluokan sekä pääkäyttöliittymäluokan, jotta se voi muokata pelin tilaa sekä käyttäjälle näkyviä ilmoituksia.</em>
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment">     * @param p päälogiikkaluokka</em>
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment">     * @param, i pääkäyttöliittymäluokka</em>
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment">     * @param i pääkäyttöliittymäluokka</em>
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment">     * @see logiikka.Pong</em>
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment">     * @see kayttoliittyma.Kayttoliittyma</em>
@@ -38,7 +38,7 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>      @Override
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> actionPerformed(ActionEvent e) {
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">if</strong> (pong.peliAlkanut()) {
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">if</strong> (pong.isPeliAlkanut()) {
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>              <strong class="jxr_keyword">if</strong> (pong.isPeliKaynnissa()) {
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>                  pong.setPeliKaynnissa(false);
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>                  kali.asetaIlmoitus(<span class="jxr_string">"paused"</span>);

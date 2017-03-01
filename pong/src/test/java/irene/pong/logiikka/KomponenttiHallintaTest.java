@@ -130,7 +130,6 @@ public class KomponenttiHallintaTest {
         assertEquals(2, kontrolleri.getPallonOsumat());
     }
     
-    
     @Test
     public void maalinJalkeenOdotusaika15() {
         Pallo pallo = kontrolleri.getPallo();
