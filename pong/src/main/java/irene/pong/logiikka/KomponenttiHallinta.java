@@ -22,10 +22,11 @@ public class KomponenttiHallinta {
     private PallonTormaystenTarkistaja pallonTormaystenTarkistaja;
     private KenttaRajaTarkistaja kenttaRajaTarkastaja;
     private Tilasto tilasto;
+    private Aly aly;
+    
     private int pallonOsumat;
     private int pallonOdotusaika;
     private int esteidenTiheys;
-    private Aly aly;
     private boolean kaytaAlya;
 
     /**
@@ -107,6 +108,9 @@ public class KomponenttiHallinta {
         pallonOdotusaika = i;
     }
     
+    /**
+     * Asettaa esteiden tiheyden kahdeksitoista, eli alkuperäiseksi määräksi.
+     */
     public void alustaEsteidenTiheys() {
         esteidenTiheys = 12;
     }
@@ -121,12 +125,14 @@ public class KomponenttiHallinta {
 
     /**
      * Asettaa komponentit alun tilanteeseen, jossa pallo ja mailat ovat keskellä.
+     * Arpoo pallolle satunnaisen suunnan. Nollaa tekoälyn käytön.
      * 
      * @see Maila
      * @see Pallo 
      */
     public void alustaKomponentit() {
         asetaPalloKeskelle();
+        pallo.vaihdaSuuntaaSatunnaisesti();
         asetaPelaaja1Keskelle();
         asetaPelaaja2Keskelle();
         esteidenTiheys = 12;

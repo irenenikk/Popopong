@@ -59,6 +59,9 @@ public class Este implements Tormattava {
         this.varoitusaika = varoitusaika;
     }
     
+    /**
+     * Vähentää esteen harmaanaoloaikaa, jolloin siihen ei voi osua, yhdellä.
+     */
     public void vahennaVaroitusaikaa() {
         varoitusaika--;
     }

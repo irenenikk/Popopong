@@ -11,6 +11,9 @@ public class Tilasto {
     private int vasenPisteet;
     private int oikeaPisteet;
     
+    /**
+     * Aluksi molempien pelaajien pisteet ovat nolla.
+     */
     public Tilasto() {
         vasenPisteet = 0;
         oikeaPisteet = 0;
@@ -29,10 +32,18 @@ public class Tilasto {
         }
     }
     
+    /**
+     * Palauttaa vasemmanpuoleisen pelaajan pisteet.
+     * @return Vasemmanpuoleisen pelaajan pisteet.
+     */
     public int vasemmanPelaajanPisteet() {
         return vasenPisteet;
     }
     
+    /**
+     * Palauttaa oikeanpuoleisenpelaajan pisteet.
+     * @return Oikeanpuoleisen pelaajan pisteet.
+     */
     public int oikeanPelaajanPisteet() {
         return oikeaPisteet;
     }    

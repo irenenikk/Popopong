@@ -211,7 +211,7 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
          * Jos peli on vasta aloitettu, antaa ohjeet pelityypin valitsemiseksi, sitten ohjeistaa pelin aloittamisen ja pelin loputtua kertoo voittajan.
          */
         
-        if (logiikka.getTilasto().voittaja() != null && !logiikka.isPeliKaynnissa() && logiikka.peliAlkanut()) {
+        if (logiikka.getTilasto().voittaja() != null && !logiikka.isPeliKaynnissa() && logiikka.isPeliAlkanut()) {
             String voittaja = "";
             if (logiikka.getTilasto().voittaja() == Pelaaja.VASEN && logiikka.getPelityyppi() == Pelityyppi.YKSINPELI) {
                 voittaja = "AI";
@@ -221,7 +221,7 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
                 voittaja = "Player 2";
             }
             asetaIlmoitus("<html><div style='text-align: center;'> <strong> " + voittaja + " wins </strong> <br> Press SPACE to restart <br> or close the window </div></html>");            
-        } else if (!logiikka.peliAlkanut() && !logiikka.isPeliKaynnissa() && logiikka.getPelityyppi() != null) {
+        } else if (!logiikka.isPeliAlkanut() && !logiikka.isPeliKaynnissa() && logiikka.getPelityyppi() != null) {
             String pelityyppi = "";
             String ohjeet = "";
             if (logiikka.getPelityyppi() == Pelityyppi.YKSINPELI) {
@@ -232,8 +232,8 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
                 ohjeet = "Player 1: W - S <br> Player 2: Arrow keys";
             }
             asetaIlmoitus("<html><div style='text-align: center;'> <p> You chose " + pelityyppi + "</p> <p>  " + ohjeet + " </p> <p> Press SPACE to start </p></div></html>");
-        } else if (!logiikka.peliAlkanut() && !logiikka.isPeliKaynnissa() && logiikka.getPelityyppi() == null && logiikka.getTilasto().voittaja() == null) {
-            asetaIlmoitus("<html><div style='text-align: center;'> <strong> PONG </strong> <p> 1 - single <br> 2 - multiplayer </p> </div></html>");
+        } else if (!logiikka.isPeliAlkanut() && !logiikka.isPeliKaynnissa() && logiikka.getPelityyppi() == null && logiikka.getTilasto().voittaja() == null) {
+            asetaIlmoitus("<html><div style='text-align: center;'> <strong> PONG </strong> <p>Choose game type: </p><p> 1 - single <br> 2 - multiplayer </p> </div></html>");
         }
         
     }

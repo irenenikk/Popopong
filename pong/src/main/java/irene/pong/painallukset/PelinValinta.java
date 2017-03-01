@@ -33,7 +33,7 @@ public class PelinValinta extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!peli.peliAlkanut() && !peli.isPeliKaynnissa() && peli.getPelityyppi() == null && peli.getTilasto().voittaja() == null) {
+        if (!peli.isPeliAlkanut() && !peli.isPeliKaynnissa() && peli.getPelityyppi() == null && peli.getTilasto().voittaja() == null) {
             if (kirjain.equals("1")) {
                 peli.setPelityyppi(Pelityyppi.YKSINPELI);
                 kali.lisaaPelaajienNappaimet(Pelityyppi.YKSINPELI);

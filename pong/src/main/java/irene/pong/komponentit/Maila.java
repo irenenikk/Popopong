@@ -100,6 +100,6 @@ public class Maila implements Tormattava, Liikkuja {
 
     @Override
     public Rectangle getOikeaRajat() {
-        return new Rectangle(getX() + getLeveys(), getY(), 5, getKorkeus());
+        return new Rectangle(getX() + getLeveys() - 5, getY(), 5, getKorkeus());
     }
 }

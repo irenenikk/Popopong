@@ -22,7 +22,7 @@ public class PongTest {
     @Test
     public void peliAluksEiKaynnissaTaiAlkanut() {
         assertFalse(pong.isPeliKaynnissa());
-        assertFalse(pong.peliAlkanut());
+        assertFalse(pong.isPeliAlkanut());
     }
     
     @Test

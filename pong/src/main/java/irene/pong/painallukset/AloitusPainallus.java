@@ -31,17 +31,17 @@ public class AloitusPainallus extends AbstractAction {
          * Jos peli on vasta aloitettu, päivittää päälogiikkaluokan tilan, tyhjentää kentän yläreunan ilmoituksen ja aloittaa pelianimaation.
          * Jos peli on juuri loppunut, nollaa pelitilanteen nollaamalla tilastoluokan pisteetsekä mailoille viimeksi annetut suunnat, poistaa tekoälyn käytöstä, ja palauttaa pallon nopeuden aloitusnopeudeksi.
          */
-        if (!pong.isPeliKaynnissa() && !kali.getAnimoija().getAnimoija().isPaused() && !pong.peliAlkanut() && pong.getPelityyppi() == null) {
+        if (!pong.isPeliKaynnissa() && !kali.getAnimoija().getAnimaatio().isPaused() && !pong.isPeliAlkanut() && pong.getPelityyppi() == null) {
             pong.getTilasto().nollaaPisteet();
             pong.getKentta().alustaKentta();
             kali.getPiirturi().tyhjennaEsteidenVarit();
             pong.getKontrolleri().alustaKomponentit();
             kali.pausePiiloon();
             kali.paivita();
-            kali.getAnimoija().getAnimoija().stop();
+            kali.getAnimoija().getAnimaatio().stop();
 
         }
-        if (!pong.isPeliKaynnissa() && !kali.getAnimoija().getAnimoija().isPaused() && !pong.peliAlkanut() && pong.getPelityyppi() != null) {
+        if (!pong.isPeliKaynnissa() && !kali.getAnimoija().getAnimaatio().isPaused() && !pong.isPeliAlkanut() && pong.getPelityyppi() != null) {
             pong.setPeliKaynnissa(true);
             pong.setPeliAlkanut(true);
             kali.getAnimoija().aloitaPeli();

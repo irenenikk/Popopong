@@ -18,9 +18,12 @@ public class Pallo implements Liikkuja {
     private Suunta suuntaX;
     private boolean odottaa;
 
+    /**
+     * Palloa luodessa sille asetetaan aloitussuunta, ja se asetetaan odottamaan.
+     */
     public Pallo() {
-        this.suuntaX = Suunta.VASEN;
-        this.suuntaY = Suunta.ALAS;
+        suuntaY = Suunta.ALAS;
+        suuntaX = Suunta.OIKEA;
         odottaa = false;        
     }
 
@@ -42,6 +45,9 @@ public class Pallo implements Liikkuja {
         return nopeus;
     }
     
+    /**
+     * Lisää pallon nopeutta.
+     */
     public void nopeuta() {
         nopeus += 0.5;
     }

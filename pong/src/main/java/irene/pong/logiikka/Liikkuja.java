@@ -1,8 +1,8 @@
 package irene.pong.logiikka;
 
 /**
- *
- * @author nikkaire
+ * Rajapinta tarjoaa metodit olion koordinaattien ja rajojen seuraamiseksi ja
+ * muuttamiseksi.
  */
 public interface Liikkuja {
 

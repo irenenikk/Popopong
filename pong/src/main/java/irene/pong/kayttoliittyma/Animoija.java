@@ -11,7 +11,7 @@ import org.jdesktop.core.animation.timing.TimingTarget;
 public class Animoija {
 
     private final Pong pong;
-    private final Animator animoija;
+    private final Animator animaatio;
 
     /**
      * Luo pelille animoijan, joka kutsuu päälogiikkaluokan sisällä varsinaisen peliloopin luovaa metodia.
@@ -20,35 +20,35 @@ public class Animoija {
      */
     public Animoija(Pong p) { 
         pong = p;
-        animoija = new Animator.Builder()
+        animaatio = new Animator.Builder()
                 .setRepeatCount(Animator.INFINITE)
                 .addTarget(pong)
                 .build();
     }
 
-    public Animator getAnimoija() {
-        return animoija;
+    public Animator getAnimaatio() {
+        return animaatio;
     }
 
     /**
      * Käynnistää animoijan, eli kentän liikkeen.
      */
     public void aloitaPeli() {
-        animoija.start();
+        animaatio.start();
     }
 
     /**
      * Keskeyttää animaation, jos se on käynnissä.
      */
     public void pauseta() {
-        animoija.pause();
+        animaatio.pause();
     }
 
     /**
      * Jatkaa animaatioita, jos se on keskeytetty.
      */
     public void jatka() {
-        animoija.resume();
+        animaatio.resume();
     }
 
 }

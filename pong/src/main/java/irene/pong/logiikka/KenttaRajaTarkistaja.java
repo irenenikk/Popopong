@@ -10,6 +10,12 @@ import irene.pong.komponentit.*;
 public class KenttaRajaTarkistaja {
     private Kentta kentta;
 
+    /**
+     * Kenttarajatarkastaja saa konstruktorissa kentän, jonka komponenttien
+     * liikkeitä sen tulee valvoa.
+     * 
+     * @param kentta Pelikenttä
+     */
     public KenttaRajaTarkistaja(Kentta kentta) {
         this.kentta = kentta;
     }

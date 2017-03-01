@@ -38,7 +38,7 @@ public class Pong implements TimingTarget {
         return peliKaynnissa;
     }
 
-    public boolean peliAlkanut() {
+    public boolean isPeliAlkanut() {
         return peliAlkanut;
     }
 

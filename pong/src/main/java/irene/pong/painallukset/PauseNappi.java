@@ -18,7 +18,7 @@ public class PauseNappi extends AbstractAction {
      * Luokka saa sekä päälogiikkaluokan sekä pääkäyttöliittymäluokan, jotta se voi muokata pelin tilaa sekä käyttäjälle näkyviä ilmoituksia.
      * 
      * @param p päälogiikkaluokka
-     * @param, i pääkäyttöliittymäluokka
+     * @param i pääkäyttöliittymäluokka
      * 
      * @see logiikka.Pong
      * @see kayttoliittyma.Kayttoliittyma
@@ -30,7 +30,7 @@ public class PauseNappi extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (pong.peliAlkanut()) {
+        if (pong.isPeliAlkanut()) {
             if (pong.isPeliKaynnissa()) {
                 pong.setPeliKaynnissa(false);
                 kali.asetaIlmoitus("paused");
