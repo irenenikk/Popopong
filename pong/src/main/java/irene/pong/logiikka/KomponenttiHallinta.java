@@ -158,18 +158,18 @@ public class KomponenttiHallinta {
         maila1.liiku();
         maila2.liiku();
         
-        tarkistaOsuukoPalloMailaan();
+        tarkistaKasvavatkoPallonTormaykset();
         kenttaRajaTarkastaja.tarkistaOsuukoKentanReunaan(maila1);
         kenttaRajaTarkastaja.tarkistaOsuukoKentanReunaan(maila2);
         pallonTormaystenTarkistaja.tarkistaOsuukoPalloEsteeseen();
         pallonTormaystenTarkistaja.tormaakoPalloSeinaan();
 
-        kentta.poistaPoistettavatEsteet();
-
         tarkistaMaali();
         tarkistaLuodaankoEste();
         tarkistaEsteidenNakyvyys();
         tarkistaPallonNopeutus();
+
+        kentta.poistaPoistettavatEsteet();
     }
 
     private void asetaPalloKeskelle() {
@@ -195,8 +195,9 @@ public class KomponenttiHallinta {
         }
     }
 
-    private void tarkistaOsuukoPalloMailaan() {      
-        if (pallonTormaystenTarkistaja.palloTormaa(kentta.getVasenPelaaja()) || pallonTormaystenTarkistaja.palloTormaa(kentta.getOikeaPelaaja())) {
+    private void tarkistaKasvavatkoPallonTormaykset() {      
+        if (pallonTormaystenTarkistaja.palloKimpoaa(kentta.getVasenPelaaja()) || 
+                pallonTormaystenTarkistaja.palloKimpoaa(kentta.getOikeaPelaaja())) {
             pallonOsumat++;
         }
     }

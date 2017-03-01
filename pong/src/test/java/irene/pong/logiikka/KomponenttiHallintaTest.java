@@ -181,7 +181,8 @@ public class KomponenttiHallintaTest {
     
     @Test
     public void josPallonOsotusAikaOnNollaPalloLiikkeelle() {
-        kontrolleri.setPallonOdotusaika(0);
+        kontrolleri.getPallo().setPaikallaan(true);
+        kontrolleri.setPallonOdotusaika(1);
         kontrolleri.paivita();
         assertFalse(kontrolleri.getPallo().isPaikallaan());
     }
@@ -206,7 +207,10 @@ public class KomponenttiHallintaTest {
     
     @Test
     public void esteidenTiheysAinaYli2() {
-        kontrolleri.setPallonOsumat(0);
+        kontrolleri.setEsteidenTiheys(2);
+        kontrolleri.setPallonOsumat(12);
+        kontrolleri.paivita();
+        assertEquals(2, kontrolleri.getEsteidenTiheys());
     }
     
     @Test
@@ -242,4 +246,43 @@ public class KomponenttiHallintaTest {
         kontrolleri.paivita();
         assertEquals(2, kontrolleri.getEsteidenTiheys());
     }
+    
+    @Test
+    public void pallonNopeutusLisaaOsumia() {
+        kontrolleri.setPallonOsumat(6);
+        kontrolleri.paivita();
+        assertEquals(7, kontrolleri.getPallonOsumat());
+    }
+    
+    @Test
+    public void kaytaTekoAlyaSaaTekoAlynLiikuttamaanVasentaMailaa() {
+        kontrolleri.kaytaTekoalya();
+        Maila vasen = kontrolleri.getMaila1();
+        vasen.setKiihdytaYlos(false);
+        vasen.setY(300);
+        vasen.setX(0);
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setX(100);
+        pallo.setY(10);
+        kontrolleri.paivita();
+        assertTrue(kontrolleri.getMaila1().isKiihdytaYlos());
+    }
+    
+    @Test
+    public void poistaTekoAlyEstaaTekoalyaLiikuttamastaVasentaMailaa() {
+        kontrolleri.kaytaTekoalya();
+        kontrolleri.poistaTekoAlY();
+        Maila vasen = kontrolleri.getMaila1();
+        vasen.setKiihdytaYlos(false);
+        vasen.setY(300);
+        vasen.setX(0);
+        Pallo pallo = kontrolleri.getPallo();
+        pallo.setSuuntaX(Suunta.VASEN);
+        pallo.setX(100);
+        pallo.setY(10);
+        kontrolleri.paivita();
+        assertFalse(kontrolleri.getMaila1().isKiihdytaYlos());
+    }
+    
 }

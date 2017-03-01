@@ -31,7 +31,7 @@ public class PallonTormaystenTarkistaja {
      * @param t Tormattava-rajapinnan toteuttava Maila.
      * @return osuiko pallo kyseiseen komponenttiin.
      */
-    public boolean palloTormaa(Tormattava t) {
+    public boolean palloKimpoaa(Tormattava t) {
         if (kentta.getPallo().getRajat().intersects(t.getOikeaRajat())) {
             kentta.getPallo().setSuuntaX(Suunta.OIKEA);
             kentta.getPallo().setX(kentta.getPallo().getX() + (int) kentta.getPallo().getNopeus());
@@ -63,7 +63,7 @@ public class PallonTormaystenTarkistaja {
     public void tarkistaOsuukoPalloEsteeseen() {
         kentta.getEsteet().stream().forEach((Este este) -> {
             if (este.isNakyvissa()) {
-                if (palloTormaa(este)) {
+                if (palloKimpoaa(este)) {
                     este.setPoistettava(true);
                 }
             }

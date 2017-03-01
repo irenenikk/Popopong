@@ -5,6 +5,7 @@ package irene.pong.komponentit;
 
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.*;
 import java.util.function.Consumer;
@@ -69,20 +70,20 @@ public class Kentta {
     public void lisaaEste() {
         Este uusi;
         while (true) {
-            boolean osuuEsteeseen = false;
+            boolean osuuKomponenttiin = false;
             int x = random.nextInt(50) + getLeveys() / 3;
             int y = random.nextInt(getKorkeus() - 70) + 10;
             uusi = new Este(x, y);
             for (Este este : esteet) {
-                if (este.getRajat().intersects(uusi.getRajat())) {
-                    osuuEsteeseen = true;
+                if (este.getRajat().intersects(uusi.getRajat()) || uusi.getRajat().intersects(pallo.getRajatKeskella())) {
+                    System.out.println("Olisi osunut esteeseen");
+                    osuuKomponenttiin = true;
                 }
             }
-            if (!osuuEsteeseen) {
+            if (!osuuKomponenttiin) {
                 break;
             }
         }
-
         esteet.add(uusi);
     }
 

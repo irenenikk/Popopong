@@ -33,8 +33,8 @@ public class PallonTormaystentarkistajaTest {
         Maila pelaaja2 = k.getOikeaPelaaja();
         pelaaja2.setX(300);
         pelaaja2.setY(300);
-        assertFalse(tt.palloTormaa(pelaaja1));
-        assertFalse(tt.palloTormaa(pelaaja2));
+        assertFalse(tt.palloKimpoaa(pelaaja1));
+        assertFalse(tt.palloKimpoaa(pelaaja2));
         assertEquals(null, tt.tarkistaMaali());
     }
     @Test
@@ -55,9 +55,9 @@ public class PallonTormaystentarkistajaTest {
         pallo.liiku();
         pallo.liiku();
         pallo.liiku();
-        tt.palloTormaa(pelaaja);
+        tt.palloKimpoaa(pelaaja);
         assertEquals(Suunta.OIKEA, pallo.getSuuntaX());
-        assertTrue(tt.palloTormaa(pelaaja));
+        assertTrue(tt.palloKimpoaa(pelaaja));
     }
     
     @Test
@@ -78,9 +78,9 @@ public class PallonTormaystentarkistajaTest {
         pallo.liiku();
         pallo.liiku();
         pallo.liiku();
-        tt.palloTormaa(pelaaja);
+        tt.palloKimpoaa(pelaaja);
         assertEquals(Suunta.VASEN, pallo.getSuuntaX());
-        assertTrue(tt.palloTormaa(pelaaja));
+        assertTrue(tt.palloKimpoaa(pelaaja));
     }
     
     @Test

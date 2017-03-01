@@ -147,6 +147,15 @@ public class Pallo implements Liikkuja {
     public Rectangle getRajat() {
         return new Rectangle(getX(), getY(), getHalkaisija(), getHalkaisija());
     }
+    
+    /**
+     * Palauttaa pallon rajat sen ollessa keskellä kenttää.
+     * 
+     * @return Pallon rajat sen ollessa keskellä kenttää.
+     */
+    public Rectangle getRajatKeskella() {
+        return new Rectangle(getLeveys() / 2 - getHalkaisija(), getKorkeus() / 2 - getHalkaisija(), getHalkaisija(), getHalkaisija());
+    }
 
     @Override
     public int getKorkeus() {
