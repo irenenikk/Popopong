@@ -19,9 +19,6 @@ public class PauseNappi extends AbstractAction {
      * 
      * @param p päälogiikkaluokka
      * @param i pääkäyttöliittymäluokka
-     * 
-     * @see logiikka.Pong
-     * @see kayttoliittyma.Kayttoliittyma
      */
     public PauseNappi(Pong p, Kayttoliittyma i) {
         pong = p;

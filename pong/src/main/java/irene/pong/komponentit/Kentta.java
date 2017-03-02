@@ -5,12 +5,8 @@ package irene.pong.komponentit;
 
 import irene.pong.komponentit.Maila;
 import irene.pong.komponentit.Pallo;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import javafx.util.Pair;
 
 public class Kentta {
 

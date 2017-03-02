@@ -17,8 +17,6 @@ public class PainallusAlas extends AbstractAction {
      * 
      * @param kh pelin komponenttien hallintaluokka
      * @param k painetun näppäimen kirjain
-     * 
-     * @see logiikka.KomponenttiHallinta
      */
     public PainallusAlas(KomponenttiHallinta kh, String k) {
 

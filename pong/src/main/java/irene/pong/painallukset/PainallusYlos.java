@@ -17,8 +17,6 @@ public class PainallusYlos extends AbstractAction {
      * 
      * @param kh pelin komponenttien hallintaluokka
      * @param k painetun näppäimen kirjain
-     * 
-     * @see logiikka.KomponenttiHallinta
      */
     public PainallusYlos(KomponenttiHallinta kh, String k) {
         kontrolleri = kh;
@@ -27,7 +25,6 @@ public class PainallusYlos extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println("Painoit ylös");
         if (kirjain.equals("W")) {
             kontrolleri.getMaila1().setKiihdytaYlos(true);
         }

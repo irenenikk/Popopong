@@ -26,8 +26,6 @@ public class Aly {
      * mailasta poispäin y-akselilla, tai on sen kanssa samalla puolella, maila
      * liikkuu palloa kohti.
      *
-     * @see komponentit.Pallo
-     * @see komponentit.Maila
      */
     public void liikutaMailaa() {
         if (kentta.getPallo().getSuuntaX() == Suunta.VASEN) {

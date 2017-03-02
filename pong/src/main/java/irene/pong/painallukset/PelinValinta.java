@@ -21,9 +21,6 @@ public class PelinValinta extends AbstractAction {
      * @param p päälogiikkaluokka
      * @param k painetun näppäimen kirjain
      * @param kl pääkäyttöliittymäluokka
-     * 
-     * @see logiikka.Pong
-     * @see kayttoliittyma.Kayttoliittyma
      */
     public PelinValinta(Pong p, String k, Kayttoliittyma kl) {
         peli = p;

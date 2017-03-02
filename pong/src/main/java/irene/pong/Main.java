@@ -9,6 +9,8 @@ public class Main {
     /**
      * Peli käynnistetään käyttöliittymän kautta.
      * 
+     * @param args Ohjelmalle käynnistettäessa annetut parametrit.
+     * 
      * @see Pong
      * @see Kayttoliittyma
      */

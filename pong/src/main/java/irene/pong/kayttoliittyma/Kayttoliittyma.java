@@ -74,6 +74,10 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
         return piirturi;
     }
     
+    /**
+     * Asettaa kentän yläreunan ilmoitukseen tekstin.
+     * @param ilmo Ilmoituksen teksti.
+     */
     public void asetaIlmoitus(String ilmo) {
         ilmoitus.setText(ilmo);
     }
@@ -160,7 +164,7 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
      * Lisää KeyBindingsit, joiden avulla pelaaja tai pelaajat voivat ohjata mailoja riippuen pelityypistä.
      * Jos pelityyppi on yksinpeli, vasemmanpuoleisen pelaajan näppäimiä ei kuunnella.
      * 
-     * @param Pelityyppi käyttäjän valitsema pelityyppi(yksin- tai kaksinpeli)
+     * @param tyyppi käyttäjän valitsema pelityyppi(yksin- tai kaksinpeli)
      */
     public void lisaaPelaajienNappaimet(Pelityyppi tyyppi) {
         piirturi.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed UP"), "UP painettu");

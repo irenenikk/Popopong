@@ -142,10 +142,6 @@ public class KomponenttiHallinta {
 
     /**
      * Liikuttaa komponentteja, varmistaa etteivät ne mene kentän ulkopuolella ja tarkistaa maalit.
-     * 
-     * @see Maila
-     * @see Pallo
-     * @see Kentta
      */
     public void paivita() {       
         tarkistaLiikkuukoPallo();
