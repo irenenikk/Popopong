@@ -16,3 +16,5 @@ Peliä ohjataan näppäimistöllä. Valitse yksinpeli tekoälyä vastaan painama
 [Uusin pit-raportti](https://htmlpreview.github.io/?https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/pit-raportti/201703012113/index.html)
 
 [Testidokumentti](https://github.com/irenenikk/Popopong/blob/master/dokumentaatio/testidokumentti.md)
+
+[JavaDoc](https://htmlpreview.github.io/?https://github.com/irenenikk/Popopong/blob/master/javadocs/index.html)
