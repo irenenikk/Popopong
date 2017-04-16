@@ -16,6 +16,7 @@ import irene.pong.painallukset.VapautusAlas;
 import irene.pong.painallukset.VapautusYlos;
 import irene.pong.logiikka.Pelityyppi;
 import irene.pong.logiikka.Pong;
+import irene.pong.logiikka.Suunta;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -38,7 +39,6 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
     private Piirturi piirturi;
     private final Animoija animoija;
     
-
     /**
      * Luo kaikki käyttöliittymän komponentit, ja asettaa itsensä päälogiikkaluokan päivitettävä-olioksi.
      * 
@@ -208,6 +208,21 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
 
     @Override
     public void paivita() {
+        if (logiikka.isPeliKaynnissa() && logiikka.getKentta().getPallo().isPaikallaan()) {
+            if (logiikka.getKentta().getPallo().getSuuntaX() == Suunta.OIKEA) {
+                logiikka.getKontrolleri().setPalloMerkkiX(logiikka.getKentta().getLeveys()-30);
+            } else {
+                logiikka.getKontrolleri().setPalloMerkkiX(30);
+            }
+            if (logiikka.getKentta().getPallo().getSuuntaY() == Suunta.YLOS) {
+                logiikka.getKontrolleri().setPalloMerkkiY(0);
+            } else {
+                logiikka.getKontrolleri().setPalloMerkkiY(logiikka.getKentta().getKorkeus()-logiikka.getKentta().getPallo().getHalkaisija()-10);
+            }
+        } else {
+            logiikka.getKontrolleri().setPalloMerkkiX(-1);
+            logiikka.getKontrolleri().setPalloMerkkiY(-1);
+        }
         if (logiikka.getTilasto().voittaja() != null && !logiikka.isPeliKaynnissa() && logiikka.isPeliAlkanut()) {
             String voittaja = "";
             if (logiikka.getTilasto().voittaja() == Pelaaja.VASEN && logiikka.getPelityyppi() == Pelityyppi.YKSINPELI) {
@@ -232,7 +247,5 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
         } else if (!logiikka.isPeliAlkanut() && !logiikka.isPeliKaynnissa() && logiikka.getPelityyppi() == null && logiikka.getTilasto().voittaja() == null) {
             asetaIlmoitus("<html><div style='text-align: center;'> <strong> PONG </strong> <p>Choose game type: </p><p> 1 - single <br> 2 - multiplayer </p> </div></html>");
         }
-        
-    }
-            
+    }            
 }

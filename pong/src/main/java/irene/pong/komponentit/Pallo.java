@@ -156,6 +156,21 @@ public class Pallo implements Liikkuja {
     public Rectangle getRajatKeskella() {
         return new Rectangle(getLeveys() / 2 - getHalkaisija(), getKorkeus() / 2 - getHalkaisija(), getHalkaisija(), getHalkaisija());
     }
+    
+    public String suuntaToString() {
+        String suunta = "";
+        if (suuntaX == Suunta.OIKEA) {
+            suunta += "oikealle ";
+        } else {
+            suunta += "vasemmalle ";
+        }
+        if (suuntaY == Suunta.YLOS) {
+            suunta += " ylös";
+        } else {
+            suunta += " alas";
+        }
+        return suunta;
+    }
 
     @Override
     public int getKorkeus() {

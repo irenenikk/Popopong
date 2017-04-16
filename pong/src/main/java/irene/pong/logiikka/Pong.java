@@ -117,11 +117,13 @@ public class Pong implements TimingTarget {
             kontrolleri.paivita();
             if (tilasto.voittaja() != null) {
                 peliKaynnissa = false;
-                tilannePaivitettava.paivita(); 
+            }
+        }
+        tilannePaivitettava.paivita(); 
+            if (tilasto.voittaja() != null) {
                 peliAlkanut = false;
                 pelityyppi = null;
             }
-        }
         liikePaivitettava.paivita();
     }
 }

@@ -28,6 +28,8 @@ public class KomponenttiHallinta {
     private int pallonOdotusaika;
     private int esteidenTiheys;
     private boolean kaytaAlya;
+    private int palloMerkkiX;
+    private int palloMerkkiY;
 
     /**
      * Komponenttihallinta saa konstruktorissaan kentän, sekä pelin tilaston.
@@ -123,6 +125,24 @@ public class KomponenttiHallinta {
         return esteidenTiheys;
     }
 
+    public int getPalloMerkkiX() {
+        return palloMerkkiX;
+    }
+
+    public void setPalloMerkkiX(int palloMerkkiX) {
+        this.palloMerkkiX = palloMerkkiX;
+    }
+
+    public int getPalloMerkkiY() {
+        return palloMerkkiY;
+    }
+
+    public void setPalloMerkkiY(int palloMerkkiY) {
+        this.palloMerkkiY = palloMerkkiY;
+    }
+    
+    
+
     /**
      * Asettaa komponentit alun tilanteeseen, jossa pallo ja mailat ovat keskellä.
      * Arpoo pallolle satunnaisen suunnan. Nollaa tekoälyn käytön.
@@ -187,7 +207,7 @@ public class KomponenttiHallinta {
         Pelaaja pisteensaaja = pallonTormaystenTarkistaja.tarkistaMaali();
         if (pisteensaaja != null) {
             tilasto.lisaaPistePelaajalle(pisteensaaja);
-            pallonOdotusaika = 15;
+            pallonOdotusaika = 30;
         }
     }
 

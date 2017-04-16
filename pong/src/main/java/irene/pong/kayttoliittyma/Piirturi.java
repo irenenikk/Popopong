@@ -59,9 +59,14 @@ public class Piirturi extends JPanel implements Paivitettava {
 
         g.fillRect(logiikka.getKentta().getVasenPelaaja().getX(), logiikka.getKentta().getVasenPelaaja().getY(), logiikka.getKentta().getVasenPelaaja().getLeveys(), logiikka.getKentta().getVasenPelaaja().getKorkeus());
         g.fillRect(logiikka.getKentta().getOikeaPelaaja().getX(), logiikka.getKentta().getOikeaPelaaja().getY(), logiikka.getKentta().getOikeaPelaaja().getLeveys(), logiikka.getKentta().getOikeaPelaaja().getKorkeus());
-
+        
         g.fillOval(logiikka.getKentta().getPallo().getX(), logiikka.getKentta().getPallo().getY(), logiikka.getKentta().getPallo().getHalkaisija(), logiikka.getKentta().getPallo().getHalkaisija());
-
+        
+        if (logiikka.getKontrolleri().getPalloMerkkiX()!=-1 && logiikka.getKontrolleri().getPalloMerkkiY()!=-1) {
+            System.out.println(logiikka.getKontrolleri().getPalloMerkkiX() + ", " + logiikka.getKontrolleri().getPalloMerkkiY());
+            g.setColor(new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
+            g.fillOval(logiikka.getKontrolleri().getPalloMerkkiX(), logiikka.getKontrolleri().getPalloMerkkiY(), logiikka.getKentta().getPallo().getHalkaisija(), logiikka.getKentta().getPallo().getHalkaisija());
+        }
         getToolkit().sync();
     }
 

@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 
 public class Kentta {
 
-    private final int leveys = 500;
+    private final int leveys = 600;
     private final int korkeus = 600;
     private final Pallo pallo;
     private final Maila vasen;
     private final Maila oikea;
     private final List<Este> esteet;
     private final Random random;
-
+    
     /**
      * Luokan vastuulla on luoda kentän komponentit, eli pallo, mailat ja
      * esteet.
@@ -72,7 +72,6 @@ public class Kentta {
             uusi = new Este(x, y);
             for (Este este : esteet) {
                 if (este.getRajat().intersects(uusi.getRajat()) || uusi.getRajat().intersects(pallo.getRajatKeskella())) {
-                    System.out.println("Olisi osunut esteeseen");
                     osuuKomponenttiin = true;
                 }
             }

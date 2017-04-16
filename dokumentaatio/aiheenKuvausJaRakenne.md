@@ -28,5 +28,5 @@ Pelin loogiset pääkomponentit ovat Pong-, Kentta- ja KomponenttiHallintaluokat
 #### Sekvenssikaavio pelitypin valitsemisesta
 ![Sekvenssikaavio pelityypin valitsemisesta](sekvenssikaavio_pelinvalinta.png)
 
-####Sekvenssikaavio pausettamisesta
+#### Sekvenssikaavio pausettamisesta
 ![Sekvenssikaavio pelin pausettamisesta](sekvenssikaavio_pausettaminen.png)
